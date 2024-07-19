@@ -1,0 +1,1 @@
+Allow build scripts to compile and run at the same time

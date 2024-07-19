@@ -6,6 +6,10 @@ if "%1" == "compile" (
     for /r .\src %%F in (*.java) do (
         md ".\build\%%~dpF" 2>nul
         javac -d ".\build" "%%F"
+        if errorlevel 1 (
+            echo Compilation failed for "%%F". Please check the error messages above.
+            exit /b 1
+        )
     )
     echo Compilation completed.
 
