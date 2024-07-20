@@ -1,8 +1,20 @@
+/**
+ *
+ * @author Stephen M. Borja
+ * @author Mariella Jeanne A. Dellosa
+ *
+ * JDeleteDialog is a custom panel that contains a delete button.
+ * When the delete button is clicked, a confirmation dialog is shown to confirm the deletion.
+ * The dialog contains "Yes" and "No" buttons for the user's response.
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * JDeleteDialog class that extends JPanel.
+ */
 public class JDeleteDialog extends JPanel {
 
     // VARIABLES
@@ -13,9 +25,13 @@ public class JDeleteDialog extends JPanel {
     private JButton btnYes;
     private JButton btnNo;
 
-    // CONSTRUCTOR
+    /**
+     * Constructs a JDeleteDialog with the specified parent frame.
+     *
+     * @param frame the parent frame of the dialog
+     */
     public JDeleteDialog(JFrame frame) {
-
+        // Set the background color of the panel
         this.setBackground(Color.YELLOW);
 
         // Initialize components
@@ -30,9 +46,10 @@ public class JDeleteDialog extends JPanel {
         this.btnDelete.setSize(btnDelete.getPreferredSize());
         this.add(btnDelete);
 
+        // Set the bounds for the panel
         this.setBounds(1980 / 2 - this.getPreferredSize().width, 1080 / 2 - this.getPreferredSize().height, this.getPreferredSize().width, this.getPreferredSize().height);
 
-        //Set layout for the dialog and panel
+        // Set layout for the dialog and panel
         this.dlgDelete.setLayout(new GridLayout());
         this.pnlChoice.setLayout(new FlowLayout());
 
@@ -42,7 +59,7 @@ public class JDeleteDialog extends JPanel {
         this.pnlChoice.add(btnNo);
         this.dlgDelete.add(pnlChoice);
 
-        //Set dialog size and center it relative to the parent frame
+        // Set dialog size and center it relative to the parent frame
         this.dlgDelete.pack();
         this.dlgDelete.setLocationRelativeTo(frame);
 
@@ -75,7 +92,11 @@ public class JDeleteDialog extends JPanel {
         });
     }
 
-    // SET VISIBILITY
+    /**
+     * Sets the visibility of the delete dialog.
+     *
+     * @param tf true to make the dialog visible, false to hide it
+     */
     public void setDlgDeleteVisibility(boolean tf) {
         this.dlgDelete.setVisible(tf);
     }

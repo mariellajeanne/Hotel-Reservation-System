@@ -1,13 +1,19 @@
-/*
-JInputComboBox✅
-has a label + combo box✅
-hungarian notation: inc
+/**
+ *
+ * @author Stephen M. Borja
+ * @author Mariella Jeanne A. Dellosa
+ *
+ * JInputComboBox is a custom panel that contains a label and a combo box.
  */
+
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * JInputComboBox class that extends JPanel
+ */
 public class JInputComboBox extends JPanel {
 
     //VARIABLES
@@ -15,6 +21,12 @@ public class JInputComboBox extends JPanel {
     private JComboBox cbxComboBox;
     //CONSTRUCTOR
 
+    /**
+     * Constructs a JInputComboBox with the specified label text and combo box items.
+     *
+     * @param labelText the text for the label
+     * @param comboList the list of items for the combo box
+     */
     public JInputComboBox(String labelText, ArrayList<String> comboList){
         this.setBackground(Color.YELLOW);
 
