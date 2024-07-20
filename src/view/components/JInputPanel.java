@@ -1,7 +1,7 @@
 /**
  *
- * @author Stephen M. Borja
- * @author Mariella Jeanne A. Dellosa
+// * @author Stephen M. Borja
+// * @author Mariella Jeanne A. Dellosa
  *
  * JInputPanel is a custom JPanel that includes a label, a text field, an optional error message, and an optional description.
  */
