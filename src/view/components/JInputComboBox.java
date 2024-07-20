@@ -3,10 +3,11 @@ JInputComboBox✅
 has a label + combo box✅
 hungarian notation: inc
  */
+package view.components;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import javax.swing.*;
 
 public class JInputComboBox extends JPanel {
 

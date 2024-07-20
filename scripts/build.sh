@@ -1,45 +1,35 @@
 #!/bin/bash
 
 # Compile command
-compile() {
+if [ "$1" == "compile" ]; then
     echo "Compiling..."
-    find ./src -name '*.java' -exec bash -c '
-        mkdir -p ./build/$(dirname "{}")
-        javac -d ./build "{}"
+    errorOccurred=false
+    find ./src -name '*.java' | while read -r file; do
+        dir=$(dirname "$file")
+        mkdir -p "./build/${dir#./src/}"
+        javac -d "./build" "$file"
         if [ $? -ne 0 ]; then
-            echo "Compilation failed for {}." >&2
-            exit 1
+            echo "Compilation failed for '$file'. Please check the error messages above."
+            errorOccurred=true
         fi
-    ' \;
-    if [ $? -ne 0 ]; then
-        echo "Compilation failed. Aborting."
+    done
+    if [ "$errorOccurred" = true ]; then
+        echo "Compilation completed with errors."
         exit 1
+    else
+        echo "Compilation completed successfully."
     fi
-    echo "Compilation completed."
-}
 
 # Run command
-run() {
+elif [ "$1" == "run" ]; then
     echo "Running..."
     java -cp ./build Main
     echo "Execution completed."
-}
 
-# Main script execution based on arguments
-case "$1" in
-    compile)
-        compile
-        ;;
-    run)
-        compile   # Compile first
-        run       # Then run
-        ;;
-    *)
-        echo "ERROR: INVALID ARGUMENT"
-        echo "Enter \"./scripts/build.sh compile\" to compile the project."
-        echo "Enter \"./scripts/build.sh run\" to run the project."
-        exit 1
-        ;;
-esac
-
-exit 0
+# Invalid command
+else
+    echo "ERROR: INVALID ARGUMENT"
+    echo "Enter './scripts/build.sh compile' to compile the project."
+    echo "Enter './scripts/build.sh run' to run the project."
+    exit 1
+fi

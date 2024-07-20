@@ -3,15 +3,24 @@
 rem Compile command
 if "%1" == "compile" (
     echo Compiling...
+    setlocal
+    set "errorOccurred=false"
     for /r .\src %%F in (*.java) do (
         md ".\build\%%~dpF" 2>nul
         javac -d ".\build" "%%F"
         if errorlevel 1 (
             echo Compilation failed for "%%F". Please check the error messages above.
-            exit /b 1
+            set "errorOccurred=true"
         )
     )
-    echo Compilation completed.
+    if "%errorOccurred%" == "true" (
+        echo Compilation completed with errors.
+        endlocal
+        exit /b 1
+    ) else (
+        echo Compilation completed successfully.
+        endlocal
+    )
 
 rem Run command
 ) else if "%1" == "run" (

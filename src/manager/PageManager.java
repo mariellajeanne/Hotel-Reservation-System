@@ -1,5 +1,5 @@
 package manager;
 
-public class Page {
+public class PageManager {
     
 }

@@ -1,6 +1,6 @@
 package model;
 
-public class Reservation
+public class ReservationModel
 {
     
 }

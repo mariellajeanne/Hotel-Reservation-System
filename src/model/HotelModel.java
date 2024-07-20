@@ -1,6 +1,8 @@
+
+
 package model;
 
-public class Hotel
+public class HotelModel
 {
     
 }

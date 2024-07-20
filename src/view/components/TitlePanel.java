@@ -1,5 +1,7 @@
-import javax.swing.*;
+package view.components;
+
 import java.awt.*;
+import javax.swing.*;
 
 public class TitlePanel{
 
