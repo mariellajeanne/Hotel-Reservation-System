@@ -1,3 +1,5 @@
+package view.utils;
+
 /**
  *
  * @author Stephen M. Borja
@@ -6,8 +8,8 @@
  * JTitlePanel is a singleton class that creates a title panel with application name and author information.
  */
 
-import java.awt.*;
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * TitlePanel class

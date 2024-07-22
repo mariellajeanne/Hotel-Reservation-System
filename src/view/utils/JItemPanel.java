@@ -1,3 +1,5 @@
+package view.utils;
+
 /**
  * @author Stephen M. Borja
  * @author Mariella Jeanne A. Dellosa
@@ -7,6 +9,7 @@
  */
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * JItemPanel class that extends JPanel
