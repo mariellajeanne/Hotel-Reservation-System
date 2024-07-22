@@ -6,6 +6,7 @@
  * a button to edit the item, and a delete dialog.
  */
 
+import java.awt.*;
 import javax.swing.*;
 
 /**

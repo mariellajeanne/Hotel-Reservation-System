@@ -5,8 +5,6 @@
  *
  * JInputComboBox is a custom panel that contains a label and a combo box.
  */
-package view.components;
-
 
 import java.awt.*;
 import java.util.ArrayList;

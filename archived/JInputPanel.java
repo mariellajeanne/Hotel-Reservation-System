@@ -6,8 +6,6 @@
  * JInputPanel is a custom JPanel that includes a label, a text field, an optional error message, and an optional description.
  */
 
-package view.components;
-
 import java.awt.*;
 import javax.swing.*;
 
