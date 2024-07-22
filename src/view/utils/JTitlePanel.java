@@ -1,6 +1,6 @@
 package view.utils;
 
-public class JInputPanel
+public class JTitlePanel
 {
     
 }
