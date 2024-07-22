@@ -9,6 +9,18 @@
  */
 package view.utils;
 
+<<<<<<< HEAD
+=======
+/**
+ *
+ * @author Stephen M. Borja
+ * @author Mariella Jeanne A. Dellosa
+ *
+ * JDeleteDialog is a custom panel that contains a delete button.
+ * When the delete button is clicked, a confirmation dialog is shown to confirm the deletion.
+ * The dialog contains "Yes" and "No" buttons for the user's response.
+ */
+>>>>>>> f6cc21255918b73182a1a33d6e81c3fc58c1415a
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
