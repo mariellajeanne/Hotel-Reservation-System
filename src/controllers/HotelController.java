@@ -1,6 +1,6 @@
-package controller;
+package controllers;
 
 public class HotelController
 {
-    
+
 }

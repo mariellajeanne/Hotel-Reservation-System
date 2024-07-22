@@ -1,0 +1,16 @@
+View
+    shows GUI
+
+Controllers
+    contains action listeners
+    calls services to manipulate models
+    calls the page manager to update ui
+
+Services
+    manipulates models
+
+Models
+    getters and setters
+
+
+

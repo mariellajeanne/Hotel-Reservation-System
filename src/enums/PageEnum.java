@@ -5,12 +5,12 @@
  * The page state.
  */
 
-package state;
+package states.enums;
 
 /**
  * The page state enum.
  */
-public enum PageState
+public enum PageEnum
 {
     /* ------------------------------ ADMINISTRATOR ----------------------------- */
 
