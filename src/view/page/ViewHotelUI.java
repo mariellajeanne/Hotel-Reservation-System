@@ -51,8 +51,8 @@ public final class ViewHotelUI extends JBlackPanel
             private JCommonLabel lblGuestName;
             private JCommonLabel lblReserveDeluxe;
             private JCommonLabel lblCheckInAndOut;
-            private JCommonLabel lblReservationPrice;
-            private JCommonLabel lblReservationPricePerNight;
+            private JCommonLabel lblResPrice;
+            private JCommonLabel lblResPricePerNight;
 
             private JCommonComboBox<String> cmbHotels;
             private JCommonComboBox<Integer> cmbAvailDates;
@@ -109,8 +109,8 @@ public final class ViewHotelUI extends JBlackPanel
             lblGuestName = new JCommonLabel("Guest:", 0,false);
             lblReserveDeluxe = new JCommonLabel("Room:", 0,false);
             lblCheckInAndOut = new JCommonLabel("Check-in and check-out:", 0,false);
-            lblReservationPrice = new JCommonLabel("Price (w/discount if any):", 0,false);
-            lblReservationPricePerNight = new JCommonLabel("Price per night:", 0,false);
+            lblResPrice = new JCommonLabel("Price (w/discount if any):", 0,false);
+            lblResPricePerNight = new JCommonLabel("Price per night:", 0,false);
             
             cmbHotels = new JCommonComboBox<>();
             cmbAvailDates = new JCommonComboBox<>(db.getReservationDates(true));
@@ -144,8 +144,8 @@ public final class ViewHotelUI extends JBlackPanel
             lblGuestName.setBounds(1010,308, lblGuestName.getPreferredSize().width,43);
             lblReserveDeluxe.setBounds(1010,371, lblReserveDeluxe.getPreferredSize().width,43);
             lblCheckInAndOut.setBounds(1010,435, lblCheckInAndOut.getPreferredSize().width,43);
-            lblReservationPrice.setBounds(1010,494, lblReservationPrice.getPreferredSize().width,43);
-            lblReservationPricePerNight.setBounds(1010,556,lblReservationPricePerNight.getPreferredSize().width,43);
+            lblResPrice.setBounds(1010,494, lblResPrice.getPreferredSize().width,43);
+            lblResPricePerNight.setBounds(1010,556,lblResPricePerNight.getPreferredSize().width,43);
 
             cmbHotels.setBounds(372,249,396,29);
             cmbAvailDates.setBounds(711,440,63,29);
@@ -184,8 +184,8 @@ public final class ViewHotelUI extends JBlackPanel
             add(lblGuestName);
             add(lblReserveDeluxe);
             add(lblCheckInAndOut);
-            add(lblReservationPrice);
-            add(lblReservationPricePerNight);
+            add(lblResPrice);
+            add(lblResPricePerNight);
             
             add(cmbHotels);
             add(cmbAvailDates);

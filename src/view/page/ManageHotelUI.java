@@ -47,8 +47,8 @@ public final class ManageHotelUI extends JBlackPanel
             private JCommonTextField txtChangePrice;
             private JCommonTextField txtChangeRate;
             
-            private JCommonComboBox<String> cmbHotelList;
-            private JCommonComboBox<Integer> cmbStandardList; //TODO Change the <> type;
+            private JCommonComboBox<String> cmbHotels;
+            private JCommonComboBox<Integer> cmbStandardCnt; //TODO change to text field
             private JCommonComboBox<Integer> cmbDeluxeList;
             private JCommonComboBox<Integer> cmbExecutiveList;
             private JCommonComboBox<String> cmbReservationList;
@@ -99,9 +99,9 @@ public final class ManageHotelUI extends JBlackPanel
                 this.lblChangeRate = new JCommonLabel("Change rate of night:",0,false);
                 this.lblErrorMessage = new JErrorLabel();
                 
-                this.cmbHotelList = new JCommonComboBox<String>();
+                this.cmbHotels = new JCommonComboBox<String>();
                 this.txtChangeName = new JCommonTextField();
-                this.cmbStandardList = new JCommonComboBox<Integer>();
+                this.cmbStandardCnt = new JCommonComboBox<Integer>();
                 this.cmbDeluxeList = new JCommonComboBox<Integer>();
                 this.cmbExecutiveList = new JCommonComboBox<Integer>();
                 this.txtChangePrice = new JCommonTextField();
@@ -154,18 +154,18 @@ public final class ManageHotelUI extends JBlackPanel
                 lblChangeRate.setBounds(468,751,458,38);
                 add(lblChangeRate);
 
-                //TODO Initialize the cmbHotelList;
-                cmbHotelList.setBounds(673,300,341,30);
-                add(cmbHotelList);
-                componentHashMap.put("cmbHotelList", cmbHotelList);
+                //TODO Initialize the cmbHotels;
+                cmbHotels.setBounds(673,300,341,30);
+                add(cmbHotels);
+                componentHashMap.put("cmbHotels", cmbHotels);
 
                 txtChangeName.setBounds(998,389,279,30);
                 add(txtChangeName);
                 componentHashMap.put("txtChangeName", txtChangeName);
 
-                cmbStandardList.setBounds(998,449,89,30);
-                add(cmbStandardList);
-                componentHashMap.put("cmbStandardList", cmbStandardList);
+                cmbStandardCnt.setBounds(998,449,89,30);
+                add(cmbStandardCnt);
+                componentHashMap.put("cmbStandardCnt", cmbStandardCnt);
 
                 cmbDeluxeList.setBounds(998,508,89,30);
                 add(cmbDeluxeList);
