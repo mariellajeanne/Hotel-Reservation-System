@@ -1,16 +1,36 @@
-View
-    shows GUI
+view
+    pages
+        contains set ups
+        contains adders
+        contains getters (hashmap / array list of components if applicable)
+        contains updaters
+        
+    utils
+        setup
+            contains creators
 
-Controllers
+controllers
     contains action listeners
-    calls services to manipulate models
-    calls the page manager to update ui
+    adds action listeners
+    [call] services
 
-Services
-    manipulates models
+services
+    contains manipulators
+    [call] models
 
-Models
-    getters and setters
+models
+    contains getters
+    contains setters
+
+managers
+    EventManager
+        adds action listeners to components (one page per function)
+        [call] pages
+        [call] controllers
+    PageManager
+        contains the main frame
+        contains functions that set major panel to visible vs. invisible?
+        [call] pages
 
 
 
