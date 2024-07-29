@@ -8,9 +8,11 @@
 package controller.page;
 
 import javax.swing.*;
+
+import controller.error.CreateHotelER;
 import model.Database;
 import model.Hotel;
-import service.error.CreateHotelER;
+import view.frame.MainFrameUI;
 import view.page.CreateHotelUI;
 
 /**
@@ -25,19 +27,8 @@ public class CreateHotelCO
         private static CreateHotelCO chCO; // The single instance of the class.
         private static CreateHotelUI chUI; // The create hotel UI.
         private static CreateHotelER chER; // The create hotel error handler.
+        private static MainFrameUI mfUI;   // The main frame UI.
         private static Database db;        // The database.
-
-        JTextField txtName;
-
-        JComboBox<Integer> cmbStandard;
-        JComboBox<Integer> cmbDeluxe;
-        JComboBox<Integer> cmbExecutive;
-
-        JTextField txtPrice;
-
-        JTextField txtErrorMessage;
-
-        JButton btnCreate;
 
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
@@ -50,6 +41,7 @@ public class CreateHotelCO
         {
             chUI = CreateHotelUI.getInstance();
             chER = CreateHotelER.getInstance();
+            mfUI = MainFrameUI.getInstance();
             db = Database.getInstance();
 
             handleCreateHotel();
@@ -97,23 +89,20 @@ public class CreateHotelCO
                     if (!errorMessage.equals(""))
                         chUI.setErrorMessage(errorMessage);
 
-                    // Creates the hotel if there was no error.
+                    
                     else
                     {
+                        // Creates the hotel if there was no error.
                         Hotel h = new Hotel(name,
                         Double.parseDouble(price),
                         Integer.parseInt(standard),
                         Integer.parseInt(deluxe),
                         Integer.parseInt(executive));
-
                         db.addHotel(h);
 
-                        // TODO Update UI
+                        // Updates the UI accordingly.
+                        mfUI.openPage("HOTEL_HUB");
                 }
             });
         }
-
-    /* -------------------------------------------------------------------------- */
-    /*                                  SERVICES                                  */
-    /* -------------------------------------------------------------------------- */
 }

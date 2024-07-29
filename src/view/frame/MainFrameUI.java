@@ -8,6 +8,7 @@
 package view.frame;
 
 import javax.swing.*;
+import model.Database;
 import view.page.*;
 
 /**
@@ -26,6 +27,8 @@ public class MainFrameUI extends JFrame
         private static HotelHubUI hhUI;         // The hotel hub UI.
         private static ManageHotelUI mhUI;      // The manage hotel UI.
         private static ViewHotelUI vhUI;        // The view hotel UI.
+
+        private static Database db;             // The database.
 
         private static String currentPage;      // The current page.
 
@@ -75,16 +78,48 @@ public class MainFrameUI extends JFrame
         {
             closePage();
 
+            // Sets the default hotel, reservation, and room.
+            if (!db.getHotels().isEmpty() && !page.equals(currentPage))
+            {
+                db.setHotel(db.getHotels().get(0));
+                db.setRoom(db.getHotel().getRooms().get(0));
+
+                if (!db.getRoom().getReservations().isEmpty())
+                    db.setReservation(db.getRoom().getReservations().get(0));
+            }
+
+            // Opens each page.
             switch (page)
             {
-                case "BOOK_RESERVATION" -> {add(brUI);}
-                case "CREATE_HOTEL"     -> {add(chUI);}
-                case "HOTEL_HUB"        -> {add(hhUI);}
-                case "MANAGE_HOTEL"     -> {add(mhUI);}
-                case "VIEW_HOTEL"       -> {add(vhUI);}
+                case "BOOK_RESERVATION" ->
+                {
+                    brUI.updateValues();
+                    add(brUI);
+                }
+                case "CREATE_HOTEL" -> 
+                {
+                    chUI.updateValues();
+                    add(chUI);
+                }
+                case "HOTEL_HUB" ->
+                {
+                    hhUI.updateValues();
+                    add(hhUI);
+                }
+                case "MANAGE_HOTEL" ->
+                {
+                    mhUI.updateValues();
+                    add(mhUI);
+                }
+                case "VIEW_HOTEL" ->
+                {
+                    vhUI.updateValues();
+                    add(vhUI);
+                }
                 default -> {}
             }
 
+            repaint();
             currentPage = page;
         }
 
@@ -93,8 +128,10 @@ public class MainFrameUI extends JFrame
          * 
          * @param page {String} The page to close.
          */
-        public void closePage()
+        private void closePage()
         {
+            db.setHotel(null);
+
             switch (currentPage)
             {
                 case "BOOK_RESERVATION" -> {remove(brUI);}
@@ -104,5 +141,14 @@ public class MainFrameUI extends JFrame
                 case "VIEW_HOTEL"       -> {remove(vhUI);}
                 default -> {}
             }
+        }
+        
+        /**
+         * Re-opens the current page.
+         */
+        public void reopenPage()
+        {
+            closePage();
+            openPage(currentPage);
         }
 }

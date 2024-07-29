@@ -24,6 +24,7 @@ public class JErrorLabel extends JLabel
          */
         public JErrorLabel()
         {
+            setText("");
             setFont(new Font("Arial", Font.PLAIN, 20));
             setForeground(Color.decode("#ffa0a0"));
         }

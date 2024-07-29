@@ -53,4 +53,25 @@ public abstract class JBlackPanel extends JPanel
          * Adds components to the component hashmap.
          */
         protected abstract void addCompsToHashMap();
+
+    /* -------------------------------------------------------------------------- */
+    /*                                   GETTERS                                  */
+    /* -------------------------------------------------------------------------- */
+
+        /**
+         * Returns a component given the component ID.
+         *
+         * @param componentID   {String}    The component ID.
+         * @return              {JComponent}
+         */
+        public abstract JComponent getComp(String componentID);
+
+    /* -------------------------------------------------------------------------- */
+    /*                                MANIPULATORS                                */
+    /* -------------------------------------------------------------------------- */
+
+        /**
+         * Updates the page's component values.
+         */
+        public abstract void updateValues();
 }

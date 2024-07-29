@@ -48,7 +48,7 @@ public class ManageHotelER
         }
 
     /* -------------------------------------------------------------------------- */
-    /*                                  SERVICES                                  */
+    /*                                MAIN CHECKERS                               */
     /* -------------------------------------------------------------------------- */
 
         /**
@@ -66,6 +66,101 @@ public class ManageHotelER
             else if (!iER.checkNameAvailability(name))
                 return "Hotel name already exists.";
             return "";
+        }
+
+        /**
+         * Checks all possible errors for adding rooms.
+         * 
+         * @param h     {Hotel}     The hotel.
+         * @param n     {String}    The number of rooms to be added.
+         * @return      {String}
+         */
+        public String checkAddRooms(Hotel h, String n)
+        {
+            if (!iER.checkIntChars(n))
+                return "Invalid number input.";
+            else if (checkMaxMinRoomCnt(h, true))
+                return "Maximum number of rooms reached.";
+            else if (!checkAddedValue(h, n))
+                return "Number range must be 1-" + (50 - h.getRooms().size());
+            return "";
+        }
+
+        /**
+         * Checks all possible errors for deleting rooms.
+         * 
+         * @param h     {Hotel}     The hotel.
+         * @param type  {String}    The room type.
+         * @param n     {String}    The number of rooms to be deleted.
+         * @return      {String}
+         */
+        public String checkDeleteRooms(Hotel h, String type, String n)
+        {
+            if (!iER.checkIntChars(n))
+                return "Invalid number input.";
+            else if (checkMaxMinRoomCnt(h, false))
+                return "Minimum number of rooms reached.";
+            else if (!checkDeletedValue(h, type, n))
+            {
+                if (h.getRooms().size() == h.getNumOfAvailRooms(type))
+                    return "Number range must be 1-" + ((h.getNumOfAvailRooms(type) - 1));
+                else
+                    return "Number range must be 1-" + (h.getNumOfAvailRooms(type));
+            }
+            return "";
+        }
+
+    /* -------------------------------------------------------------------------- */
+    /*                               HELPER CHECKERS                              */
+    /* -------------------------------------------------------------------------- */
+
+        /**
+         * Checks if the number of rooms to be added is valid.
+         * 
+         * @param h     {Hotel}     The hotel.
+         * @param n     {String}    The number of rooms to be added.
+         * @return      {boolean}
+         */
+        private boolean checkAddedValue(Hotel h, String n)
+        {
+            int cnt = Integer.parseInt(n);
+
+            return cnt + h.getRooms().size() <= 50 &&
+                   cnt >= 1;
+        }
+
+        /**
+         * Checks if the number of rooms to be deleted is valid.
+         * 
+         * @param h     {Hotel}     The hotel.
+         * @param type  {String}    The room type.
+         * @param n     {String}    The number of rooms to be added.
+         * @return      {boolean}
+         */
+        private boolean checkDeletedValue(Hotel h, String type, String n)
+        {
+            int deleteCnt = Integer.parseInt(n);
+            int typeCnt =  h.getNumOfAvailRooms(type);
+
+            if (h.getRooms().size() == typeCnt)
+                return deleteCnt >= 1 && deleteCnt <= typeCnt - 1;
+            else
+                return deleteCnt >= 1 && deleteCnt <= typeCnt;
+        }
+
+        /**
+         * Checks if the number of existing rooms reached maximum/minimum.
+         * 
+         * @param h     {Hotel}     The hotel.
+         * @param isMax {boolean}   Determines if the max/min room count is to be found.
+         * @return      {boolean}
+         */
+        private boolean checkMaxMinRoomCnt(Hotel h, boolean isMax)
+        {
+            if (isMax)
+                return h.getRooms().size() == 50;
+            else
+                return h.getRooms().size() == 1;
         }
 
         /**
@@ -87,9 +182,9 @@ public class ManageHotelER
         }
 
         /**
-         * Checks all possible errors for changing the date rate.
+         * Checks all possible errors for changing the night rate.
          * 
-         * @param   rate    {String}    The date rate.
+         * @param   rate    {String}    The night rate.
          * @return          {String}
          */
         public String checkChangeRate(String rate)
@@ -118,10 +213,10 @@ public class ManageHotelER
         }
 
         /**
-         * Checks the validity of the inputted date rate.
+         * Checks the validity of the inputted night rate.
          * 
-         * @return  rate    {String}    The date rate.
-         * @return          {boolean}
+         * @param rate  {String}    The night rate.
+         * @return      {boolean}
          */
         private boolean checkRateValue(String rate)
         {

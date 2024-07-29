@@ -2,7 +2,7 @@
  * @author Stephen M. Borja
  * @author Mariella Jeanne A. Dellosa
  * 
- * Controls the menu.
+ * Controls the main menu.
  */
 
 package controller.page;
@@ -46,6 +46,8 @@ public class HotelHubCO
     /* -------------------------------------------------------------------------- */
     /*                               EVENT LISTENERS                              */
     /* -------------------------------------------------------------------------- */
+
+        
 
     /* -------------------------------------------------------------------------- */
     /*                                  SERVICES                                  */

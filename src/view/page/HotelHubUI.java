@@ -10,6 +10,7 @@ package view.page;
 import java.awt.*;
 import java.util.HashMap;
 import javax.swing.*;
+import model.Database;
 import view.util.*;
 
 /**
@@ -25,6 +26,7 @@ public final class HotelHubUI extends JBlackPanel
         /* Class instances */
 
             private static HotelHubUI hhUI;
+            private static Database db;
 
         /* Component hashmap */
         
@@ -51,6 +53,8 @@ public final class HotelHubUI extends JBlackPanel
          */
         private HotelHubUI()
         {
+            db = Database.getInstance();
+
             initializeComps();
             configureComps();
             addCompsToPanel();
@@ -68,6 +72,7 @@ public final class HotelHubUI extends JBlackPanel
         protected void initializeComps()
         {
             componentHashMap  = new HashMap<>();
+            
             pnlTitle = new JLabel("Hotel Hub");
             
             lblAuthor1 = new JCommonLabel("Stephen M. Borja", 0, false);
@@ -95,8 +100,11 @@ public final class HotelHubUI extends JBlackPanel
 
             btnCreateHotel.setLocation(785,590);
             btnViewHotel.setLocation(785, 670);
+            btnViewHotel.setEnabled(!db.getHotels().isEmpty());
             btnManageHotel.setLocation(785, 750);
+            btnManageHotel.setEnabled(!db.getHotels().isEmpty());
             btnBook.setLocation(785,830);
+            btnBook.setEnabled(!db.getHotels().isEmpty());
         }
 
         /**
@@ -150,8 +158,22 @@ public final class HotelHubUI extends JBlackPanel
          * @param componentID   {String}    The component ID.
          * @return              {JComponent}
          */
+        @Override
         public JComponent getComp(String componentID)
         {
             return componentHashMap.get(componentID);
+        }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                MANIPULATORS                                */
+    /* -------------------------------------------------------------------------- */
+
+        /**
+         * Updates the page's component values.
+         */
+        @Override
+        public void updateValues()
+        {   
+            hhUI = new HotelHubUI();
         }
 }

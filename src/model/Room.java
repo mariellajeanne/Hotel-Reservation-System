@@ -8,6 +8,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * The room model class.
@@ -48,6 +49,17 @@ public class Room
     /* -------------------------------------------------------------------------- */
     /*                                   GETTERS                                  */
     /* -------------------------------------------------------------------------- */
+
+        /**
+         * Returns the room types.
+         * 
+         * @return {String[]}
+         */
+        public static String[] getRoomTypes()
+        {
+            String[] roomTypes = {"STANDARD", "DELUXE", "EXECUTIVE"};
+            return roomTypes;
+        }
 
         /**
          * Returns the room number.
@@ -113,6 +125,53 @@ public class Room
         public ArrayList<Integer> getReservedDates()
         {
             return this.reservedDates;
+        }
+
+        /**
+         * Returns the codes of the room's reservations.
+         * 
+         * @return {String[]}
+         */
+        public String[] getReservationCodes()
+        {
+            ArrayList<String> resCodesList = new ArrayList<>();
+
+            for (Reservation res : reservations)
+            {
+                resCodesList.add("Room " + num + ": " + res.getCheckIn() +
+                    "-" + res.getCheckOut());
+            }
+
+            String[] resCodesArray = new String[resCodesList.size()];
+            resCodesList.toArray(resCodesArray);
+
+            return resCodesArray;
+        }
+
+        /**
+         * Returns the nights when the room is not reserved.
+         * 
+         * @return {Integer[]}
+         */
+        public Integer[] getAvailableNights()
+        {
+            // Gets all the reservation nights.
+            ArrayList<Integer> availNightsList =
+            new ArrayList<>(Arrays.asList(Reservation.getReservationDates(true)));
+
+            // Loops through each reservation.
+            for (Reservation r : reservations)
+            {
+                // Removes all the reserved nights.
+                for (int i = r.getCheckIn(); i < r.getCheckOut(); i++)
+                    availNightsList.remove(i);
+            }
+
+            // Stores the available nights list in an array.
+            Integer[] availNightsArray = new Integer[availNightsList.size()];
+            availNightsList.toArray(availNightsArray);
+
+            return availNightsArray;
         }
 
     /* -------------------------------------------------------------------------- */

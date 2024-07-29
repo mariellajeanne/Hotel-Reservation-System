@@ -47,7 +47,7 @@ public class CreateHotelER
         }
 
     /* -------------------------------------------------------------------------- */
-    /*                                  SERVICES                                  */
+    /*                                MAIN CHECKERS                               */
     /* -------------------------------------------------------------------------- */
 
         /**
@@ -79,6 +79,10 @@ public class CreateHotelER
             return "";
         }
 
+    /* -------------------------------------------------------------------------- */
+    /*                               HELPER CHECKERS                              */
+    /* -------------------------------------------------------------------------- */
+
         /**
          * Checks the number of total rooms to be added.
          * 
@@ -92,6 +96,6 @@ public class CreateHotelER
             int sum =   Integer.parseInt(standard) + Integer.parseInt(deluxe) +
                         Integer.parseInt(executive);
 
-            return  sum <= 50 && sum > 0;
+            return  sum <= 50 && sum >= 1;
         }
 }

@@ -9,6 +9,8 @@ package view.page;
 
 import java.util.HashMap;
 import javax.swing.*;
+import model.*;
+import view.frame.MainFrameUI;
 import view.util.*;
 
 /**
@@ -23,6 +25,8 @@ public final class ManageHotelUI extends JBlackPanel
         /* Class instances */
 
             private static ManageHotelUI mhUI;
+            private static MainFrameUI mfUI;
+            private static Database db;
 
         /* Component hashmap */
 
@@ -44,31 +48,29 @@ public final class ManageHotelUI extends JBlackPanel
             private JErrorLabel lblErrorMessage;
 
             private JCommonTextField txtChangeName;
+            private JCommonTextField txtStandardCnt;
+            private JCommonTextField txtDeluxeCnt;
+            private JCommonTextField txtExecutiveCnt;
             private JCommonTextField txtChangePrice;
             private JCommonTextField txtChangeRate;
-            
+
             private JCommonComboBox<String> cmbHotels;
-            private JCommonComboBox<Integer> cmbStandardCnt; //TODO change to text field
-            private JCommonComboBox<Integer> cmbDeluxeList;
-            private JCommonComboBox<Integer> cmbExecutiveList;
-            private JCommonComboBox<String> cmbReservationList;
-            private JCommonComboBox<String> cmbDateList;
+            private JCommonComboBox<String> cmbReservations;
+            private JCommonComboBox<String> cmbNights;
             
             private JSmallButton btnDeleteHotel;
             private JSmallButton btnSaveName;
             private JSmallButton btnAddStandard;
-            private JSmallButton btnDeleteStandard;
             private JSmallButton btnAddDeluxe;
-            private JSmallButton btnDeleteDeluxe;
             private JSmallButton btnAddExecutive;
+            private JSmallButton btnDeleteStandard;
+            private JSmallButton btnDeleteDeluxe;
             private JSmallButton btnDeleteExecutive;
             private JSmallButton btnSavePrice;
             private JSmallButton btnDeleteReservation;
             private JSmallButton btnSaveRate;
 
             private JBigButton btnOK;
-            
-            private final String[] dates;
 
    /* -------------------------------------------------------------------------- */
    /*                                 CONSTRUCTOR                                */
@@ -79,172 +81,13 @@ public final class ManageHotelUI extends JBlackPanel
          */
         private ManageHotelUI()
         {
-            /* Initialization */
-
-                this.dates = new String[30];
-                for (int i = 0; i < 30; i++)
-                    this.dates[i] = String.valueOf(i + 1) + "-" + String.valueOf(i + 2);
-
-                this.componentHashMap  = new HashMap<String, JComponent>();
-                this.pnlTitle = new JTitlePanel("Manage Hotel");
-                this.btnBack = new JBackButton();
-                
-                this.lblHotel = new JCommonLabel("HOTEL:",1,true);
-                this.lblChangeName = new JCommonLabel("Change name:",0,false);
-                this.lblActionStandard = new JCommonLabel("Add/delete standard rooms:",0,false);
-                this.lblActionDeluxe = new JCommonLabel("Add/delete deluxe rooms:",0,false);
-                this.lblActionExecutive = new JCommonLabel("Add/delete executive rooms:",0,false);
-                this.lblChangePrice = new JCommonLabel("Change base price:",0,false);
-                this.lblRemoveReservation = new JCommonLabel("Remove reservation:",0,false);
-                this.lblChangeRate = new JCommonLabel("Change rate of night:",0,false);
-                this.lblErrorMessage = new JErrorLabel();
-                
-                this.cmbHotels = new JCommonComboBox<String>();
-                this.txtChangeName = new JCommonTextField();
-                this.cmbStandardCnt = new JCommonComboBox<Integer>();
-                this.cmbDeluxeList = new JCommonComboBox<Integer>();
-                this.cmbExecutiveList = new JCommonComboBox<Integer>();
-                this.txtChangePrice = new JCommonTextField();
-                this.cmbReservationList = new JCommonComboBox<String>();
-                this.cmbDateList = new JCommonComboBox<String>(dates);
-                this.txtChangeRate = new JCommonTextField();
-                
-                this.btnDeleteHotel = new JSmallButton("Delete", 1);
-                this.btnSaveName = new JSmallButton("Save", 1);
-                this.btnAddStandard = new JSmallButton("Add", 0);
-                this.btnDeleteStandard = new JSmallButton("Delete", 1);
-                this.btnAddDeluxe = new JSmallButton("Add", 0);
-                this.btnDeleteDeluxe = new JSmallButton("Delete", 1);
-                this.btnAddExecutive = new JSmallButton("Add", 0);
-                this.btnDeleteExecutive = new JSmallButton("Delete", 1);
-                this.btnSavePrice = new JSmallButton("Save", 1);
-                this.btnDeleteReservation = new JSmallButton("Delete", 1);
-                this.btnSaveRate = new JSmallButton("Save", 1);
-                
-                this.btnOK = new JBigButton("OK");
-
-            /* Configuration and Addition to Panel and HashMap */
-            
-                add(pnlTitle);
-
-                add(btnBack);
-                componentHashMap.put("btnBack", btnBack);
-
-                lblHotel.setBounds(470,299,lblHotel.getPreferredSize().width,31);
-                add(lblHotel);
-
-                lblChangeName.setBounds(470,389,lblChangeName.getPreferredSize().width,38);
-                add(lblChangeName);
-
-                lblActionStandard.setBounds(468,449,488,30);
-                add(lblActionStandard);
-
-                lblActionDeluxe.setBounds(468,508,452,31);
-                add(lblActionDeluxe);
-
-                lblActionExecutive.setBounds(468,568,503,31);
-                add(lblActionExecutive);
-
-                lblChangePrice.setBounds(468,628,343,39);
-                add(lblChangePrice);
-
-                lblRemoveReservation.setBounds(468,691,363,30);
-                add(lblRemoveReservation);
-
-                lblChangeRate.setBounds(468,751,458,38);
-                add(lblChangeRate);
-
-                //TODO Initialize the cmbHotels;
-                cmbHotels.setBounds(673,300,341,30);
-                add(cmbHotels);
-                componentHashMap.put("cmbHotels", cmbHotels);
-
-                txtChangeName.setBounds(998,389,279,30);
-                add(txtChangeName);
-                componentHashMap.put("txtChangeName", txtChangeName);
-
-                cmbStandardCnt.setBounds(998,449,89,30);
-                add(cmbStandardCnt);
-                componentHashMap.put("cmbStandardCnt", cmbStandardCnt);
-
-                cmbDeluxeList.setBounds(998,508,89,30);
-                add(cmbDeluxeList);
-                componentHashMap.put("cmbDeluxeList", cmbDeluxeList);
-
-                cmbExecutiveList.setBounds(998,568,89,30);
-                add(cmbExecutiveList);
-                componentHashMap.put("cmbExecutiveList", cmbExecutiveList);
-
-                txtChangePrice.setBounds(998,628,180,30);
-                add(txtChangePrice);
-                componentHashMap.put("txtChangePrice", txtChangePrice);
-
-                //TODO Initialize this
-                cmbReservationList.setBounds(998,691,279,30);
-                add(cmbReservationList);
-                componentHashMap.put("cmbReservationList", cmbReservationList);
-
-                cmbDateList.setBounds(998,751,89,30);
-                add(cmbDateList);
-                componentHashMap.put("cmbDateList", cmbDateList);
-
-                txtChangeRate.setBounds(1190,751,89,30);
-                add(txtChangeRate);
-                componentHashMap.put("txtChangeRate", txtChangeRate);
-
-                btnDeleteHotel.setLocation(1328,299);
-                add(btnDeleteHotel);
-                componentHashMap.put("btnDeleteHotel", btnDeleteHotel);
-
-                btnSaveName.setLocation(1328,389);
-                add(btnSaveName);
-                componentHashMap.put("btnSaveName", btnSaveName);
-
-                btnDeleteStandard.setLocation(1328,450);
-                add(btnDeleteStandard);
-                componentHashMap.put("btnDeleteStandard", btnDeleteStandard);
-
-                btnDeleteDeluxe.setLocation(1328,509);
-                add(btnDeleteDeluxe);
-                componentHashMap.put("btnDeleteDeluxe", btnDeleteDeluxe);
-
-                btnDeleteExecutive.setLocation(1328,569);
-                add(btnDeleteExecutive);
-                componentHashMap.put("btnDeleteExecutive", btnDeleteExecutive);
-
-                btnSavePrice.setLocation(1328,628);
-                add(btnSavePrice);
-                componentHashMap.put("btnSavePrice", btnSavePrice);
-
-                btnDeleteReservation.setLocation(1328,691);
-                add(btnDeleteReservation);
-                componentHashMap.put("btnDeleteReservation", btnDeleteReservation);
-
-                btnSaveRate.setLocation(1328,749);
-                add(btnSaveRate);
-                componentHashMap.put("btnSaveRate", btnSaveRate);
-
-                btnAddStandard.setLocation(1189,450);
-                add(btnAddStandard);
-                componentHashMap.put("btnAddStandard", btnAddStandard);
-
-                btnAddDeluxe.setLocation(1189,509);
-                add(btnAddDeluxe);
-                componentHashMap.put("btnAddDeluxe", btnAddDeluxe);
-
-                btnAddExecutive.setLocation(1189,569);
-                add(btnAddExecutive);
-                componentHashMap.put("btnAddExecutive", btnAddExecutive);
-
-                btnOK.setBounds(785,925,330,55);
-                add(btnOK);
-                componentHashMap.put("btnOK", btnOK);
-
-                lblErrorMessage.setBounds(468,830, lblErrorMessage.getPreferredSize().width,
-                    lblErrorMessage.getPreferredSize().height);
-                add(lblErrorMessage);
-                lblErrorMessage.setVisible(false);
-                componentHashMap.put("lblErrorMessage", lblErrorMessage);
+            db = Database.getInstance();
+            mfUI = MainFrameUI.getInstance();
+     
+            initializeComps();
+            configureComps();
+            addCompsToPanel();
+            addCompsToHashMap();
         }
 
     /* -------------------------------------------------------------------------- */
@@ -257,7 +100,45 @@ public final class ManageHotelUI extends JBlackPanel
         @Override
         protected void initializeComps()
         {
+            componentHashMap  = new HashMap<>();
+            
+            pnlTitle = new JTitlePanel("Manage Hotel");
+            btnBack = new JBackButton();
+            
+            lblHotel = new JCommonLabel("HOTEL:",1,true);
+            lblChangeName = new JCommonLabel("Change name:",0,false);
+            lblActionStandard = new JCommonLabel("Add/delete standard rooms:",0,false);
+            lblActionDeluxe = new JCommonLabel("Add/delete deluxe rooms:",0,false);
+            lblActionExecutive = new JCommonLabel("Add/delete executive rooms:",0,false);
+            lblChangePrice = new JCommonLabel("Change base price:",0,false);
+            lblRemoveReservation = new JCommonLabel("Remove reservation:",0,false);
+            lblChangeRate = new JCommonLabel("Change rate of night:",0,false);
+            lblErrorMessage = new JErrorLabel();
 
+            txtChangeName = new JCommonTextField();
+            txtStandardCnt = new JCommonTextField();
+            txtDeluxeCnt = new JCommonTextField();
+            txtExecutiveCnt = new JCommonTextField();
+            txtChangePrice = new JCommonTextField();
+            txtChangeRate = new JCommonTextField();
+        
+            cmbHotels = new JCommonComboBox<>(db.getHotelNames());
+            cmbReservations = new JCommonComboBox<>(db.getHotel().getReservationCodes());
+            cmbNights = new JCommonComboBox<>(Reservation.getReservationNights());
+            
+            btnDeleteHotel = new JSmallButton("Delete", 1);
+            btnSaveName = new JSmallButton("Save", 1);
+            btnAddStandard = new JSmallButton("Add", 0);
+            btnDeleteStandard = new JSmallButton("Delete", 1);
+            btnAddDeluxe = new JSmallButton("Add", 0);
+            btnDeleteDeluxe = new JSmallButton("Delete", 1);
+            btnAddExecutive = new JSmallButton("Add", 0);
+            btnDeleteExecutive = new JSmallButton("Delete", 1);
+            btnSavePrice = new JSmallButton("Save", 1);
+            btnDeleteReservation = new JSmallButton("Delete", 1);
+            btnSaveRate = new JSmallButton("Save", 1);
+            
+            btnOK = new JBigButton("OK");
         }
 
         /**
@@ -266,7 +147,42 @@ public final class ManageHotelUI extends JBlackPanel
         @Override
         protected void configureComps()
         {
-
+            cmbHotels.setBounds(673,300,341,30);
+            cmbNights.setBounds(998,751,89,30);
+            cmbReservations.setBounds(998,691,279,30);
+            
+            lblHotel.setBounds(470,299,lblHotel.getPreferredSize().width,31);
+            lblChangeName.setBounds(470,389,lblChangeName.getPreferredSize().width,38);
+            lblActionStandard.setBounds(468,449,488,30);
+            lblActionDeluxe.setBounds(468,508,452,31);
+            lblActionExecutive.setBounds(468,568,503,31);
+            lblChangePrice.setBounds(468,628,343,39);
+            lblRemoveReservation.setBounds(468,691,363,30);
+            lblChangeRate.setBounds(468,751,458,38);
+            lblErrorMessage.setBounds(468,830, lblErrorMessage.getPreferredSize().width,
+            lblErrorMessage.getPreferredSize().height);
+            lblErrorMessage.setVisible(false);
+            
+            txtChangeName.setBounds(998,389,279,30);
+            txtStandardCnt.setBounds(998,449,89,30);
+            txtDeluxeCnt.setBounds(998,508,89,30);
+            txtExecutiveCnt.setBounds(998,568,89,30);
+            txtChangePrice.setBounds(998,628,180,30);
+            txtChangeRate.setBounds(1190,751,89,30);
+            
+            btnDeleteHotel.setLocation(1328,299);
+            btnSaveName.setLocation(1328,389);
+            btnAddStandard.setLocation(1189,450);
+            btnAddDeluxe.setLocation(1189,509);
+            btnAddExecutive.setLocation(1189,569);
+            btnDeleteStandard.setLocation(1328,450);
+            btnDeleteDeluxe.setLocation(1328,509);
+            btnDeleteExecutive.setLocation(1328,569);
+            btnDeleteReservation.setLocation(1328,691);
+            btnSavePrice.setLocation(1328,628);
+            btnSaveRate.setLocation(1328,749);
+            
+            btnOK.setBounds(785,925,330,55);
         }
 
         /**
@@ -275,7 +191,43 @@ public final class ManageHotelUI extends JBlackPanel
         @Override
         protected void addCompsToPanel()
         {
-
+            add(pnlTitle);
+            add(btnBack);
+            
+            add(cmbHotels);
+            add(cmbReservations);
+            add(cmbNights);
+            
+            add(lblHotel);
+            add(lblChangeName);
+            add(lblActionStandard);
+            add(lblActionDeluxe);
+            add(lblActionExecutive);
+            add(lblChangePrice);
+            add(lblRemoveReservation);
+            add(lblChangeRate);
+            add(lblErrorMessage);
+            
+            add(txtChangeName);
+            add(txtStandardCnt);
+            add(txtDeluxeCnt);
+            add(txtExecutiveCnt);
+            add(txtChangePrice);
+            add(txtChangeRate);
+            
+            add(btnDeleteHotel);
+            add(btnSaveName);
+            add(btnAddStandard);
+            add(btnAddDeluxe);
+            add(btnAddExecutive);
+            add(btnDeleteStandard);
+            add(btnDeleteDeluxe);
+            add(btnDeleteExecutive);
+            add(btnSavePrice);
+            add(btnDeleteReservation);
+            add(btnSaveRate);
+            
+            add(btnOK);
         }
 
         /**
@@ -284,7 +236,34 @@ public final class ManageHotelUI extends JBlackPanel
         @Override
         protected void addCompsToHashMap()
         {
+            componentHashMap.put("btnBack", btnBack);
 
+            componentHashMap.put("cmbHotels", cmbHotels);
+            componentHashMap.put("cmbReservations", cmbReservations);
+            componentHashMap.put("cmbNights", cmbNights);
+            
+            componentHashMap.put("txtChangeName", txtChangeName);
+            componentHashMap.put("txtStandardCnt", txtStandardCnt);
+            componentHashMap.put("txtDeluxeCnt", txtDeluxeCnt);
+            componentHashMap.put("txtExecutiveCnt", txtExecutiveCnt);
+            componentHashMap.put("txtChangePrice", txtChangePrice);
+            componentHashMap.put("txtChangeRate", txtChangeRate);
+            
+            componentHashMap.put("btnDeleteHotel", btnDeleteHotel);
+            componentHashMap.put("btnSaveName", btnSaveName);
+            componentHashMap.put("btnAddStandard", btnAddStandard);
+            componentHashMap.put("btnAddDeluxe", btnAddDeluxe);
+            componentHashMap.put("btnAddExecutive", btnAddExecutive);
+            componentHashMap.put("btnDeleteStandard", btnDeleteStandard);
+            componentHashMap.put("btnDeleteDeluxe", btnDeleteDeluxe);
+            componentHashMap.put("btnDeleteExecutive", btnDeleteExecutive);
+            componentHashMap.put("btnSavePrice", btnSavePrice);
+            componentHashMap.put("btnDeleteReservation", btnDeleteReservation);
+            componentHashMap.put("btnSaveRate", btnSaveRate);
+            
+            componentHashMap.put("lblErrorMessage", lblErrorMessage);
+            
+            componentHashMap.put("btnOK", btnOK);
         }
 
     /* -------------------------------------------------------------------------- */
@@ -304,13 +283,15 @@ public final class ManageHotelUI extends JBlackPanel
         }
 
         /**
-         * Returns the component hashmap.
+         * Returns a component given the component ID.
          *
-         * @return {HashMap<String, JComponent>}
+         * @param componentID   {String}    The component ID.
+         * @return              {JComponent}
          */
-        public HashMap<String, JComponent> getComp()
+        @Override
+        public JComponent getComp(String componentID)
         {
-            return componentHashMap;
+            return componentHashMap.get(componentID);
         }
 
     /* -------------------------------------------------------------------------- */
@@ -320,20 +301,20 @@ public final class ManageHotelUI extends JBlackPanel
         /**
          * Updates the page's component values.
          */
+        @Override
         public void updateValues()
         {
-            lblErrorMessage.setText("");
-            this.repaint();
+            mhUI = new ManageHotelUI();
         }
 
         /**
-         * Returns a component given the component ID.
-         *
-         * @param componentID   {String}    The component ID.
-         * @return              {JComponent}
+         * Sets the error message.
+         * 
+         * @param text {String} The error message.
          */
-        public JComponent getComp(String componentID)
+        public void setErrorMessage(String text)
         {
-            return componentHashMap.get(componentID);
+            lblErrorMessage.setText(text);
+            repaint();
         }
 }

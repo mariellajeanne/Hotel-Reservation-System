@@ -9,7 +9,7 @@ package view.page;
 
 import java.util.HashMap;
 import javax.swing.*;
-import model.Database;
+import model.*;
 import view.util.*;
 
 /**
@@ -61,6 +61,8 @@ public final class BookReservationUI extends JBlackPanel
          */
         private BookReservationUI()
         {
+            db = Database.getInstance();
+            
             initializeComps();
             configureComps();
             addCompsToPanel();
@@ -78,6 +80,7 @@ public final class BookReservationUI extends JBlackPanel
         protected void initializeComps()
         {
             componentHashMap = new HashMap<>();
+            
             pnlTitle = new JTitlePanel("Book Reservation");
             btnBack = new JBackButton();
             
@@ -93,9 +96,9 @@ public final class BookReservationUI extends JBlackPanel
             txtDiscountCode = new JCommonTextField();
             
             cmbHotels = new JCommonComboBox<>(db.getHotelNames());
-            cmbRoomTypes = new JCommonComboBox<>(db.getRoomTypes());
-            cmbCheckIn = new JCommonComboBox<>(db.getReservationDates(true));
-            cmbCheckOut = new JCommonComboBox<>(db.getReservationDates(false));
+            cmbRoomTypes = new JCommonComboBox<>(Room.getRoomTypes());
+            cmbCheckIn = new JCommonComboBox<>(Reservation.getReservationDates(true));
+            cmbCheckOut = new JCommonComboBox<>(Reservation.getReservationDates(false));
 
             btnBook = new JBigButton("Book");
         }
@@ -198,6 +201,7 @@ public final class BookReservationUI extends JBlackPanel
          * @param componentID   {String}    The component ID.
          * @return              {JComponent}
          */
+        @Override
         public JComponent getComp(String componentID)
         {
             return componentHashMap.get(componentID);
@@ -210,6 +214,7 @@ public final class BookReservationUI extends JBlackPanel
         /**
          * Updates the page's component values.
          */
+        @Override
         public void updateValues()
         {
             brUI = new BookReservationUI();
@@ -223,6 +228,6 @@ public final class BookReservationUI extends JBlackPanel
         public void setErrorMessage(String text)
         {
             lblErrorMessage.setText(text);
-            this.repaint();
+            repaint();
         }
 }

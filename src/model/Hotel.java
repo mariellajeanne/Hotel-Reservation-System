@@ -82,9 +82,39 @@ public class Hotel
          * @param date {int} The date.
          * @return     {double}
          */
-        public double getDateRate(int date)
+        public double getNightRate(int date)
         {
             return this.rates[date - 1];
+        }
+
+        /**
+         * Returns the 
+         * @return
+         */
+
+        /**
+         * Returns the reservation codes of all rooms.
+         * 
+         * @return {String[]}
+         */
+        public String[] getReservationCodes()
+        {
+            ArrayList<String> resCodesList = new ArrayList<>();
+            int count = 0;
+
+            for (Room r : rooms)
+            {
+                ArrayList<String> roomResCodes =
+                new ArrayList<>(Arrays.asList(r.getReservationCodes()));
+                resCodesList.addAll(roomResCodes);
+
+                count += r.getReservations().size();
+            }
+
+            String[] resCodesArray = new String[count];
+            resCodesList.toArray(resCodesArray);
+
+            return resCodesArray;
         }
 
         /**
@@ -98,16 +128,56 @@ public class Hotel
         }
 
         /**
-         * Returns the number of rooms without reservations.
+         * Returns an array of the available rooms.
+         * 
+         * @return {Integer[]}
+         */
+        public Integer[] getAvailableRooms()
+        {
+            int numOfAvailRooms = getNumOfAvailRooms("STANDARD") + 
+                getNumOfAvailRooms("DELUXE") +
+                getNumOfAvailRooms("EXECUTIVE");
+
+            Integer[] availRooms = new Integer[numOfAvailRooms];
+
+            for (int i = 0; i < numOfAvailRooms; i++)
+            {
+                if (rooms.get(i).getReservations().isEmpty())
+                    availRooms[i] = rooms.get(i).getNumber();
+            }
+
+            return availRooms;
+        }
+
+        /**
+         * Returns the total number of rooms without reservations.
+         * 
+         * @return {int}
+         */
+        public int getNumOfAvailRooms()
+        {
+            int i = 0;
+
+            for (Room r : rooms)
+            {
+                if (r.getReservations().isEmpty())
+                    i++;
+            }
+
+            return i;
+        }
+
+        /**
+         * Returns the number of rooms of a certain type without reservations.
          * 
          * @param   type    {String}    The room type.
          * @return          {int}
          */
-        public int getAvailablExecutives(String type)
+        public int getNumOfAvailRooms(String type)
         {
             int i = 0;
 
-            for (Room r : this.rooms)
+            for (Room r : rooms)
             {
                 if (r.getType().equals(type) &&
                     r.getReservations().isEmpty())
@@ -117,6 +187,33 @@ public class Hotel
             return i;
         }
 
+        /**
+         * Returns the total number of rooms booked.
+         * 
+         * @return {int}
+         */
+        public int getNumOfBookedRooms()
+        {
+            return rooms.size() - getNumOfAvailRooms();
+        }
+
+        /**
+         * Returns the hotel's total estimated earnings.
+         * 
+         * @return {double}
+         */
+        public double getTotalEarnings()
+        {
+            double sum = 0;
+
+            for (Room r : rooms)
+            {
+                for (int i = 0; i < r.getReservations().size(); i++)
+                    sum += r.getReservations().get(i).getTotalPrice();
+            }
+
+            return sum;
+        }
 
     /* -------------------------------------------------------------------------- */
     /*                                   SETTERS                                  */
@@ -141,9 +238,9 @@ public class Hotel
         {
             this.basePrice = basePrice;
 
-            for (int i = 0; i < this.rooms.size(); i++)
+            for (int i = 0; i < rooms.size(); i++)
             {
-                this.rooms.get(i).setNightlyPrice(basePrice);
+                rooms.get(i).setNightlyPrice(basePrice);
             }
         }
 
@@ -153,7 +250,7 @@ public class Hotel
          * @param date {int} The date.
          * @param rate {double} The rate.
          */
-        public void setDateRate(int date, double rate)
+        public void setNightRate(int date, double rate)
         {
             this.rates[date - 1] = rate;
         }

@@ -15,6 +15,7 @@ import model.Room;
 import service.error.BookReservationER;
 import view.frame.MainFrameUI;
 import view.page.BookReservationUI;
+import java.awt.*;
 
 /**
  * The book reservation controller.
@@ -25,11 +26,11 @@ public class BookReservationCO
     /*                                 ATTRIBUTES                                 */
     /* -------------------------------------------------------------------------- */
 
-    private static BookReservationCO brCO; // The single instance of the class.
-    private static BookReservationER brER; // The book reservation error handler.
-    private static BookReservationUI brUI; // The book reservation UI.
-    private static MainFrameUI mfUI;       // The main frame UI.
-    private static Database db;            // The database.
+        private static BookReservationCO brCO; // The single instance of the class.
+        private static BookReservationER brER; // The book reservation error handler.
+        private static BookReservationUI brUI; // The book reservation UI.
+        private static MainFrameUI mfUI;       // The main frame UI.
+        private static Database db;            // The database.
 
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
@@ -74,7 +75,7 @@ public class BookReservationCO
                 /* Setup */
 
                     // Gets the inputted details.
-                    String guest = (String) txtGuest.getText();
+                    String guest = (String) (JTextField)brUI.getComp("txtGuest").getText();
                     Hotel hotel = db.getHotel((String) cmbHotel.getSelectedItem());
                     String type = (String) cmbRoomType.getSelectedItem();
                     int checkIn = (int) cmbCheckIn.getSelectedItem();
@@ -91,11 +92,12 @@ public class BookReservationCO
                     if (!errorMessage.equals(""))
                         brUI.setErrorMessage(errorMessage);
 
-                    // Books a reservation if details are valid.
                     else
                     {
+                        // Books a reservation if details are valid.
                         bookReservation(guest, hotel, type, checkIn, checkOut, code);
-                        brUI.updateValues();
+                        
+                        // Updates the UI accordingly.
                         mfUI.openPage("HOTEL_HUB");
                     }
             });
@@ -104,6 +106,8 @@ public class BookReservationCO
     /* -------------------------------------------------------------------------- */
     /*                                  SERVICES                                  */
     /* -------------------------------------------------------------------------- */
+
+        // TODO Change location of services?
 
         /**
          * Books a reservation.
@@ -156,11 +160,11 @@ public class BookReservationCO
         {
             double totalPrice = 0; // The reservation's total price.
 
-            // Sets the nightly prices based on the date rates.
+            // Sets the nightly prices based on the night rates.
             for (int i = r.getCheckIn(); i < r.getCheckOut(); i++)
             {
                 double roomPrice = r.getRoom().getNightlyPrice();
-                double nightlyPrice = roomPrice * h.getDateRate(i);
+                double nightlyPrice = roomPrice * h.getNightRate(i);
 
                 r.setNightlyPrice(i, nightlyPrice);
                 totalPrice += nightlyPrice;

@@ -21,7 +21,10 @@ public class Database
 
         private static Database db; // The single instance of the class.
 
-        private final ArrayList<Hotel> hotels; // The hotels.
+        private final ArrayList<Hotel> hotels;  // The hotels.
+        private Hotel hotel;                    // The hotel currently being handled.
+        private Room room;                      // The room currently being handled.
+        private Reservation reservation;        // The reservation currently being handled.
 
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
@@ -48,8 +51,18 @@ public class Database
         }
 
     /* -------------------------------------------------------------------------- */
-    /*                                  C.R.U.D.                                  */
+    /*                                   GETTERS                                  */
     /* -------------------------------------------------------------------------- */
+
+        /**
+         * Returns the hotels.
+         * 
+         * @return {ArrayList<Hotel>} The hotel.
+         */
+        public ArrayList<Hotel> getHotels()
+        {
+            return this.hotels;
+        }
 
         /**
          * Returns an array of the hotel names.
@@ -66,6 +79,16 @@ public class Database
             Arrays.sort(hotelNames);
 
             return hotelNames;
+        }
+        
+        /**
+         * Returns the hotel currently being handled.
+         * 
+         * @return  {Hotel}
+         */
+        public Hotel getHotel()
+        {
+            return this.hotel;
         }
 
         /**
@@ -85,6 +108,64 @@ public class Database
         }
 
         /**
+         * Returns the room currently being handled.
+         * 
+         * @return {Room}
+         */
+        public Room getRoom()
+        {
+            return this.room;
+        }
+
+        /**
+         * Returns the reservation currently being handled.
+         * 
+         * @return {Reservation}
+         */
+        public Reservation getReservation()
+        {
+            return this.reservation;
+        }
+    
+    /* -------------------------------------------------------------------------- */
+    /*                                   SETTERS                                  */
+    /* -------------------------------------------------------------------------- */
+
+        /**
+         * Sets the hotel to be currently handled.
+         * 
+         * @param h {Hotel} The hotel to be handled.
+         */
+        public void setHotel(Hotel h)
+        {
+            this.hotel = h;
+        }
+
+        /**
+         * Sets the room to be currently handled.
+         * 
+         * @param r {Room} The room to be handled.
+         */
+        public void setRoom(Room r)
+        {
+            this.room = r;
+        }
+
+        /**
+         * Sets the reservation to be currently handled.
+         * 
+         * @param r {Reservation} The reservation to be handled.
+         */
+        public void setReservation(Reservation r)
+        {
+            this.reservation = r;
+        }
+
+    /* -------------------------------------------------------------------------- */
+    /*                             ADDERS AND REMOVERS                            */
+    /* -------------------------------------------------------------------------- */
+
+        /**
          * Adds a hotel to the database.
          * 
          * @param h {Hotel} The hotel.
@@ -102,41 +183,5 @@ public class Database
         public void removeHotel(String name)
         {
             hotels.remove(getHotel(name));
-        }
-
-        /**
-         * Returns the room types.
-         * 
-         * @return {String[]}
-         */
-        public String[] getRoomTypes()
-        {
-            String[] roomTypes = {"Standard", "Deluxe", "Executive"};
-            return roomTypes;
-        }
-
-        /**
-         * Returns the valid set of reservation dates.
-         * 
-         * @param isCheckIn {boolean} Determine if the dates to be returned
-         *                            are the check-in dates.
-         * @return          {Integer[]}
-         */
-        public Integer[] getReservationDates(boolean isCheckIn)
-        {
-            Integer[] reservationDates = new Integer[30];
-
-            if (isCheckIn)
-            {
-                for (int i = 0; i < 30; i++)
-                    reservationDates[i] = i + 1;
-            }
-            else
-            {
-                for (int i = 0; i < 30; i++)
-                    reservationDates[i] = i + 2;
-            }
-            
-            return reservationDates;
         }
 }

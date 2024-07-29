@@ -7,6 +7,8 @@
 
 package controller.page;
 
+import model.Database;
+
 /**
  * The view hotel controller.
  */
@@ -17,6 +19,7 @@ public class ViewHotelCO
     /* -------------------------------------------------------------------------- */
 
         private static ViewHotelCO vhCO; // The single instance of the class.
+        private static Database db;      // The database.
 
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
@@ -27,7 +30,10 @@ public class ViewHotelCO
          */
         private ViewHotelCO()
         {
-
+            db = Database.getInstance();
+            
+            if (!db.getHotels().isEmpty())
+                db.setHotel(db.getHotel((String) cmbHotel.getSelectedItem()));
         }
 
         /**

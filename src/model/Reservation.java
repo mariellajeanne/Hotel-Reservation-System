@@ -16,7 +16,7 @@ public class Reservation
     /*                                 ATTRIBUTES                                 */
     /* -------------------------------------------------------------------------- */
 
-        private final String client;          // The client's name.
+        private final String guest;           // The guest's name.
         private final int checkIn;            // The check-in date.
         private final int checkOut;           // The check-out date.
         private final Room room;              // The reserved room.
@@ -28,7 +28,7 @@ public class Reservation
     /* -------------------------------------------------------------------------- */
 
         /**
-         * Constructs a reservation given the client's name, the check-in date,
+         * Constructs a reservation given the guest's name, the check-in date,
          * the check-out date, the reserved room, and the discount code.
          * 
          * @param guest      {String}    The guest name.
@@ -37,10 +37,10 @@ public class Reservation
          * @param room       {Room}      The reserved room.
          * @param code       {String}    The discount code.
          */
-        public Reservation(String client, int checkIn, int checkOut,
+        public Reservation(String guest, int checkIn, int checkOut,
                         Room room, String code)
         {
-            this.client = client;
+            this.guest = guest;
             this.checkIn = checkIn;
             this.checkOut = checkOut;
             this.room = room;
@@ -52,13 +52,57 @@ public class Reservation
     /* -------------------------------------------------------------------------- */
 
         /**
-         * Returns the client's name.
+         * Returns the valid set of reservation dates.
+         * 
+         * @param isCheckIn {boolean} Determine if the dates to be returned
+         *                            are the check-in dates.
+         * @return          {Integer[]}
+         */
+        public static Integer[] getReservationDates(boolean isCheckIn)
+        {
+            Integer[] reservationDates = new Integer[30];
+
+            if (isCheckIn)
+            {
+                for (int i = 0; i < 30; i++)
+                    reservationDates[i] = i + 1;
+            }
+            else
+            {
+                for (int i = 0; i < 30; i++)
+                    reservationDates[i] = i + 2;
+            }
+            
+            return reservationDates;
+        }
+
+        /**
+         * Returns an array of reservation nights.
+         * 
+         * @retun String[]
+         */
+        public static String[] getReservationNights()
+        {
+            String[] reservationNights = new String[30];
+
+            for (int i = 0; i < 30; i++)
+            {
+                reservationNights[i] =
+                    String.valueOf(i + 1) + "-" +
+                    String.valueOf(i + 2);
+            }
+
+            return reservationNights;
+        }
+
+        /**
+         * Returns the guest's name.
          * 
          * @return {String}
          */
-        public String getClient()
+        public String getGuest()
         {
-            return this.client;
+            return this.guest;
         }
         
         /**
@@ -82,6 +126,16 @@ public class Reservation
         }
 
         /**
+         * Returns a string of the check-in and check-out dates.
+         * 
+         * @return {String}
+         */
+        public String getCheckInAndOut()
+        {
+            return checkIn + "-" + checkOut;
+        }
+
+        /**
          * Returns the room.
          * 
          * @return {Room}
@@ -95,11 +149,29 @@ public class Reservation
          * Returns the nightly price given the night.
          * 
          * @param night {int} The night.
-         * @return {double}
+         * @return      {double}
          */
         public double getNightlyPrice(int night)
         {
-            return this.nightlyPrices[checkIn - night];
+            return this.nightlyPrices[night - checkIn];
+        }
+
+        /**
+         * Returns an array of the total price breakdown.
+         * 
+         * @return {String[]}
+         */
+        public String[] getNightlyPrices()
+        {
+            String[] pricePerNight = new String[nightlyPrices.length];
+
+            for (int i = checkIn; i < checkOut; i++)
+            {
+                pricePerNight[i - checkIn] = "Night " +
+                    (i) + (i + 1) + ": " + getNightlyPrice(i);
+            }
+                
+            return pricePerNight;
         }
 
         /**

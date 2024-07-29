@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import model.*;
 import service.error.ManageHotelER;
+import view.frame.MainFrameUI;
 import view.page.ManageHotelUI;
 
 /**
@@ -25,37 +26,9 @@ public class ManageHotelCO
         private static ManageHotelCO mhCO; // The single instance of the class.
         private static ManageHotelER mhER; // The manage hotel error handler.
         private static ManageHotelUI mhUI; // The manage hotel UI.
+        private static MainFrameUI mfUI;   // The main frame UI.
         private static Database db;        // The database.
 
-        JComboBox<String> cmbHotel;
-        JButton btnDeleteHotel;
-
-        JTextField txtName;
-        JButton btnSaveName;
-
-        JComboBox<Integer> cmbStandard;
-        JButton btnAddStandard;
-        JButton btnDeleteStandard;
-
-        JComboBox<Integer> cmbDeluxe;
-        JButton btnAddDeluxe;
-        JButton btnDeleteDeluxe;
-
-        JComboBox<Integer> cmbExecutive;
-        JButton btnAddExecutive;
-        JButton btnDeleteExecutive;
-
-        JTextField txtPrice;
-        JButton btnSavePrice;
-
-        JComboBox<String> cmbReservation;
-        JButton btnDeleteReservation;
-
-        JComboBox<Integer> cmbDate;
-        JTextField txtRate;
-        JButton btnSaveRate;
-
-        JLabel lblErrorMessage;
 
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
@@ -67,12 +40,16 @@ public class ManageHotelCO
         private ManageHotelCO()
         {
             mhER = ManageHotelER.getInstance();
-            // TODO mhUI = ManageHotelUI.getInstance();
+            mhUI = ManageHotelUI.getInstance();
+            mfUI = MainFrameUI.getInstance();
             db = Database.getInstance();
+
+            if (!db.getHotels().isEmpty())
+                db.setHotel(db.getHotel((String) cmbHotel.getSelectedItem()));
 
             handleDeleteHotel();
             handleChangeName();
-            handlExecutiveCount();
+            handleRoomCount();
             handleChangePrice();
             handleRemoveReservation();
             handleChangeRate();
@@ -109,8 +86,13 @@ public class ManageHotelCO
                 /* Update */
 
                     // Deletes the hotel.
-                    // TODO redirect UI to main menu
                     db.removeHotel(hotel);
+
+                    // Updates the UI accordingly.
+                    if (db.getHotels().isEmpty())
+                        mfUI.openPage("HOTEL_HUB");
+                    else
+                        mfUI.reopenPage();
             });
         }
 
@@ -138,12 +120,13 @@ public class ManageHotelCO
                     // Displays the error message if the input is invalid.
                     if (!errorMessage.equals(""))
                         lblErrorMessage.setText(errorMessage);
-                    
-                    // Changes the hotel name if the input is valid.
                     else
                     {
+                        // Changes the hotel name if the input is valid.
                         h.setName(newName);
-                        // TODO update UI
+
+                        // Updates the UI accordingly.
+                        mfUI.reopenPage();
                     }
             });
         }
@@ -151,16 +134,16 @@ public class ManageHotelCO
         /**
          * Handles the addition and deletion of rooms.
          */
-        private void handlExecutiveCount()
+        private void handleRoomCount()
         {
-            updatExecutiveCount(cmbStandard, btnAddStandard, "STANDARD", true);
-            updatExecutiveCount(cmbStandard, btnDeleteStandard, "STANDARD", false);
+            updateRoomCount(cmbStandard, btnAddStandard, "STANDARD", true);
+            updateRoomCount(cmbStandard, btnDeleteStandard, "STANDARD", false);
 
-            updatExecutiveCount(cmbDeluxe, btnAddDeluxe, "DELUXE", true);
-            updatExecutiveCount(cmbDeluxe, btnDeleteDeluxe, "DELUXE", false);
+            updateRoomCount(cmbDeluxe, btnAddDeluxe, "DELUXE", true);
+            updateRoomCount(cmbDeluxe, btnDeleteDeluxe, "DELUXE", false);
 
-            updatExecutiveCount(cmbExecutive, btnAddExecutive, "EXECUTIVE", true);
-            updatExecutiveCount(cmbExecutive, btnDeleteExecutive, "EXECUTIVE", false);
+            updateRoomCount(cmbExecutive, btnAddExecutive, "EXECUTIVE", true);
+            updateRoomCount(cmbExecutive, btnDeleteExecutive, "EXECUTIVE", false);
         }
 
         /**
@@ -185,11 +168,13 @@ public class ManageHotelCO
                     if (!errorMessage.equals(""))
                         lblErrorMessage.setText(errorMessage);
                     
-                    // Changes the base price if there was no error.
                     else
                     {
+                        // Changes the base price if there was no error.
                         h.setBasePrice(Double.parseDouble(price));
-                        // TODO Update UI
+
+                        // Updates the UI accordingly.
+                        mfUI.reopenPage();
                     }
             });
         }
@@ -224,12 +209,14 @@ public class ManageHotelCO
 
                     // Removes the reservation from the hotel.
                     room.getReservations().remove(res);
-                    // TODO Update UI
+
+                    // Updates the UI accordingly.
+                    mfUI.reopenPage();
             });
         }
 
         /**
-         * Handles the change of a date rate.
+         * Handles the change of a night rate.
          */
         private void handleChangeRate()
         {
@@ -240,7 +227,7 @@ public class ManageHotelCO
                     // Gets the hotel.
                     Hotel h = db.getHotel((String) cmbHotel.getSelectedItem());
 
-                    // Gets the date rate details.
+                    // Gets the night rate details.
                     int date = (int) cmbDate.getSelectedItem();
                     String rate = (String) txtRate.getText();
 
@@ -253,18 +240,20 @@ public class ManageHotelCO
                     if (!errorMessage.equals(""))
                         lblErrorMessage.setText(errorMessage);
                     
-                    // Updates the date rate if there was no error.
                     else
                     {
-                        h.setDateRate(date, Double.parseDouble(rate));
-                        // TODO Update UI
+                        // Updates the night rate if there was no error.
+                        h.setNightRate(date, Double.parseDouble(rate));
+
+                        // Updates the UI accordingly.
+                        mfUI.reopenPage();
                     }
             });
         }
 
-        /* -------------------------------------------------------------------------- */
-        /*                                  SERVICES                                  */
-        /* -------------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------- */
+    /*                                  SERVICES                                  */
+    /* -------------------------------------------------------------------------- */
 
         /**
          * Adds rooms to or removes rooms from a hotel.
@@ -274,7 +263,7 @@ public class ManageHotelCO
          * @param type      {String}    The room type.
          * @param isAdded   {boolean}   Determines if the number is to be added or deleted.
          */
-        private void updatExecutiveCount(JComboBox<Integer> cmbRoom, JButton btnUpdate,
+        private void updateRoomCount(JComboBox<Integer> cmbRoom, JButton btnUpdate,
             String type, boolean isAdded)
         {
             cmbRoom.addActionListener(e ->
@@ -285,36 +274,60 @@ public class ManageHotelCO
                     Hotel h = db.getHotel((String) cmbHotel.getSelectedItem());
 
                     // Gets the number of rooms to be added/deleted.
-                    int numAdded = (int) cmbRoom.getSelectedItem();
+                    String numUpdated = (String) cmbRoom.getSelectedItem();
+
+                    // Gets the error message.
+                    String errorMessage;
+                    if (isAdded)
+                        errorMessage = mhER.checkAddRooms(h, type);
+                    else
+                        errorMessage = mhER.checkDeleteRooms(h, type, numUpdated);
 
                 /* Update */
 
-                    // Gets the current number of rooms in the hotel.
-                    int num = h.getRooms().size();
+                    // Displays the error message if there was an error.
+                    if (!errorMessage.equals(""))
+                        mhUI.setErrorMessage(errorMessage);
 
-                    // Gets the rooms in the hotel.
-                    ArrayList<Room> rooms = h.getRooms();
-
-                    // Adds rooms.
-                    if (isAdded)
-                    {
-                        for (int i = num + 1; i <= num + numAdded; i++)
-                            rooms.add(new Room(i, type, h.getBasePrice()));
-                    }
+                    // Adds/deletes rooms if there was no error.
                     else
                     {
-                        // Removes rooms.
-                        for (Room r : rooms)
+                        // Gets the current number of rooms in the hotel.
+                        int numOfRooms = h.getRooms().size();
+
+                        // Gets the rooms in the hotel.
+                        ArrayList<Room> rooms = h.getRooms();
+
+                        // Adds rooms.
+                        if (isAdded)
                         {
-                            if (r.getType().equals(type) && r.getReservations().isEmpty())
-                                rooms.remove(r);
+                            for (int i = numOfRooms + 1; i <= numOfRooms +
+                                Integer.parseInt(numUpdated); i++)
+                                rooms.add(new Room(i, type, h.getBasePrice()));
                         }
+                        else
+                        {
+                            // Removes rooms.
+                            int numDeleted = 0;
+                            for (int i = 0; i < numOfRooms && numDeleted <
+                                Integer.parseInt(numUpdated); i++)
+                            {
+                                Room r = rooms.get(i);
+                                
+                                if (r.getType().equals(type) && r.getReservations().isEmpty())
+                                {
+                                    rooms.remove(r);
+                                    numDeleted++;
+                                }
+                            }
 
-                        // Updates room numbers.
-                        for (int i = 0; i < rooms.size(); i++)
-                            rooms.get(i).setNum(i + 1);
+                            // Updates room numbers.
+                            for (int i = 0; i < rooms.size(); i++)
+                                rooms.get(i).setNum(i + 1);
 
-                        // TODO Update UI
+                            // Updates the UI accordingly.
+                            mfUI.reopenPage();
+                        }
                     }
             });
         }

@@ -74,18 +74,15 @@ public final class CreateHotelUI extends JBlackPanel
         protected void initializeComps()
         {
             componentHashMap  = new HashMap<>();
+            
             pnlTitle = new JTitlePanel("Create Hotel");
             btnBack = new JBackButton();
             
             lblName = new JCommonLabel("Name:", 0,false);
-            lblStandard = new JCommonLabel("Number of standard rooms:",
-                0,false);
-            lblDeluxe = new JCommonLabel("Number of deluxe rooms:",
-                0,false);
-            lblExecutive = new JCommonLabel("Number of executive rooms:",
-                0,false);
-            lblPrice = new JCommonLabel("Base nightly price:",
-                0,false);
+            lblStandard = new JCommonLabel("Number of standard rooms:", 0,false);
+            lblDeluxe = new JCommonLabel("Number of deluxe rooms:", 0,false);
+            lblExecutive = new JCommonLabel("Number of executive rooms:", 0, false);
+            lblPrice = new JCommonLabel("Base nightly price:", 0, false);
             lblErrorMessage = new JErrorLabel();
             
             txtName = new JCommonTextField();
@@ -187,6 +184,7 @@ public final class CreateHotelUI extends JBlackPanel
          * @param componentID   {String}    The component ID.
          * @return              {JComponent}
          */
+        @Override
         public JComponent getComp(String componentID)
         {
             return componentHashMap.get(componentID);
@@ -199,10 +197,10 @@ public final class CreateHotelUI extends JBlackPanel
         /**
          * Updates the page's component values.
          */
+        @Override
         public void updateValues()
         {
-            lblErrorMessage.setText("");
-            repaint();
+            chUI = new CreateHotelUI();
         }
 
         /**
