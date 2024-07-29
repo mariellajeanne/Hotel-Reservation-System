@@ -20,7 +20,6 @@ public class ManageHotelER
 
         private static ManageHotelER mhER; // The single instance of the class.
         private static InputER iER;        // The input error handler.
-        private static Database db;        // The database.
 
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
@@ -32,7 +31,6 @@ public class ManageHotelER
         private ManageHotelER()
         {
             iER = InputER.getInstance();
-            db = Database.getInstance();
         }
 
         /**

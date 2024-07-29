@@ -7,9 +7,8 @@
 
 package controller.page;
 
-import javax.swing.*;
-
 import controller.error.CreateHotelER;
+import java.awt.event.*;
 import model.Database;
 import model.Hotel;
 import view.frame.MainFrameUI;
@@ -68,16 +67,16 @@ public class CreateHotelCO
          */
         public final void handleCreateHotel()
         {
-            btnCreate.addActionListener(e ->
+            chUI.setActionListener("btnCreate", (ActionEvent e) ->
             {
                 /* Setup */
 
                     // Gets the hotel details.
-                    String name = txtName.getText();
-                    String standard = (String) cmbStandard.getSelectedItem();
-                    String deluxe = (String) cmbDeluxe.getSelectedItem();
-                    String executive = (String) cmbExecutive.getSelectedItem();
-                    String price = txtPrice.getText();
+                    String name = chUI.getValue("txtName");
+                    String standard = chUI.getValue("txtStandard");
+                    String deluxe = chUI.getValue("txtDeluxe");
+                    String executive = chUI.getValue("txtExecutive");
+                    String price = chUI.getValue("txtPrice");
 
                     // Gets the error message.
                     String errorMessage = chER.checkCreateHotel(name,
@@ -89,7 +88,6 @@ public class CreateHotelCO
                     if (!errorMessage.equals(""))
                         chUI.setErrorMessage(errorMessage);
 
-                    
                     else
                     {
                         // Creates the hotel if there was no error.

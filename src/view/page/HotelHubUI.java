@@ -8,7 +8,7 @@
 package view.page;
 
 import java.awt.*;
-import java.util.HashMap;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import model.Database;
 import view.util.*;
@@ -27,10 +27,6 @@ public final class HotelHubUI extends JBlackPanel
 
             private static HotelHubUI hhUI;
             private static Database db;
-
-        /* Component hashmap */
-        
-            private HashMap<String, JComponent> componentHashMap;
 
         /* Components */
 
@@ -58,7 +54,6 @@ public final class HotelHubUI extends JBlackPanel
             initializeComps();
             configureComps();
             addCompsToPanel();
-            addCompsToHashMap();
         }
 
     /* -------------------------------------------------------------------------- */
@@ -71,8 +66,6 @@ public final class HotelHubUI extends JBlackPanel
         @Override
         protected void initializeComps()
         {
-            componentHashMap  = new HashMap<>();
-            
             pnlTitle = new JLabel("Hotel Hub");
             
             lblAuthor1 = new JCommonLabel("Stephen M. Borja", 0, false);
@@ -124,18 +117,6 @@ public final class HotelHubUI extends JBlackPanel
             add(btnBook);
         }
 
-        /**
-         * Adds components to the component hashmap.
-         */
-        @Override
-        protected void addCompsToHashMap()
-        {
-            componentHashMap.put("btnCreateHotel", btnCreateHotel);
-            componentHashMap.put("btnViewHotel", btnViewHotel);
-            componentHashMap.put("btnManageHotel", btnManageHotel);
-            componentHashMap.put("btnBook", btnBook);
-        }
-
     /* -------------------------------------------------------------------------- */
     /*                                   GETTERS                                  */
     /* -------------------------------------------------------------------------- */
@@ -152,16 +133,26 @@ public final class HotelHubUI extends JBlackPanel
             return hhUI;
         }
 
+    /* -------------------------------------------------------------------------- */
+    /*                                   SETTERS                                  */
+    /* -------------------------------------------------------------------------- */
+
         /**
-         * Returns a component given the component ID.
-         *
-         * @param componentID   {String}    The component ID.
-         * @return              {JComponent}
+         * Sets the action listener of a component.
+         * 
+         * @param componentID   {String}            The component ID.
+         * @param a             {ActionListener}    The action listener.
          */
         @Override
-        public JComponent getComp(String componentID)
+        public void setActionListener(String componentID, ActionListener a)
         {
-            return componentHashMap.get(componentID);
+            switch (componentID)
+            {
+                case "btnCreateHotel" -> {btnCreateHotel.addActionListener(a);}
+                case "btnViewHotel" -> {btnViewHotel.addActionListener(a);}
+                case "btnManageHotel" -> {btnManageHotel.addActionListener(a);}
+                case "btnBook" -> {btnBook.addActionListener(a);}
+            }
         }
 
     /* -------------------------------------------------------------------------- */

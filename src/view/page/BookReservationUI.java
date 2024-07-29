@@ -7,8 +7,7 @@
 
 package view.page;
 
-import java.util.HashMap;
-import javax.swing.*;
+import java.awt.event.ActionListener;
 import model.*;
 import view.util.*;
 
@@ -26,10 +25,6 @@ public final class BookReservationUI extends JBlackPanel
             private static BookReservationUI brUI;
             private static Database db;
 
-        /* Component hashmap */
-        
-            private HashMap<String, JComponent> componentHashMap;
-
         /* Components */
         
             private JTitlePanel pnlTitle;
@@ -44,7 +39,7 @@ public final class BookReservationUI extends JBlackPanel
             private JErrorLabel lblErrorMessage;
             
             private JCommonTextField txtGuest;
-            private JCommonTextField txtDiscountCode;
+            private JCommonTextField txtCode;
             private JCommonComboBox<String> cmbHotels;
             private JCommonComboBox<String> cmbRoomTypes;
             private JCommonComboBox<Integer> cmbCheckIn;
@@ -66,7 +61,6 @@ public final class BookReservationUI extends JBlackPanel
             initializeComps();
             configureComps();
             addCompsToPanel();
-            addCompsToHashMap();
         }
 
     /* -------------------------------------------------------------------------- */
@@ -79,8 +73,6 @@ public final class BookReservationUI extends JBlackPanel
         @Override
         protected void initializeComps()
         {
-            componentHashMap = new HashMap<>();
-            
             pnlTitle = new JTitlePanel("Book Reservation");
             btnBack = new JBackButton();
             
@@ -93,7 +85,7 @@ public final class BookReservationUI extends JBlackPanel
             lblErrorMessage = new JErrorLabel();
             
             txtGuest = new JCommonTextField();
-            txtDiscountCode = new JCommonTextField();
+            txtCode = new JCommonTextField();
             
             cmbHotels = new JCommonComboBox<>(db.getHotelNames());
             cmbRoomTypes = new JCommonComboBox<>(Room.getRoomTypes());
@@ -120,7 +112,7 @@ public final class BookReservationUI extends JBlackPanel
             lblErrorMessage.getPreferredSize().height);
 
             txtGuest.setBounds(870,300,381,30);
-            txtDiscountCode.setBounds(962,667,289,30);
+            txtCode.setBounds(962,667,289,30);
             
             cmbHotels.setBounds(870,361,380,30);
             cmbRoomTypes.setBounds(1031,422,220,30);
@@ -148,7 +140,7 @@ public final class BookReservationUI extends JBlackPanel
             add(lblErrorMessage);
             
             add(txtGuest);
-            add(txtDiscountCode);
+            add(txtCode);
             
             add(cmbHotels);
             add(cmbRoomTypes);
@@ -156,27 +148,6 @@ public final class BookReservationUI extends JBlackPanel
             add(cmbCheckOut);
             
             add(btnBook);
-        }
-
-        /**
-         * Adds components to the component hashmap.
-         */
-        @Override
-        protected void addCompsToHashMap()
-        {
-            componentHashMap.put("btnBack", btnBack);
-
-            componentHashMap.put("txtGuest", txtGuest);
-            componentHashMap.put("txtDiscountCode", txtDiscountCode);
-
-            componentHashMap.put("cmbHotels", cmbHotels);
-            componentHashMap.put("cmbRoomTypes", cmbRoomTypes);
-            componentHashMap.put("cmbCheckIn", cmbCheckIn);
-            componentHashMap.put("cmbCheckOut", cmbCheckOut);
-
-            componentHashMap.put("lblErrorMessage", lblErrorMessage);
-
-            componentHashMap.put("btnBook", btnBook);
         }
 
     /* -------------------------------------------------------------------------- */
@@ -196,29 +167,28 @@ public final class BookReservationUI extends JBlackPanel
         }
 
         /**
-         * Returns a component given the component ID.
+         * Returns the input of a component.
          *
          * @param componentID   {String}    The component ID.
          * @return              {JComponent}
          */
-        @Override
-        public JComponent getComp(String componentID)
+        public String getValue(String componentID)
         {
-            return componentHashMap.get(componentID);
+            switch (componentID)
+            {
+                case "txtGuest" -> {return txtGuest.getText();}
+                case "cmbHotels" -> {return (String) cmbHotels.getSelectedItem();}
+                case "cmbRoomTypes" -> {return (String) cmbRoomTypes.getSelectedItem();}
+                case "cmbCheckIn" -> {return (String) cmbCheckIn.getSelectedItem();}
+                case "cmbCheckOut" -> {return (String) cmbCheckOut.getSelectedItem();}
+                case "txtCode" -> {return txtCode.getText();}
+                default -> {return "";}
+            }
         }
 
     /* -------------------------------------------------------------------------- */
-    /*                                MANIPULATORS                                */
+    /*                                   SETTERS                                  */
     /* -------------------------------------------------------------------------- */
-
-        /**
-         * Updates the page's component values.
-         */
-        @Override
-        public void updateValues()
-        {
-            brUI = new BookReservationUI();
-        }
 
         /**
          * Sets the error message.
@@ -230,4 +200,33 @@ public final class BookReservationUI extends JBlackPanel
             lblErrorMessage.setText(text);
             repaint();
         }
+
+        /**
+         * Sets the action listener of a component.
+         * 
+         * @param componentID   {String}            The component ID.
+         * @param a             {ActionListener}    The action listener.
+         */
+        @Override
+        public void setActionListener(String componentID, ActionListener a)
+        {
+            switch (componentID)
+            {
+                case "btnBook" -> {btnBook.addActionListener(a);}
+            }
+        }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                  UPDATERS                                  */
+    /* -------------------------------------------------------------------------- */
+
+        /**
+         * Updates the page's component values.
+         */
+        @Override
+        public void updateValues()
+        {
+            brUI = new BookReservationUI();
+        }
+        
 }

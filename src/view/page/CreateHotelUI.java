@@ -7,8 +7,7 @@
 
 package view.page;
 
-import java.util.HashMap;
-import javax.swing.*;
+import java.awt.event.ActionListener;
 import view.util.*;
 
 /**
@@ -23,10 +22,6 @@ public final class CreateHotelUI extends JBlackPanel
         /* Class instances */
 
             private static CreateHotelUI chUI;
-
-        /* Component hashmap */
-        
-            private HashMap<String, JComponent> componentHashMap;
 
         /* Components */
         
@@ -60,7 +55,6 @@ public final class CreateHotelUI extends JBlackPanel
             initializeComps();
             configureComps();
             addCompsToPanel();
-            addCompsToHashMap();
         }
 
     /* -------------------------------------------------------------------------- */
@@ -72,9 +66,7 @@ public final class CreateHotelUI extends JBlackPanel
          */
         @Override
         protected void initializeComps()
-        {
-            componentHashMap  = new HashMap<>();
-            
+        {  
             pnlTitle = new JTitlePanel("Create Hotel");
             btnBack = new JBackButton();
             
@@ -143,25 +135,6 @@ public final class CreateHotelUI extends JBlackPanel
             add(btnCreate);
         }
 
-        /**
-         * Adds components to the component hashmap.
-         */
-        @Override
-        protected void addCompsToHashMap()
-        {
-            componentHashMap.put("btnBack", btnBack);
-
-            componentHashMap.put("txtName", txtName);
-            componentHashMap.put("txtStandard", txtStandard);
-            componentHashMap.put("txtDeluxe", txtDeluxe);
-            componentHashMap.put("txtExecutive", txtExecutive);
-            componentHashMap.put("txtPrice", txtPrice);
-
-            componentHashMap.put("lblErrorMessage", lblErrorMessage);
-
-            componentHashMap.put("btnCreate", btnCreate);     
-        }
-
     /* -------------------------------------------------------------------------- */
     /*                                   GETTERS                                  */
     /* -------------------------------------------------------------------------- */
@@ -179,29 +152,27 @@ public final class CreateHotelUI extends JBlackPanel
         }
 
         /**
-         * Returns a component given the component ID.
+         * Returns the input of a component.
          *
          * @param componentID   {String}    The component ID.
          * @return              {JComponent}
          */
-        @Override
-        public JComponent getComp(String componentID)
+        public String getValue(String componentID)
         {
-            return componentHashMap.get(componentID);
+            switch (componentID)
+            {
+                case "txtName" -> {return txtName.getText();}
+                case "txtStandard" -> {return txtStandard.getText();}
+                case "txtDeluxe" -> {return txtDeluxe.getText();}
+                case "txtExecutive" -> {return txtExecutive.getText();}
+                case "txtPrice" -> {return txtPrice.getText();}
+                default -> {return "";}
+            }
         }
-    
-    /* -------------------------------------------------------------------------- */
-    /*                                MANIPULATORS                                */
-    /* -------------------------------------------------------------------------- */
 
-        /**
-         * Updates the page's component values.
-         */
-        @Override
-        public void updateValues()
-        {
-            chUI = new CreateHotelUI();
-        }
+    /* -------------------------------------------------------------------------- */
+    /*                                   SETTERS                                  */
+    /* -------------------------------------------------------------------------- */
 
         /**
          * Sets the error message.
@@ -212,5 +183,33 @@ public final class CreateHotelUI extends JBlackPanel
         {
             lblErrorMessage.setText(text);
             repaint();
+        }
+
+        /**
+         * Sets the action listener of a component.
+         * 
+         * @param componentID   {String}            The component ID.
+         * @param a             {ActionListener}    The action listener.
+         */
+        @Override
+        public void setActionListener(String componentID, ActionListener a)
+        {
+            switch (componentID)
+            {
+                case "btnCreate" -> {btnCreate.addActionListener(a);}
+            }
+        }
+    
+    /* -------------------------------------------------------------------------- */
+    /*                                  UPDATERS                                  */
+    /* -------------------------------------------------------------------------- */
+
+        /**
+         * Updates the page's component values.
+         */
+        @Override
+        public void updateValues()
+        {
+            chUI = new CreateHotelUI();
         }
 }

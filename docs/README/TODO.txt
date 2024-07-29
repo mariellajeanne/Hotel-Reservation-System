@@ -12,7 +12,7 @@ Remove "this" keyword when unnecessary
 Separate configuration, addition to panel, addition to hashmap
 Remove unnecessary elements of hashmap
 Add/delete values are different!
-
+Combo boxes listeners, update frame when combo item is selected
 
 
 

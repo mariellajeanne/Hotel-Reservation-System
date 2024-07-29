@@ -7,8 +7,6 @@
 
 package controller.error;
 
-import model.Database;
-
 /**
  * The create hotel error handler class.
  */
@@ -20,7 +18,6 @@ public class CreateHotelER
 
         private static CreateHotelER chER; // The single instance of the class.
         private static InputER iER;        // The input error handler.
-        private static Database db;        // The database.
 
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */

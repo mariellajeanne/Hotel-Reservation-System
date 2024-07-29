@@ -8,6 +8,7 @@
 package view.util;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 /**
@@ -49,25 +50,20 @@ public abstract class JBlackPanel extends JPanel
          */
         protected abstract void addCompsToPanel();
 
-        /**
-         * Adds components to the component hashmap.
-         */
-        protected abstract void addCompsToHashMap();
-
     /* -------------------------------------------------------------------------- */
-    /*                                   GETTERS                                  */
+    /*                                   SETTERS                                  */
     /* -------------------------------------------------------------------------- */
 
         /**
-         * Returns a component given the component ID.
-         *
-         * @param componentID   {String}    The component ID.
-         * @return              {JComponent}
+         * Sets the action listener of a component.
+         * 
+         * @param componentID   {String}            The component ID.
+         * @param a             {ActionListener}    The action listener.
          */
-        public abstract JComponent getComp(String componentID);
+        public abstract void setActionListener(String componentID, ActionListener a);
 
     /* -------------------------------------------------------------------------- */
-    /*                                MANIPULATORS                                */
+    /*                                  UPDATERS                                  */
     /* -------------------------------------------------------------------------- */
 
         /**

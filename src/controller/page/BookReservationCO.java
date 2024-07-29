@@ -7,16 +7,14 @@
 
 package controller.page;
 
-import javax.swing.*;
-
 import controller.error.BookReservationER;
+import java.awt.event.*;
 import model.Database;
 import model.Hotel;
 import model.Reservation;
 import model.Room;
 import view.frame.MainFrameUI;
 import view.page.BookReservationUI;
-import java.awt.*;
 
 /**
  * The book reservation controller.
@@ -71,28 +69,28 @@ public class BookReservationCO
          */
         private void handleBookBtn()
         {
-            brUI.getComp("btnBook").addActionListener(e -> 
+            brUI.setActionListener("btnBook", (ActionEvent e) ->
             {
                 /* Setup */
-
+                
                     // Gets the inputted details.
-                    String guest = (String) ((JTextField)brUI.getComp("txtGuest")).getText();
-                    Hotel hotel = db.getHotel((String) ((JComboBox)brUI).getSelectedItem());
-                    String type = (String) cmbRoomType.getSelectedItem();
-                    int checkIn = (int) cmbCheckIn.getSelectedItem();
-                    int checkOut = (int) cmbCheckOut.getSelectedItem();
-                    String code = (String) txtCode.getText();
-
+                    String guest = brUI.getValue("txtGuest");
+                    Hotel hotel = db.getHotel(brUI.getValue("cmbHotels"));
+                    String type = brUI.getValue("cmbRoomTypes");
+                    int checkIn = Integer.parseInt(brUI.getValue("cmbCheckIn"));
+                    int checkOut = Integer.parseInt(brUI.getValue("cmbCheckOut"));
+                    String code = brUI.getValue("txtCode");
+                    
                     // Gets the error message.
                     String errorMessage =
-                        brER.checkBookReservation(guest, hotel, type, checkIn, checkOut, code);
+                            brER.checkBookReservation(guest, hotel, type, checkIn, checkOut, code);
 
                 /* Update */
-
+                
                     // Displays the error message if details are invalid.
                     if (!errorMessage.equals(""))
                         brUI.setErrorMessage(errorMessage);
-
+                    
                     else
                     {
                         // Books a reservation if details are valid.
@@ -107,8 +105,6 @@ public class BookReservationCO
     /* -------------------------------------------------------------------------- */
     /*                                  SERVICES                                  */
     /* -------------------------------------------------------------------------- */
-
-        // TODO Change location of services?
 
         /**
          * Books a reservation.

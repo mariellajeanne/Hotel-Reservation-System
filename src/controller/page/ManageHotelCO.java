@@ -7,13 +7,13 @@
 
 package controller.page;
 
-import java.util.ArrayList;
-import javax.swing.*;
-
 import controller.error.ManageHotelER;
+import java.awt.event.*;
+import java.util.ArrayList;
 import model.*;
 import view.frame.MainFrameUI;
 import view.page.ManageHotelUI;
+
 
 /**
  * The manage hotel controller.
@@ -30,7 +30,6 @@ public class ManageHotelCO
         private static MainFrameUI mfUI;   // The main frame UI.
         private static Database db;        // The database.
 
-
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
     /* -------------------------------------------------------------------------- */
@@ -44,9 +43,6 @@ public class ManageHotelCO
             mhUI = ManageHotelUI.getInstance();
             mfUI = MainFrameUI.getInstance();
             db = Database.getInstance();
-
-            if (!db.getHotels().isEmpty())
-                db.setHotel(db.getHotel((String) cmbHotel.getSelectedItem()));
 
             handleDeleteHotel();
             handleChangeName();
@@ -77,12 +73,12 @@ public class ManageHotelCO
          */
         private void handleDeleteHotel()
         {
-            btnDeleteHotel.addActionListener(e ->
+            mhUI.setActionListener("btnDeleteHotel", (ActionEvent e) ->
             {
                 /* Setup */
 
                     // Gets the hotel.
-                    String hotel = (String) cmbHotel.getSelectedItem();
+                    String hotel = mhUI.getValue("cmbHotels");
 
                 /* Update */
 
@@ -101,16 +97,16 @@ public class ManageHotelCO
          * Handles changing the hotel name.
          */
         private void handleChangeName()
-        {   
-            btnSaveName.addActionListener(e ->
+        { 
+            mhUI.setActionListener("btnSaveName", (ActionEvent e) ->
             {
                 /* Setup */
 
                     // Gets the new hotel name.
-                    String newName = txtName.getText();
+                    String newName = mhUI.getValue("txtChangeName");
 
                     // Gets the hotel.
-                    String oldName = (String) cmbHotel.getSelectedItem();
+                    String oldName = mhUI.getValue("cmbHotels");
                     Hotel h = db.getHotel(oldName);
 
                     // Gets the error message.
@@ -120,7 +116,7 @@ public class ManageHotelCO
                 
                     // Displays the error message if the input is invalid.
                     if (!errorMessage.equals(""))
-                        lblErrorMessage.setText(errorMessage);
+                        mhUI.setErrorMessage(errorMessage);
                     else
                     {
                         // Changes the hotel name if the input is valid.
@@ -137,14 +133,20 @@ public class ManageHotelCO
          */
         private void handleRoomCount()
         {
-            updateRoomCount(cmbStandard, btnAddStandard, "STANDARD", true);
-            updateRoomCount(cmbStandard, btnDeleteStandard, "STANDARD", false);
+            mhUI.setActionListener("btnAddStandard",
+            updateRoomCount("STANDARD", true));
+            mhUI.setActionListener("btnDeleteStandard",
+            updateRoomCount("STANDARD", false));
 
-            updateRoomCount(cmbDeluxe, btnAddDeluxe, "DELUXE", true);
-            updateRoomCount(cmbDeluxe, btnDeleteDeluxe, "DELUXE", false);
+            mhUI.setActionListener("btnAddDeluxe",
+            updateRoomCount("DELUXE", true));
+            mhUI.setActionListener("btnDeleteDeluxe",
+            updateRoomCount("DELUXE", true));
 
-            updateRoomCount(cmbExecutive, btnAddExecutive, "EXECUTIVE", true);
-            updateRoomCount(cmbExecutive, btnDeleteExecutive, "EXECUTIVE", false);
+            mhUI.setActionListener("btnAddExecutive",
+            updateRoomCount("EXECUTIVE", true));
+            mhUI.setActionListener("btnDeleteExecutive",
+            updateRoomCount("EXECUTIVE", true));
         }
 
         /**
@@ -152,13 +154,13 @@ public class ManageHotelCO
          */
         private void handleChangePrice()
         {
-            btnSavePrice.addActionListener(e ->
+            mhUI.setActionListener("btnSavePrice", (ActionEvent e) ->
             {
                 /* Setup */
 
                     // Gets the hotel and base price.
-                    Hotel h = db.getHotel((String) cmbHotel.getSelectedItem());
-                    String price = txtPrice.getText();
+                    Hotel h = db.getHotel(mhUI.getValue("cmbHotels"));
+                    String price = mhUI.getValue("txtChangePrice");
 
                     // Gets the error message.
                     String errorMessage = mhER.checkChangePrice(h, price);
@@ -167,7 +169,7 @@ public class ManageHotelCO
 
                     // Displays the error message if there was an error.
                     if (!errorMessage.equals(""))
-                        lblErrorMessage.setText(errorMessage);
+                        mhUI.setErrorMessage(errorMessage);
                     
                     else
                     {
@@ -185,15 +187,15 @@ public class ManageHotelCO
          */
         private void handleRemoveReservation()
         {
-            btnDeleteReservation.addActionListener(e ->
+            mhUI.setActionListener("btnDeleteReservation", (ActionEvent e) ->
             {
                 /* Setup */
 
                     // Gets the hotel.
-                    Hotel h = db.getHotel((String) cmbHotel.getSelectedItem());
+                    Hotel h = db.getHotel(mhUI.getValue("cmbHotels"));
 
                     // Gets the reservation details.
-                    String resCode = (String) cmbReservation.getSelectedItem();
+                    String resCode = mhUI.getValue("cmbReservations");
                     String[] resDetails = resCode.split(": ");
                     String[] resRoom = resDetails[0].split(" ");
                     String[] resDates = resDetails[1].split("-");
@@ -221,16 +223,16 @@ public class ManageHotelCO
          */
         private void handleChangeRate()
         {
-            btnSaveRate.addActionListener(e ->
+            mhUI.setActionListener("txtChangeRate", (ActionEvent e) ->
             {
                 /* Setup */
 
                     // Gets the hotel.
-                    Hotel h = db.getHotel((String) cmbHotel.getSelectedItem());
+                    Hotel h = db.getHotel(mhUI.getValue("cmbHotels"));
 
                     // Gets the night rate details.
-                    int date = (int) cmbDate.getSelectedItem();
-                    String rate = (String) txtRate.getText();
+                    int night = Integer.parseInt(mhUI.getValue("cmbNights"));
+                    String rate = mhUI.getValue("txtChangeRate");
 
                     // Gets the error message.
                     String errorMessage = mhER.checkChangeRate(rate);
@@ -239,12 +241,12 @@ public class ManageHotelCO
 
                     // Displays the error message if there was an error.
                     if (!errorMessage.equals(""))
-                        lblErrorMessage.setText(errorMessage);
+                        mhUI.setErrorMessage(errorMessage);
                     
                     else
                     {
                         // Updates the night rate if there was no error.
-                        h.setNightRate(date, Double.parseDouble(rate));
+                        h.setNightRate(night, Double.parseDouble(rate));
 
                         // Updates the UI accordingly.
                         mfUI.reopenPage();
@@ -259,23 +261,26 @@ public class ManageHotelCO
         /**
          * Adds rooms to or removes rooms from a hotel.
          * 
-         * @param cmbRoom   {JComboBox} The room combo box.
-         * @param btnUpdate {JButton}   The add/delete button.
          * @param type      {String}    The room type.
-         * @param isAdded   {boolean}   Determines if the number is to be added or deleted.
+         * @param isAdded   {boolean}   Determines if rooms are to be added or deleted.
          */
-        private void updateRoomCount(JComboBox<Integer> cmbRoom, JButton btnUpdate,
-            String type, boolean isAdded)
+        private ActionListener updateRoomCount(String type, boolean isAdded)
         {
-            cmbRoom.addActionListener(e ->
+            return (ActionEvent e) ->
             {
                 /* Setup */
 
                     // Gets the hotel.
-                    Hotel h = db.getHotel((String) cmbHotel.getSelectedItem());
+                    Hotel h = db.getHotel(mhUI.getValue("cmbHotels"));
 
                     // Gets the number of rooms to be added/deleted.
-                    String numUpdated = (String) cmbRoom.getSelectedItem();
+                    String numUpdated = switch (type)
+                    {
+                        case "STANDARD" -> mhUI.getValue("txtStandardCnt");
+                        case "DELUXE" -> mhUI.getValue("txtDeluxeCnt");
+                        case "EXECUTIVE" -> mhUI.getValue("txtExecutive");
+                        default -> "";
+                    };
 
                     // Gets the error message.
                     String errorMessage;
@@ -330,6 +335,6 @@ public class ManageHotelCO
                             mfUI.reopenPage();
                         }
                     }
-            });
+            };
         }
 }

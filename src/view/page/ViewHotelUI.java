@@ -78,7 +78,6 @@ public final class ViewHotelUI extends JBlackPanel
             initializeComps();
             configureComps();
             addCompsToPanel();
-            addCompsToHashMap();
         }
 
     /* -------------------------------------------------------------------------- */
@@ -209,23 +208,6 @@ public final class ViewHotelUI extends JBlackPanel
             add(cmbReservations);
             
             add(pnlScrollTable);
-        }
-
-        /**
-         * Adds components to the component hashmap.
-         */
-        @Override
-        protected void addCompsToHashMap()
-        {
-            componentHashMap.put("btnBack", btnBack);
-
-            componentHashMap.put("cmbHotels", cmbHotels);
-            componentHashMap.put("cmbAvailDates", cmbAvailDates);
-            componentHashMap.put("cmbRooms", cmbRooms);
-            componentHashMap.put("cmbAvailNights", cmbAvailNights);
-            componentHashMap.put("cmbReservations", cmbReservations);
-
-            componentHashMap.put("pnlScrollTable", pnlScrollTable);
         }
 
     /* -------------------------------------------------------------------------- */
