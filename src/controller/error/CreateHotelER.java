@@ -5,7 +5,7 @@
  * Handles errors in hotel creation.
  */
 
-package service.error;
+package controller.error;
 
 import model.Database;
 

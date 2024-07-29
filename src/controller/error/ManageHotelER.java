@@ -5,7 +5,7 @@
  * Handles errors in hotel management.
  */
 
-package service.error;
+package controller.error;
 
 import model.*;
 

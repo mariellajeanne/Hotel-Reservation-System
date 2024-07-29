@@ -9,8 +9,9 @@ package controller.page;
 
 import java.util.ArrayList;
 import javax.swing.*;
+
+import controller.error.ManageHotelER;
 import model.*;
-import service.error.ManageHotelER;
 import view.frame.MainFrameUI;
 import view.page.ManageHotelUI;
 

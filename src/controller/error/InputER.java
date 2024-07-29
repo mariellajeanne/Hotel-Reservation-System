@@ -5,7 +5,7 @@
  * Handles input errors.
  */
 
-package service.error;
+package controller.error;
 
 import model.Database;
 

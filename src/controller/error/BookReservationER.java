@@ -12,7 +12,7 @@
  * Uses model.Room
  */
 
-package service.error;
+package controller.error;
 
 import model.Hotel;
 import model.Room;

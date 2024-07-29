@@ -8,11 +8,12 @@
 package controller.page;
 
 import javax.swing.*;
+
+import controller.error.BookReservationER;
 import model.Database;
 import model.Hotel;
 import model.Reservation;
 import model.Room;
-import service.error.BookReservationER;
 import view.frame.MainFrameUI;
 import view.page.BookReservationUI;
 import java.awt.*;
@@ -75,8 +76,8 @@ public class BookReservationCO
                 /* Setup */
 
                     // Gets the inputted details.
-                    String guest = (String) (JTextField)brUI.getComp("txtGuest").getText();
-                    Hotel hotel = db.getHotel((String) cmbHotel.getSelectedItem());
+                    String guest = (String) ((JTextField)brUI.getComp("txtGuest")).getText();
+                    Hotel hotel = db.getHotel((String) ((JComboBox)brUI).getSelectedItem());
                     String type = (String) cmbRoomType.getSelectedItem();
                     int checkIn = (int) cmbCheckIn.getSelectedItem();
                     int checkOut = (int) cmbCheckOut.getSelectedItem();
