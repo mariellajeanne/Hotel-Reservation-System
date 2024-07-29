@@ -43,6 +43,7 @@ public class CreateHotelCO
             mfUI = MainFrameUI.getInstance();
             db = Database.getInstance();
 
+            handleBack();
             handleCreateHotel();
         }
 
@@ -61,6 +62,17 @@ public class CreateHotelCO
     /* -------------------------------------------------------------------------- */
     /*                               EVENT LISTENERS                              */
     /* -------------------------------------------------------------------------- */
+
+        /**
+         * Handles going back.
+         */
+        private void handleBack()
+        {
+            chUI.setActionListener("btnBack", (ActionEvent e) ->
+            {
+                mfUI.openPage("HOTEL_HUB");
+            });
+        }
 
         /**
          * Handles hotel creation.

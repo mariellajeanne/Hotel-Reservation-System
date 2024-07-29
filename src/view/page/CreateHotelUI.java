@@ -159,15 +159,15 @@ public final class CreateHotelUI extends JBlackPanel
          */
         public String getValue(String componentID)
         {
-            switch (componentID)
+            return switch (componentID)
             {
-                case "txtName" -> {return txtName.getText();}
-                case "txtStandard" -> {return txtStandard.getText();}
-                case "txtDeluxe" -> {return txtDeluxe.getText();}
-                case "txtExecutive" -> {return txtExecutive.getText();}
-                case "txtPrice" -> {return txtPrice.getText();}
-                default -> {return "";}
-            }
+                case "txtName"      -> txtName.getText();
+                case "txtStandard"  -> txtStandard.getText();
+                case "txtDeluxe"    -> txtDeluxe.getText();
+                case "txtExecutive" -> txtExecutive.getText();
+                case "txtPrice"     -> txtPrice.getText();
+                default             -> "";
+            };
         }
 
     /* -------------------------------------------------------------------------- */
@@ -196,7 +196,8 @@ public final class CreateHotelUI extends JBlackPanel
         {
             switch (componentID)
             {
-                case "btnCreate" -> {btnCreate.addActionListener(a);}
+                case "btnCreate"    -> {btnCreate.addActionListener(a);}
+                case "btnBack"      -> {btnBack.addActionListener(a);}
             }
         }
     

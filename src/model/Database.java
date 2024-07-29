@@ -25,6 +25,7 @@ public class Database
         private Hotel hotel;                    // The hotel currently being handled.
         private Room room;                      // The room currently being handled.
         private Reservation reservation;        // The reservation currently being handled.
+        private int date;                       // The date currently being handled.
 
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
@@ -126,6 +127,16 @@ public class Database
         {
             return this.reservation;
         }
+
+        /**
+         * Returns the date currently being handled.
+         * 
+         * @param date {int} The date.
+         */
+        public int getDate()
+        {
+            return this.date;
+        }
     
     /* -------------------------------------------------------------------------- */
     /*                                   SETTERS                                  */
@@ -159,6 +170,16 @@ public class Database
         public void setReservation(Reservation r)
         {
             this.reservation = r;
+        }
+
+        /**
+         * Sets the date to be currently handled.
+         * 
+         * @param d {int} The date.
+         */
+        public void setDate(int d)
+        {
+            this.date = d;
         }
 
     /* -------------------------------------------------------------------------- */

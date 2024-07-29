@@ -8,10 +8,7 @@
 package view.page;
 
 import java.awt.event.ActionListener;
-import java.util.HashMap;
-import javax.swing.*;
 import model.*;
-import view.frame.MainFrameUI;
 import view.util.*;
 
 /**
@@ -26,7 +23,6 @@ public final class ManageHotelUI extends JBlackPanel
         /* Class instances */
 
             private static ManageHotelUI mhUI;
-            private static MainFrameUI mfUI;
             private static Database db;
 
         /* Components */
@@ -79,7 +75,6 @@ public final class ManageHotelUI extends JBlackPanel
         private ManageHotelUI()
         {
             db = Database.getInstance();
-            mfUI = MainFrameUI.getInstance();
      
             initializeComps();
             configureComps();
@@ -115,10 +110,17 @@ public final class ManageHotelUI extends JBlackPanel
             txtExecutiveCnt = new JCommonTextField();
             txtChangePrice = new JCommonTextField();
             txtChangeRate = new JCommonTextField();
-        
+            
+            // TODO select item by default
+            // TODO when picking reservation, dont break down string
+
             cmbHotels = new JCommonComboBox<>(db.getHotelNames());
-            cmbReservations = new JCommonComboBox<>(db.getHotel().getReservationCodes());
             cmbNights = new JCommonComboBox<>(Reservation.getReservationNights());
+
+            if (db.getHotel().getReservationCodes().length != 0)
+                cmbReservations = new JCommonComboBox<>(db.getHotel().getReservationCodes());
+            else
+                cmbReservations = new JCommonComboBox<>();
             
             btnSaveName = new JSmallButton("Save", 1);
             btnSavePrice = new JSmallButton("Save", 1);
@@ -246,21 +248,21 @@ public final class ManageHotelUI extends JBlackPanel
          * @param componentID   {String}    The component ID.
          * @return              {JComponent}
          */
-        @Override
         public String getValue(String componentID)
         {
-            switch (componentID)
+            return switch (componentID)
             {
-                case "txtChangeName" -> {return txtChangeName.getText();}
-                case "txtStandardCnt" -> {return txtStandardCnt.getText();}
-                case "txtDeluxeCnt" -> {return txtDeluxeCnt.getText();}
-                case "txtExecutiveCnt" -> {return txtExecutiveCnt.getText();}
-                case "txtChangePrice" -> {return txtChangePrice.getText();}
-                case "txtChangeRate" -> {return txtChangeRate.getText();}
-                case "cmbHotels" -> {return (String) cmbHotels.getSelectedItem();}
-                case "cmbReservations" -> {return (String) cmbReservations.getSelectedItem();}
-                case "cmbNights" -> {return (String) cmbNights.getSelectedItem();}
-            }
+                case "txtChangeName"    -> txtChangeName.getText();
+                case "txtStandardCnt"   -> txtStandardCnt.getText();
+                case "txtDeluxeCnt"     -> txtDeluxeCnt.getText();
+                case "txtExecutiveCnt"  -> txtExecutiveCnt.getText();
+                case "txtChangePrice"   -> txtChangePrice.getText();
+                case "txtChangeRate"    -> txtChangeRate.getText();
+                case "cmbHotels"        -> (String) cmbHotels.getSelectedItem();
+                case "cmbReservations"  -> (String) cmbReservations.getSelectedItem();
+                case "cmbNights"        -> (String) cmbNights.getSelectedItem();
+                default                 -> "";
+            };
         }
 
     /* -------------------------------------------------------------------------- */
@@ -278,17 +280,19 @@ public final class ManageHotelUI extends JBlackPanel
         {
             switch (componentID)
             {
-                case "btnSaveName" -> {btnSaveName.addActionListener(a);}
-                case "btnSavePrice" -> {btnSavePrice.addActionListener(a);}
-                case "btnSaveRate" -> {btnSaveRate.addActionListener(a);}
-                case "btnAddStandard" -> {btnAddStandard.addActionListener(a);}
-                case "btnAddDeluxe" -> {btnAddDeluxe.addActionListener(a);}
-                case "btnAddExecutive" -> {btnAddExecutive.addActionListener(a);}
-                case "btnDeleteHotel" -> {btnDeleteHotel.addActionListener(a);}
-                case "btnDeleteStandard" -> {btnDeleteStandard.addActionListener(a);}
-                case "btnDeleteDeluxe" -> {btnDeleteDeluxe.addActionListener(a);}
-                case "btnDeleteExecutive" -> {btnDeleteExecutive.addActionListener(a);}
+                case "cmbHotels"            -> {cmbHotels.addActionListener(a);}
+                case "btnSaveName"          -> {btnSaveName.addActionListener(a);}
+                case "btnSavePrice"         -> {btnSavePrice.addActionListener(a);}
+                case "btnSaveRate"          -> {btnSaveRate.addActionListener(a);}
+                case "btnAddStandard"       -> {btnAddStandard.addActionListener(a);}
+                case "btnAddDeluxe"         -> {btnAddDeluxe.addActionListener(a);}
+                case "btnAddExecutive"      -> {btnAddExecutive.addActionListener(a);}
+                case "btnDeleteHotel"       -> {btnDeleteHotel.addActionListener(a);}
+                case "btnDeleteStandard"    -> {btnDeleteStandard.addActionListener(a);}
+                case "btnDeleteDeluxe"      -> {btnDeleteDeluxe.addActionListener(a);}
+                case "btnDeleteExecutive"   -> {btnDeleteExecutive.addActionListener(a);}
                 case "btnDeleteReservation" -> {btnDeleteReservation.addActionListener(a);}
+                case "btnBack"              -> {btnBack.addActionListener(a);}
             }
         }
 

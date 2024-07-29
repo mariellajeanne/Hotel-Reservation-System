@@ -45,7 +45,8 @@ public class BookReservationCO
             mfUI = MainFrameUI.getInstance();
             db = Database.getInstance();
 
-            handleBookBtn();
+            handleBack();
+            handleBookReservation();
         }
 
         /**
@@ -65,9 +66,20 @@ public class BookReservationCO
     /* -------------------------------------------------------------------------- */
 
         /**
+         * Handles going back.
+         */
+        private void handleBack()
+        {
+            brUI.setActionListener("btnBack", (ActionEvent e) ->
+            {
+                mfUI.openPage("HOTEL_HUB");
+            });
+        }
+
+        /**
          * Handles reservation booking.
          */
-        private void handleBookBtn()
+        private void handleBookReservation()
         {
             brUI.setActionListener("btnBook", (ActionEvent e) ->
             {

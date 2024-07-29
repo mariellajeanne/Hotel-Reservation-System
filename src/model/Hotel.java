@@ -128,26 +128,41 @@ public class Hotel
         }
 
         /**
-         * Returns an array of the available rooms.
+         * Returns an array of the room numbers.
          * 
          * @return {Integer[]}
          */
-        public Integer[] getAvailableRooms()
+        public Integer[] getRoomNumbers()
         {
-            int numOfAvailRooms = getNumOfAvailRooms("STANDARD") + 
-                getNumOfAvailRooms("DELUXE") +
-                getNumOfAvailRooms("EXECUTIVE");
+            Integer [] numbers = new Integer[rooms.size()];
 
-            Integer[] availRooms = new Integer[numOfAvailRooms];
+            for (int i = 0; i < numbers.length; i++)
+                numbers[i] = i + 1;
 
-            for (int i = 0; i < numOfAvailRooms; i++)
-            {
-                if (rooms.get(i).getReservations().isEmpty())
-                    availRooms[i] = rooms.get(i).getNumber();
-            }
-
-            return availRooms;
+            return numbers;
         }
+
+        // /**
+        //  * Returns an array of the available rooms.
+        //  * 
+        //  * @return {Integer[]}
+        //  */
+        // public Integer[] getAvailableRooms()
+        // {
+        //     int numOfAvailRooms = getNumOfAvailRooms("STANDARD") + 
+        //         getNumOfAvailRooms("DELUXE") +
+        //         getNumOfAvailRooms("EXECUTIVE");
+
+        //     Integer[] availRooms = new Integer[numOfAvailRooms];
+
+        //     for (int i = 0; i < numOfAvailRooms; i++)
+        //     {
+        //         if (rooms.get(i).getReservations().isEmpty())
+        //             availRooms[i] = rooms.get(i).getNumber();
+        //     }
+
+        //     return availRooms;
+        // }
 
         /**
          * Returns the total number of rooms without reservations.
@@ -264,7 +279,7 @@ public class Hotel
          * 
          * @param r {Room} The room.
          */
-        public void adDeluxe(Room r)
+        public void addRoom(Room r)
         {
             this.rooms.add(r);
         }

@@ -8,7 +8,7 @@
 package view.page;
 
 import java.awt.*;
-import java.util.HashMap;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import model.*;
@@ -27,10 +27,6 @@ public final class ViewHotelUI extends JBlackPanel
 
             private static ViewHotelUI vhUI;
             private static Database db;
-
-        /* Component hashmap */
-        
-            private HashMap<String, JComponent> componentHashMap;
 
         /* Components */
 
@@ -55,7 +51,7 @@ public final class ViewHotelUI extends JBlackPanel
             private JCommonLabel lblResPricePerNight;
 
             private JCommonComboBox<String> cmbHotels;
-            private JCommonComboBox<Integer> cmbAvailDates;
+            private JCommonComboBox<Integer> cmbDates;
             private JCommonComboBox<Integer> cmbRooms;
             private JCommonComboBox<String> cmbReservations;
             private JCommonComboBox<Integer> cmbAvailNights;
@@ -93,8 +89,7 @@ public final class ViewHotelUI extends JBlackPanel
             Hotel h = db.getHotel();
             Room room = db.getRoom();
             Reservation res =  db.getReservation();
-        
-            componentHashMap  = new HashMap<>();
+            
             pnlTitle = new JTitlePanel("View Hotel");
             btnBack = new JBackButton();
             
@@ -102,8 +97,8 @@ public final class ViewHotelUI extends JBlackPanel
             lblNumRooms = new JCommonLabel("Number of rooms: " + h.getRooms().size(), 0,false);
             lblEstEarnings = new JCommonLabel("Estimated earnings: " + h.getTotalEarnings(), 0,false);
             lblRoomAvailability = new JCommonLabel("Room availability of date:", 1,false);
-            lblAvailRoomCnt = new JCommonLabel("Number of rooms available: " + h.getNumOfAvailRooms(), 0,false);
-            lblRoomTypeCnt = new JCommonLabel("Number of rooms booked: " + h.getNumOfBookedRooms(), 0,false);
+            lblAvailRoomCnt = new JCommonLabel("Number of rooms available: " + h.getNumOfAvailRooms(), 0,false); // TODO consider date
+            lblRoomTypeCnt = new JCommonLabel("Number of rooms booked: " + h.getNumOfBookedRooms(), 0,false); // TODO consider date
             lblRoom = new JCommonLabel("ROOM:", 1,true);
             lblRoomType = new JCommonLabel("Type: " + room.getType(), 0,false);
             lblPricePerNight = new JCommonLabel("Price per night: " + room.getNightlyPrice(), 0,false);
@@ -117,6 +112,7 @@ public final class ViewHotelUI extends JBlackPanel
                 lblCheckInAndOut = new JCommonLabel("Check-in and check-out: " + res.getCheckInAndOut(), 0,false);
                 lblResPrice = new JCommonLabel("Price (w/discount if any): " + res.getTotalPrice(), 0,false);
                 lblResPricePerNight = new JCommonLabel("Price per night: " + res.getRoom().getNightlyPrice(), 0,false);
+                cmbReservations = new JCommonComboBox<>(db.getRoom().getReservationCodes());
             }
             else
             {
@@ -125,12 +121,12 @@ public final class ViewHotelUI extends JBlackPanel
                 lblCheckInAndOut = new JCommonLabel("Check-in and check-out: N/A", 0,false);
                 lblResPrice = new JCommonLabel("Price (w/discount if any): N/A", 0,false);
                 lblResPricePerNight = new JCommonLabel("Price per night: N/A", 0,false);
+                cmbReservations = new JCommonComboBox<>();
             }
             
             cmbHotels = new JCommonComboBox<>(db.getHotelNames());
-            cmbAvailDates = new JCommonComboBox<>(Reservation.getReservationDates(true));
-            cmbRooms = new JCommonComboBox<>(db.getHotel().getAvailableRooms());
-            cmbReservations = new JCommonComboBox<>(db.getRoom().getReservationCodes());
+            cmbDates = new JCommonComboBox<>(Reservation.getReservationDates(true));
+            cmbRooms = new JCommonComboBox<>(db.getHotel().getRoomNumbers());
             cmbAvailNights = new JCommonComboBox<>(db.getRoom().getAvailableNights());
             
             pnlScrollTable = new JPanel(new GridLayout(1,1));
@@ -162,7 +158,7 @@ public final class ViewHotelUI extends JBlackPanel
             lblResPricePerNight.setBounds(1010,556,lblResPricePerNight.getPreferredSize().width,43);
 
             cmbHotels.setBounds(372,249,396,29);
-            cmbAvailDates.setBounds(711,440,63,29);
+            cmbDates.setBounds(711,440,63,29);
             cmbRooms.setBounds(351,683,63,29);
             cmbAvailNights.setBounds(546,877,63,29);
             cmbReservations.setBounds(1273,251,272,29);
@@ -202,7 +198,7 @@ public final class ViewHotelUI extends JBlackPanel
             add(lblResPricePerNight);
             
             add(cmbHotels);
-            add(cmbAvailDates);
+            add(cmbDates);
             add(cmbRooms);
             add(cmbAvailNights);
             add(cmbReservations);
@@ -227,19 +223,48 @@ public final class ViewHotelUI extends JBlackPanel
         }
 
         /**
-         * Returns a component given the component ID.
+         * Returns the input of a component.
          *
          * @param componentID   {String}    The component ID.
          * @return              {JComponent}
          */
-        @Override
-        public JComponent getComp(String componentID)
+        public String getValue(String componentID)
         {
-            return componentHashMap.get(componentID);
+            return switch (componentID)
+            {
+                case "cmbHotels"        -> (String) cmbHotels.getSelectedItem();
+                case "cmbDates"         -> (String) cmbDates.getSelectedItem();
+                case "cmbRooms"         -> (String) cmbRooms.getSelectedItem();
+                case "cmbReservations"  -> (String) cmbReservations.getSelectedItem();
+                default                 -> "";
+            };
         }
 
     /* -------------------------------------------------------------------------- */
-    /*                                MANIPULATORS                                */
+    /*                                   SETTERS                                  */
+    /* -------------------------------------------------------------------------- */
+
+        /**
+         * Sets the action listener of a component.
+         * 
+         * @param componentID   {String}            The component ID.
+         * @param a             {ActionListener}    The action listener.
+         */
+        @Override
+        public void setActionListener(String componentID, ActionListener a)
+        {
+            switch (componentID)
+            {
+                case "cmbHotels"        -> {cmbHotels.addActionListener(a);}
+                case "cmbDates"         -> {cmbDates.addActionListener(a);}
+                case "cmbRooms"         -> {cmbRooms.addActionListener(a);}
+                case "cmbReservations"  -> {cmbReservations.addActionListener(a);}
+                case "btnBack"          -> {btnBack.addActionListener(a);}
+            }
+        }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                  UPDATERS                                  */
     /* -------------------------------------------------------------------------- */
 
         /**

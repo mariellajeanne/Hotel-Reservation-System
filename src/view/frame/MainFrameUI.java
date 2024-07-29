@@ -83,6 +83,7 @@ public class MainFrameUI extends JFrame
             {
                 db.setHotel(db.getHotels().get(0));
                 db.setRoom(db.getHotel().getRooms().get(0));
+                db.setDate(1);
 
                 if (!db.getRoom().getReservations().isEmpty())
                     db.setReservation(db.getRoom().getReservations().get(0));

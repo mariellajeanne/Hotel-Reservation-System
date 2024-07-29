@@ -148,10 +148,10 @@ public final class HotelHubUI extends JBlackPanel
         {
             switch (componentID)
             {
-                case "btnCreateHotel" -> {btnCreateHotel.addActionListener(a);}
-                case "btnViewHotel" -> {btnViewHotel.addActionListener(a);}
-                case "btnManageHotel" -> {btnManageHotel.addActionListener(a);}
-                case "btnBook" -> {btnBook.addActionListener(a);}
+                case "btnCreateHotel"   -> {btnCreateHotel.addActionListener(a);}
+                case "btnViewHotel"     -> {btnViewHotel.addActionListener(a);}
+                case "btnManageHotel"   -> {btnManageHotel.addActionListener(a);}
+                case "btnBook"          -> {btnBook.addActionListener(a);}
             }
         }
 

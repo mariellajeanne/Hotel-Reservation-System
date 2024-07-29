@@ -174,16 +174,16 @@ public final class BookReservationUI extends JBlackPanel
          */
         public String getValue(String componentID)
         {
-            switch (componentID)
-            {
-                case "txtGuest" -> {return txtGuest.getText();}
-                case "cmbHotels" -> {return (String) cmbHotels.getSelectedItem();}
-                case "cmbRoomTypes" -> {return (String) cmbRoomTypes.getSelectedItem();}
-                case "cmbCheckIn" -> {return (String) cmbCheckIn.getSelectedItem();}
-                case "cmbCheckOut" -> {return (String) cmbCheckOut.getSelectedItem();}
-                case "txtCode" -> {return txtCode.getText();}
-                default -> {return "";}
-            }
+            return switch (componentID)
+            {   
+                case "txtGuest"     -> txtGuest.getText();
+                case "cmbHotels"    -> (String) cmbHotels.getSelectedItem();
+                case "cmbRoomTypes" -> (String) cmbRoomTypes.getSelectedItem();
+                case "cmbCheckIn"   -> (String) cmbCheckIn.getSelectedItem();
+                case "cmbCheckOut"  -> (String) cmbCheckOut.getSelectedItem();
+                case "txtCode"      -> txtCode.getText();
+                default -> "";
+            };
         }
 
     /* -------------------------------------------------------------------------- */
@@ -212,7 +212,8 @@ public final class BookReservationUI extends JBlackPanel
         {
             switch (componentID)
             {
-                case "btnBook" -> {btnBook.addActionListener(a);}
+                case "btnBook"  -> {btnBook.addActionListener(a);}
+                case "btnBack"  -> {btnBack.addActionListener(a);}
             }
         }
 

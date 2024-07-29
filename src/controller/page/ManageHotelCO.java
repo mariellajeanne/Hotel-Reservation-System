@@ -44,6 +44,7 @@ public class ManageHotelCO
             mfUI = MainFrameUI.getInstance();
             db = Database.getInstance();
 
+            handleBack();
             handleDeleteHotel();
             handleChangeName();
             handleRoomCount();
@@ -67,6 +68,25 @@ public class ManageHotelCO
     /* -------------------------------------------------------------------------- */
     /*                               EVENT LISTENERS                              */
     /* -------------------------------------------------------------------------- */
+
+        /**
+         * Handles going back.
+         */
+        private void handleBack()
+        {
+            mhUI.setActionListener("btnBack", (ActionEvent e) ->
+            {
+                mfUI.openPage("HOTEL_HUB");
+            });
+        }
+
+        /**
+         * Handles hotel selection.
+         */
+        private void handleSelectHotel()
+        {
+            
+        }
 
         /**
          * Handles hotel deletion.
