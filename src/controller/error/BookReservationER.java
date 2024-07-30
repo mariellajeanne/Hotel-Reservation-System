@@ -113,18 +113,26 @@ public class BookReservationER
          */
         private boolean checkAvailability(Hotel h, String type, int checkIn, int checkOut)
         {
+            boolean hasType = false; // Checks if the chosen room type exists.
+
+            // Loops through each room.
             for (Room r : h.getRooms())
             {
+                // Checks if the room type matches the inputted type.
                 if (r.getType().equals(type))
                 {
+                    // The desired room type has been found.
+                    hasType = true;
+
+                    // Checks the date availability of the room.
                     for (int i = checkIn; i < checkOut; i++)
                     {
-                        if (r.getReservedDates().contains(i))
+                        if (r.getReservedDates().contains((Integer) i))
                             return false;
                     }
                 }
             }
-            return true;
+            return hasType;
         }
 
         /**

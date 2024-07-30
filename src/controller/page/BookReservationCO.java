@@ -145,9 +145,9 @@ public class BookReservationCO
                 if (room.getType().equals(type))
                 {   
                     // Checks if the reservation dates are available.
-                    for (int j = checkIn; j < checkOut; j++)
+                    for (int i = checkIn; i < checkOut; i++)
                     {
-                        if (room.getReservedDates().contains(j))
+                        if (room.getReservedDates().contains((Integer) i))
                             isAvailable = false;
                     }
 
