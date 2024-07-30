@@ -30,9 +30,10 @@ public class JCommonComboBox<E> extends JComboBox<E>
         public JCommonComboBox(int x, int y, int w, int h)
         {
             setBackground(Color.WHITE);
-            setFont(new Font("Arial", Font.PLAIN, 20));
+            setFont(new Font("Arial", Font.PLAIN, (int) (20 * Scale.MIN)));
             setForeground(Color.decode("#26282e"));
-            setBounds(x, y, w, h);
+            setBounds(  (int) (x * Scale.X), (int) (y * Scale.Y),
+                        (int) (w * Scale.X), (int) (h * Scale.Y));
         }
 
         /**
@@ -48,9 +49,10 @@ public class JCommonComboBox<E> extends JComboBox<E>
         {
             super(items);
             setBackground(Color.WHITE);
-            setFont(new Font("Arial", Font.PLAIN, 20));
+            setFont(new Font("Arial", Font.PLAIN, (int) (20 * Scale.MIN)));
             setForeground(Color.decode("#26282e"));
-            setBounds(x, y, w, h);
+            setBounds((int) (x * Scale.X), (int) (y * Scale.Y),
+                    (int) (w * Scale.X), (int) (h * Scale.Y));
         }
 
     /* -------------------------------------------------------------------------- */

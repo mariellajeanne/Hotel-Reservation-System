@@ -51,10 +51,10 @@ public final class ViewHotelUI extends JBlackPanel
             private JCommonLabel lblResPricePerNight;
 
             private JCommonComboBox<String> cmbHotels;
-            private JCommonComboBox<Integer> cmbDates;
-            private JCommonComboBox<Integer> cmbRooms;
+            private JCommonComboBox<String> cmbDates;
+            private JCommonComboBox<String> cmbRooms;
             private JCommonComboBox<String> cmbReservations;
-            private JCommonComboBox<Integer> cmbAvailNights;
+            private JCommonComboBox<String> cmbAvailNights;
 
             private JPanel pnlScrollTable;
             private JScrollPane scrScroll;
@@ -99,8 +99,8 @@ public final class ViewHotelUI extends JBlackPanel
         @Override
         protected void initializeComps()
         {
-            pnlTitle = new JTitlePanel("View Hotel");
             btnBack = new JBackButton();
+            pnlTitle = new JTitlePanel("View Hotel");
             
             lblHotel = new JCommonLabel("HOTEL:", 1,true);
             lblNumRooms = new JCommonLabel(0,false);
@@ -135,7 +135,8 @@ public final class ViewHotelUI extends JBlackPanel
 
             pnlScrollTable = new JPanel(new GridLayout(1,1));
             pnlScrollTable.add(scrScroll);
-            pnlScrollTable.setBounds(1010,618,536,290);
+            pnlScrollTable.setBounds((int) (1010 * Scale.X), (int) (618 * Scale.Y),
+                                    (int) (536 * Scale.X),(int) (290 * Scale.Y));
         }
 
         /**
@@ -144,22 +145,22 @@ public final class ViewHotelUI extends JBlackPanel
         @Override
         protected void configureComps()
         {
-            lblHotel.setBounds(200,249,lblHotel.getPreferredSize().width,30);
-            lblNumRooms.setBounds(250,308,lblNumRooms.getPreferredSize().width,39);
-            lblEstEarnings.setBounds(250,371,lblEstEarnings.getPreferredSize().width,38);
-            lblRoomAvailability.setBounds(250,432,441,43);
-            lblAvailRoomCnt.setBounds(304,493,lblAvailRoomCnt.getPreferredSize().width,43);
-            lblBookedRoomCnt.setBounds(304,556,lblBookedRoomCnt.getPreferredSize().width,43);
-            lblRoom.setBounds(200,681,lblRoom.getPreferredSize().width,31);
-            lblRoomType.setBounds(248,743,lblRoomType.getPreferredSize().width,43);
-            lblPricePerNight.setBounds(248,806, lblPricePerNight.getPreferredSize().width,43);
-            lblAvailNights.setBounds(248,868, lblAvailNights.getPreferredSize().width,43);
-            lblReservation.setBounds(960,249,lblReservation.getPreferredSize().width,31);
-            lblGuestName.setBounds(1010,308, lblGuestName.getPreferredSize().width,43);
-            lblRoomDetails.setBounds(1010,371, lblRoomDetails.getPreferredSize().width,43);
-            lblCheckInAndOut.setBounds(1010,435, lblCheckInAndOut.getPreferredSize().width,43);
-            lblResPrice.setBounds(1010,494, lblResPrice.getPreferredSize().width,43);
-            lblResPricePerNight.setBounds(1010,556,lblResPricePerNight.getPreferredSize().width,43);
+            lblHotel.setSizePos(200,249,30);
+            lblNumRooms.setSizePos(250,308,39);
+            lblEstEarnings.setSizePos(250,371,38);
+            lblRoomAvailability.setSizePos(250,432,43);
+            lblAvailRoomCnt.setSizePos(304,493,43);
+            lblBookedRoomCnt.setSizePos(304,556,43);
+            lblRoom.setSizePos(200,681,31);
+            lblRoomType.setSizePos(248,743,43);
+            lblPricePerNight.setSizePos(248,806,43);
+            lblAvailNights.setSizePos(248,868,43);
+            lblReservation.setSizePos(960,249,31);
+            lblGuestName.setSizePos(1010,308,43);
+            lblRoomDetails.setSizePos(1010,371,43);
+            lblCheckInAndOut.setSizePos(1010,435,43);
+            lblResPrice.setSizePos(1010,494,43);
+            lblResPricePerNight.setSizePos(1010,556,43);
 
             // Stores the hotel, room, and reservation being currently handled.
             Hotel h = db.getHotel();
@@ -238,8 +239,8 @@ public final class ViewHotelUI extends JBlackPanel
         @Override
         protected void addCompsToPanel()
         {
-            add(pnlTitle);
             add(btnBack);
+            add(pnlTitle);
             
             add(lblHotel);
             add(lblNumRooms);
@@ -288,6 +289,8 @@ public final class ViewHotelUI extends JBlackPanel
                 case "cmbReservations"  -> (String) cmbReservations.getSelectedItem();
                 default                 -> "";
             };
+
+            // TODO FIX INTEGER CASTING
         }
 
         /**
@@ -318,12 +321,19 @@ public final class ViewHotelUI extends JBlackPanel
         }
 
         /**
+         * Resets values of text fields.
+         */
+        @Override
+        public void resetValues(){}
+
+        /**
          * Updates the page's component values.
          */
         @Override
         public void updateValues()
         {
             configureComps();
+            revalidate();
             repaint();
         }
 }

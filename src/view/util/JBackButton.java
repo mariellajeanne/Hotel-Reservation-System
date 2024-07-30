@@ -25,10 +25,11 @@ public class JBackButton extends JButton
         public JBackButton()
         {
             setText("Back");
-            setFont(new Font("Arial", Font.BOLD, 25));
+            setFont(new Font("Arial", Font.BOLD, (int) (25 * Scale.MIN)));
             setBackground(Color.WHITE);
             setForeground(Color.decode("#26282e"));
-            setBounds(70,70,150,40);
+            setBounds((int) (70 * Scale.X), (int) (70 * Scale.Y),
+                    (int) (150 * Scale.X), (int) (40 * Scale.Y));
             setHorizontalAlignment(SwingConstants.CENTER);
             setLayout(null);
         }

@@ -25,9 +25,12 @@ public abstract class JBlackPanel extends JPanel
          */
         public JBlackPanel()
         {
-            setBounds(0, 0, 1920, 1080);
+            int width = (int) (1920 * Scale.X);
+            int height = (int) (1080 * Scale.Y);
+
+            setBounds(0, 0, width, height);
             setBackground(Color.decode("#26282e"));
-            setLayout(new FlowLayout());
+            setLayout(null);
             setVisible(true);
         }
 
@@ -84,6 +87,11 @@ public abstract class JBlackPanel extends JPanel
     /* -------------------------------------------------------------------------- */
     /*                                  UPDATERS                                  */
     /* -------------------------------------------------------------------------- */
+
+        /**
+         * Resets values of text fields.
+         */
+        public abstract void resetValues();
 
         /**
          * Updates the page's component values.

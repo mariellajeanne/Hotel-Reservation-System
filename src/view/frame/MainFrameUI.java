@@ -7,10 +7,9 @@
 
 package view.frame;
 
+import java.awt.Color;
 import javax.swing.*;
 import model.Database;
-import model.Hotel;
-import model.Room;
 import view.page.*;
 
 /**
@@ -32,31 +31,29 @@ public class MainFrameUI extends JFrame
 
         private static Database db;             // The database.
 
-        private static String currentPage;      // The current page.
-
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
     /* -------------------------------------------------------------------------- */
 
+    // TODO SET TEXT FIELDS TO EMPTY WHEN GOING BACK OR ACTION PERFORMED
         /**
          * Constructs the frame of the system.
          */
         private MainFrameUI()
         {
+            db = Database.getInstance();
+
             brUI = BookReservationUI.getInstance();
             chUI = CreateHotelUI.getInstance();
             hhUI = HotelHubUI.getInstance();
             mhUI = ManageHotelUI.getInstance();
             vhUI = ViewHotelUI.getInstance();
-            db = Database.getInstance();
-
-            currentPage = "";
 
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            openPage("HOTEL_HUB");
+            setExtendedState(JFrame.MAXIMIZED_BOTH);
+            setBackground(Color.decode("#26282e"));
+            openPage("", "HOTEL_HUB");
             setVisible(true);
-
-            // TODO SET SIZE
         }
 
         /**
@@ -78,90 +75,50 @@ public class MainFrameUI extends JFrame
         /**
          * Opens a page.
          * 
-         * @param page {String} The page to open.
+         * @param close {String}    The page to close.
+         * @param open  {String}    The page to open.
          */
-        public final void openPage(String page)
+        public final void openPage(String close, String open)
         {
-            if (!currentPage.equals(""))
-                closePage();
+            closePage(close);
 
-            // Executes if the page had been changed.
-            if (!page.equals(currentPage))
-            {   
-                // Sets the hotel to null if there exists no hotel.
-                if (db.getHotels().isEmpty())
-                    db.setHotel(null);
-                
-                else
-                {
-                    Hotel hotel = db.getHotels().get(0);
-                    Room room = hotel.getRooms().get(0);
-                    
-                    // Sets the default chosen hotel to the first in the list.
-                    db.setHotel(hotel);
-
-                    // Sets the default chosen room to the hotel's first room.
-                    db.setRoom(room);
-
-                    // Sets the default chosen reservation to null if there exists no reservations.
-                    if (hotel.getNumOfReservations() == 0)
-                        db.setReservation(null);
-
-                    // Sets the default chosen reservation to the hotel's first reservation otherwise.
-                    else
-                    {
-                        boolean isFound = false;
-
-                        // Loops through each room.
-                        for (int i = 0; i < hotel.getRooms().size() && !isFound; i++)
-                        {
-                            Room r = hotel.getRooms().get(i);
-
-                            // Sets the reservation if found.
-                            if (!r.getReservations().isEmpty())
-                            {
-                                db.setReservation(r.getReservations().get(0));
-                                isFound = true;
-                            }
-                        }
-                    }
-                }
-            }
+            // Updates the database's default values if the page changed.
+            if (!close.equals(open))
+                db.updateDefaultValues();
 
             // Opens each page.
-            switch (page)
+            switch (open)
             {
                 case "BOOK_RESERVATION" ->
                 {
+                    add(brUI);
                     brUI.updateValues();
-                    getContentPane().add(brUI);
                 }
                 case "CREATE_HOTEL" -> 
-                {
+                {  
+                    add(chUI);
                     chUI.updateValues();
-                    getContentPane().add(chUI);
                 }
                 case "HOTEL_HUB" ->
                 {
+                    add(hhUI);
                     hhUI.updateValues();
-                    getContentPane().add(hhUI);
                 }
                 case "MANAGE_HOTEL" ->
                 {
+                    add(mhUI);
                     mhUI.updateValues();
-                    getContentPane().add(mhUI);
                 }
                 case "VIEW_HOTEL" ->
                 {
+                    add(vhUI);
                     vhUI.updateValues();
-                    getContentPane().add(vhUI);
                 }
                 default -> {}
             }
-
+    
             revalidate();
             repaint();
-            currentPage = page;
         }
 
         /**
@@ -169,25 +126,29 @@ public class MainFrameUI extends JFrame
          * 
          * @param page {String} The page to close.
          */
-        private void closePage()
+        private void closePage(String page)
         {
-            switch (currentPage)
+            switch (page)
             {
-                case "BOOK_RESERVATION" -> {getContentPane().remove(brUI);}
-                case "CREATE_HOTEL"     -> {getContentPane().remove(chUI);}
-                case "HOTEL_HUB"        -> {getContentPane().remove(hhUI);}
-                case "MANAGE_HOTEL"     -> {getContentPane().remove(mhUI);}
-                case "VIEW_HOTEL"       -> {getContentPane().remove(vhUI);}
+                case "BOOK_RESERVATION" -> {remove(brUI);}
+                case "CREATE_HOTEL"     -> {remove(chUI);}
+                case "HOTEL_HUB"        -> {remove(hhUI);}
+                case "MANAGE_HOTEL"     -> {remove(mhUI);}
+                case "VIEW_HOTEL"       -> {remove(vhUI);}
                 default -> {}
             }
+
+            revalidate();
+            repaint();
         }
         
         /**
          * Re-opens the current page.
+         * 
+         * @param page {String} The page to be re-opened.
          */
-        public void reopenPage()
+        public void reopenPage(String page)
         {
-            closePage();
-            openPage(currentPage);
+            openPage(page, page);
         }
 }

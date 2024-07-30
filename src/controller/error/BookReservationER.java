@@ -74,7 +74,7 @@ public class BookReservationER
             if (!cER.checkStringChars(guest, true))
                 return "Invalid guest name characters.";
             else if (!cER.checkStringLength(guest))
-                return "Guest name must have 1-20 characters.";
+                return "Guest name must have 1-50 characters.";
             else if (!checkDates(checkIn, checkOut))
                 return "Invalid reservation dates.";
             else if (!checkAvailability(h, type, checkIn, checkOut))
@@ -87,6 +87,8 @@ public class BookReservationER
     /* -------------------------------------------------------------------------- */
     /*                               HELPER CHECKERS                              */
     /* -------------------------------------------------------------------------- */
+
+        // TODO Deal with empty inputs
 
         /**
          * Checks if the check-in date check-out dates are valid.

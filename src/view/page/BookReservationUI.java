@@ -42,8 +42,8 @@ public final class BookReservationUI extends JBlackPanel
             private JCommonTextField txtCode;
             private JCommonComboBox<String> cmbHotels;
             private JCommonComboBox<String> cmbRoomTypes;
-            private JCommonComboBox<Integer> cmbCheckIn;
-            private JCommonComboBox<Integer> cmbCheckOut;
+            private JCommonComboBox<String> cmbCheckIn;
+            private JCommonComboBox<String> cmbCheckOut;
             
             private JBigButton btnBook;
 
@@ -85,8 +85,8 @@ public final class BookReservationUI extends JBlackPanel
         @Override
         protected void initializeComps()
         {
-            pnlTitle = new JTitlePanel("Book Reservation");
             btnBack = new JBackButton();
+            pnlTitle = new JTitlePanel("Book Reservation");
             
             lblGuest = new JCommonLabel("Guest:", 0, false);
             lblHotel = new JCommonLabel("Hotel:", 0, false);
@@ -113,19 +113,20 @@ public final class BookReservationUI extends JBlackPanel
         @Override
         protected void configureComps()
         {
-            lblGuest.setBounds(670, 300, lblGuest.getPreferredSize().width, 30);
-            lblHotel.setBounds(670, 361, lblHotel.getPreferredSize().width,30);
-            lblRoomType.setBounds(670,422,lblRoomType.getPreferredSize().width,38);
-            lblCheckIn.setBounds(670,482,254,31);
-            lblCheckOut.setBounds(670,542,278,31);
-            lblDiscountCode.setBounds(670,667,lblDiscountCode.getPreferredSize().width,30);
-            lblErrorMessage.setBounds(670,775, lblErrorMessage.getPreferredSize().width,
-            lblErrorMessage.getPreferredSize().height);
+            lblGuest.setSizePos(670,300,30);
+            lblHotel.setSizePos(670,361,30);
+            lblRoomType.setSizePos(670,422,38);
+            lblCheckIn.setSizePos(670,482,31);
+            lblCheckOut.setSizePos(670,542,31);
+            lblDiscountCode.setSizePos(670,667,30);
+            lblErrorMessage.setSizePos(670,775);
 
             if (!db.getHotels().isEmpty())
                 cmbHotels.setItems(db.getHotelNames());
             else
                 cmbHotels.removeAllItems();
+
+            // TODO set room types and check in / check out
         }
 
         /**
@@ -134,8 +135,8 @@ public final class BookReservationUI extends JBlackPanel
         @Override
         protected void addCompsToPanel()
         {
-            add(pnlTitle);
             add(btnBack);
+            add(pnlTitle);
             
             add(lblGuest);
             add(lblHotel);
@@ -211,12 +212,25 @@ public final class BookReservationUI extends JBlackPanel
         }
 
         /**
+         * Resets values of text fields.
+         */
+        @Override
+        public void resetValues()
+        {
+            txtGuest.setText("");
+            txtCode.setText("");
+            revalidate();
+            repaint();
+        }
+
+        /**
          * Updates the page's component values.
          */
         @Override
         public void updateValues()
         {
             configureComps();
+            revalidate();
             repaint();
         }
 }

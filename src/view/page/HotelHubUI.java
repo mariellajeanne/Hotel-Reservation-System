@@ -95,13 +95,13 @@ public final class HotelHubUI extends JBlackPanel
         @Override
         protected void configureComps()
         {
-            lblTitle.setFont(new Font("Arial", Font.BOLD, 250));
+            lblTitle.setFont(new Font("Arial", Font.BOLD, (int) (250 * Scale.MIN)));
             lblTitle.setForeground(Color.decode("#86d0f3"));
-            lblTitle.setLocation(382,196);
-            lblTitle.setSize(lblTitle.getPreferredSize().width, 182);
+            lblTitle.setLocation((int) (382 * Scale.X),(int) (196 * Scale.Y));
+            lblTitle.setSize((int) (lblTitle.getPreferredSize().width * 1.2), (int) (182 * Scale.Y));
 
-            lblAuthor1.setBounds(382, 440, 306, 39);
-            lblAuthor2.setBounds(382, 494, 470, 30);
+            lblAuthor1.setSizePos(382, 440, 39);
+            lblAuthor2.setSizePos(382, 494, 30);
 
             btnViewHotel.setEnabled(!db.getHotels().isEmpty());
             btnManageHotel.setEnabled(!db.getHotels().isEmpty());
@@ -165,12 +165,19 @@ public final class HotelHubUI extends JBlackPanel
         }
 
         /**
+         * Resets values of text fields.
+         */
+        @Override
+        public void resetValues(){}
+
+        /**
          * Updates the page's component values.
          */
         @Override
         public void updateValues()
         {   
             configureComps();
+            revalidate();
             repaint();
         }
 }

@@ -60,7 +60,7 @@ public class ManageHotelER
             if (!cER.checkStringChars(name, false))
                 return "No spaces must be at the first and last character.";
             else if (!cER.checkStringLength(name))
-                return "Hotel name must have 1-20 characters.";
+                return "Hotel name must have 1-50 characters.";
             else if (!cER.checkNameAvailability(name))
                 return "Hotel name already exists.";
             return "";

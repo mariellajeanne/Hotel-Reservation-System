@@ -9,7 +9,6 @@ package controller.page;
 
 import controller.error.CreateHotelER;
 import java.awt.event.*;
-import javax.swing.SwingUtilities;
 import model.Database;
 import model.Hotel;
 import view.frame.MainFrameUI;
@@ -44,11 +43,8 @@ public class CreateHotelCO
             mfUI = MainFrameUI.getInstance();
             db = Database.getInstance();
 
-            SwingUtilities.invokeLater(() ->
-            {
-                handleBack();
-                handleCreateHotel();
-            });
+            handleBack();
+            handleCreateHotel();
         }
 
         /**
@@ -74,7 +70,8 @@ public class CreateHotelCO
         {
             chUI.setActionListener("btnBack", (ActionEvent e) ->
             {
-                mfUI.openPage("HOTEL_HUB");
+                chUI.resetValues();
+                mfUI.openPage("CREATE_HOTEL", "HOTEL_HUB");
             });
         }
 
@@ -97,6 +94,9 @@ public class CreateHotelCO
                     // Gets the error message.
                     String errorMessage = chER.checkCreateHotel(name,
                         standard, deluxe, executive, price);
+                    
+                    // !DEBUGGING
+                    System.out.print("CreateHotelCO: " + errorMessage);
 
                 /* Update */
 
@@ -115,7 +115,8 @@ public class CreateHotelCO
                         db.addHotel(h);
 
                         // Updates the UI accordingly.
-                        mfUI.openPage("HOTEL_HUB");
+                        chUI.resetValues();
+                        mfUI.openPage("CREATE_HOTEL", "HOTEL_HUB");
                 }
             });
         }

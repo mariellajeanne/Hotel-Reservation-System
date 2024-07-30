@@ -31,17 +31,17 @@ public class JSmallButton extends JButton
         {
             // Sets the size of the small button.
             if (sizeMode == 0)
-                setSize(89, 30);
+                setSize((int) (89 * Scale.X), (int) (30 * Scale.Y));
             else if (sizeMode == 1)
-                setSize(120, 30);
+                setSize((int) (120 * Scale.X), (int) (30 * Scale.Y));
             
             // Configures the button.
             setText(text);
-            setFont(new Font("Arial", Font.BOLD, 25));
+            setFont(new Font("Arial", Font.BOLD, (int) (25 * Scale.MIN)));
             setBackground(Color.WHITE);
             setForeground(Color.decode("#26282e"));
             setHorizontalAlignment(SwingConstants.CENTER);
             setLayout(null);
-            setLocation(x, y);
+            setLocation((int) (x * Scale.X), (int) (y * Scale.Y));
         }
 }

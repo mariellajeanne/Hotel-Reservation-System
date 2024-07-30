@@ -9,7 +9,6 @@ package controller.page;
 
 import controller.error.BookReservationER;
 import java.awt.event.*;
-import javax.swing.SwingUtilities;
 import model.Database;
 import model.Hotel;
 import model.Reservation;
@@ -46,11 +45,8 @@ public class BookReservationCO
             mfUI = MainFrameUI.getInstance();
             db = Database.getInstance();
 
-            SwingUtilities.invokeLater(() ->
-            {
-                handleBack();
-                handleBookReservation();
-            });
+            handleBack();
+            handleBookReservation();
         }
 
         /**
@@ -76,7 +72,8 @@ public class BookReservationCO
         {
             brUI.setActionListener("btnBack", (ActionEvent e) ->
             {
-                mfUI.openPage("HOTEL_HUB");
+                brUI.resetValues();
+                mfUI.openPage("BOOK_RESERVATION", "HOTEL_HUB");
             });
         }
 
@@ -87,34 +84,38 @@ public class BookReservationCO
         {
             brUI.setActionListener("btnBook", (ActionEvent e) ->
             {
-                /* Setup */
+                if (!db.getHotels().isEmpty())
+                {
+                    /* Setup */
                 
-                    // Gets the inputted details.
-                    String guest = brUI.getValue("txtGuest");
-                    Hotel hotel = db.getHotel(brUI.getValue("cmbHotels"));
-                    String type = brUI.getValue("cmbRoomTypes");
-                    int checkIn = Integer.parseInt(brUI.getValue("cmbCheckIn"));
-                    int checkOut = Integer.parseInt(brUI.getValue("cmbCheckOut"));
-                    String code = brUI.getValue("txtCode");
-                    
-                    // Gets the error message.
-                    String errorMessage =
-                            brER.checkBookReservation(guest, hotel, type, checkIn, checkOut, code);
-
-                /* Update */
-                
-                    // Displays the error message if details are invalid.
-                    if (!errorMessage.equals(""))
-                        brUI.setErrorMessage(errorMessage);
-                    
-                    else
-                    {
-                        // Books a reservation if details are valid.
-                        bookReservation(guest, hotel, type, checkIn, checkOut, code);
+                        // Gets the inputted details.
+                        String guest = brUI.getValue("txtGuest");
+                        Hotel hotel = db.getHotel(brUI.getValue("cmbHotels"));
+                        String type = brUI.getValue("cmbRoomTypes");
+                        int checkIn = Integer.parseInt(brUI.getValue("cmbCheckIn"));
+                        int checkOut = Integer.parseInt(brUI.getValue("cmbCheckOut"));
+                        String code = brUI.getValue("txtCode");
                         
-                        // Updates the UI accordingly.
-                        mfUI.openPage("HOTEL_HUB");
-                    }
+                        // Gets the error message.
+                        String errorMessage =
+                                brER.checkBookReservation(guest, hotel, type, checkIn, checkOut, code);
+
+                    /* Update */
+                
+                        // Displays the error message if details are invalid.
+                        if (!errorMessage.equals(""))
+                            brUI.setErrorMessage(errorMessage);
+                        
+                        else
+                        {
+                            // Books a reservation if details are valid.
+                            bookReservation(guest, hotel, type, checkIn, checkOut, code);
+                            
+                            // Updates the UI accordingly.
+                            brUI.resetValues();
+                            mfUI.openPage("BOOK_RESERVATION", "HOTEL_HUB");
+                        }
+                }
             });
         }
 

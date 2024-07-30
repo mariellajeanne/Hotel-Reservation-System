@@ -34,13 +34,13 @@ public class JTitlePanel extends JPanel
         {
             // Configures the title label.
             this.lblTitle = new JLabel(text, SwingConstants.CENTER); 
-            this.lblTitle.setFont(new Font("Arial", Font.BOLD, 100));
+            this.lblTitle.setFont(new Font("Arial", Font.BOLD, (int) (100 * Scale.MIN)));
             this.lblTitle.setForeground(Color.decode("#86d0f3"));
 
             // Configures the panel.
             setBackground(Color.decode("#26282e"));
             setLayout(new BorderLayout());
             add(lblTitle, BorderLayout.CENTER);
-            setBounds(0, 100, 1920, getPreferredSize().height);
+            setBounds(0, (int) (100 * Scale.Y), (int) (1920 * Scale.X), getPreferredSize().height);
         }
 }

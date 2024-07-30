@@ -67,15 +67,28 @@ public class JCommonLabel extends JLabel
         }
 
         /**
-         * Sets the color labels' font style.
+         * Sets the common label's font style.
          * 
          * @param isBold {boolean} Determines if the font must be bold.
          */
         private void setFontStyle(boolean isBold)
         {
             if (!isBold)
-                setFont(new Font("Arial", Font.PLAIN, 40));
+                setFont(new Font("Arial", Font.PLAIN, (int) (40 * Scale.MIN)));
             else
-                setFont(new Font("Arial", Font.BOLD, 40));
+                setFont(new Font("Arial", Font.BOLD, (int) (40 * Scale.MIN)));
+        }
+
+        /**
+         * Sets the common label's size and position.
+         * 
+         * @param x {int} The x position.
+         * @param y {int} The y position.
+         * @param h {int} The height.
+         */
+        public void setSizePos(int x, int y, int h)
+        {
+            setBounds((int) (x * Scale.X), (int) (y * Scale.Y),
+                    (int) (getPreferredSize().width * 1.2), getPreferredSize().height);
         }
 }

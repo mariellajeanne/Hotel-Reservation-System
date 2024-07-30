@@ -10,7 +10,6 @@ package controller.page;
 import controller.error.ManageHotelER;
 import java.awt.event.*;
 import java.util.ArrayList;
-import javax.swing.SwingUtilities;
 import model.*;
 import view.frame.MainFrameUI;
 import view.page.ManageHotelUI;
@@ -45,17 +44,14 @@ public class ManageHotelCO
             mfUI = MainFrameUI.getInstance();
             db = Database.getInstance();
 
-            SwingUtilities.invokeLater(() ->
-            {
-                handleBack();
-                handleSelectHotel();
-                handleDeleteHotel();
-                handleChangeName();
-                handleRoomCount();
-                handleChangePrice();
-                handleRemoveReservation();
-                handleChangeRate();
-            });
+            handleBack();
+            handleSelectHotel();
+            handleDeleteHotel();
+            handleChangeName();
+            handleRoomCount();
+            handleChangePrice();
+            handleRemoveReservation();
+            handleChangeRate();
         }
 
         /**
@@ -81,7 +77,12 @@ public class ManageHotelCO
         {
             mhUI.setActionListener("btnBack", (ActionEvent e) ->
             {
-                mfUI.openPage("HOTEL_HUB");
+                mfUI.openPage("MANAGE_HOTEL", "HOTEL_HUB");
+            });
+
+            mhUI.setActionListener("btnOK", (ActionEvent e) ->
+            {
+                mfUI.openPage("MANAGE_HOTEL", "HOTEL_HUB");
             });
         }
 
@@ -92,8 +93,11 @@ public class ManageHotelCO
         {
             mhUI.setActionListener("cmbHotels", (ActionEvent e) ->
             {
-                db.setHotel(db.getHotel(mhUI.getValue("cmbHotels")));
-                mfUI.reopenPage();
+                if (!db.getHotels().isEmpty())
+                {
+                    db.setHotel(db.getHotel(mhUI.getValue("cmbHotels")));
+                    mfUI.reopenPage("MANAGE_HOTEL");
+                }
             });
         }
 
@@ -104,21 +108,24 @@ public class ManageHotelCO
         {
             mhUI.setActionListener("btnDeleteHotel", (ActionEvent e) ->
             {
-                /* Setup */
+                if (!db.getHotels().isEmpty())
+                {
+                    /* Setup */
 
-                    // Gets the hotel.
-                    String hotel = mhUI.getValue("cmbHotels");
+                        // Gets the hotel.
+                        String hotel = mhUI.getValue("cmbHotels");
 
-                /* Update */
+                    /* Update */
 
-                    // Deletes the hotel.
-                    db.removeHotel(hotel);
+                        // Deletes the hotel.
+                        db.removeHotel(hotel);
 
-                    // Updates the UI accordingly.
-                    if (db.getHotels().isEmpty())
-                        mfUI.openPage("HOTEL_HUB");
-                    else
-                        mfUI.reopenPage();
+                        // Updates the UI accordingly.
+                        if (db.getHotels().isEmpty())
+                            mfUI.openPage("MANAGE_HOTEL", "HOTEL_HUB");
+                        else
+                            mfUI.reopenPage("MANAGE_HOTEL");
+                }
             });
         }
 
@@ -129,31 +136,34 @@ public class ManageHotelCO
         { 
             mhUI.setActionListener("btnSaveName", (ActionEvent e) ->
             {
-                /* Setup */
+                if (db.getHotel() != null)
+                {
+                    /* Setup */
 
-                    // Gets the new hotel name.
-                    String newName = mhUI.getValue("txtChangeName");
+                        // Gets the new hotel name.
+                        String newName = mhUI.getValue("txtChangeName");
 
-                    // Gets the hotel.
-                    String oldName = mhUI.getValue("cmbHotels");
-                    Hotel h = db.getHotel(oldName);
+                        // Gets the hotel.
+                        String oldName = mhUI.getValue("cmbHotels");
+                        Hotel h = db.getHotel(oldName);
 
-                    // Gets the error message.
-                    String errorMessage = mhER.checkChangeName(newName);
+                        // Gets the error message.
+                        String errorMessage = mhER.checkChangeName(newName);
 
-                /* Update */
-                
-                    // Displays the error message if the input is invalid.
-                    if (!errorMessage.equals(""))
-                        mhUI.setErrorMessage(errorMessage);
-                    else
-                    {
-                        // Changes the hotel name if the input is valid.
-                        h.setName(newName);
+                    /* Update */
+                    
+                        // Displays the error message if the input is invalid.
+                        if (!errorMessage.equals(""))
+                            mhUI.setErrorMessage(errorMessage);
+                        else
+                        {
+                            // Changes the hotel name if the input is valid.
+                            h.setName(newName);
 
-                        // Updates the UI accordingly.
-                        mfUI.reopenPage();
+                            // Updates the UI accordingly.
+                            mfUI.reopenPage("MANAGE_HOTEL");
                     }
+                }
             });
         }
 
@@ -185,29 +195,32 @@ public class ManageHotelCO
         {
             mhUI.setActionListener("btnSavePrice", (ActionEvent e) ->
             {
-                /* Setup */
+                if (!db.getHotels().isEmpty())
+                {
+                    /* Setup */
 
-                    // Gets the hotel and base price.
-                    Hotel h = db.getHotel(mhUI.getValue("cmbHotels"));
-                    String price = mhUI.getValue("txtChangePrice");
+                        // Gets the hotel and base price.
+                        Hotel h = db.getHotel(mhUI.getValue("cmbHotels"));
+                        String price = mhUI.getValue("txtChangePrice");
 
-                    // Gets the error message.
-                    String errorMessage = mhER.checkChangePrice(h, price);
+                        // Gets the error message.
+                        String errorMessage = mhER.checkChangePrice(h, price);
 
-                /* Update */
+                    /* Update */
 
-                    // Displays the error message if there was an error.
-                    if (!errorMessage.equals(""))
-                        mhUI.setErrorMessage(errorMessage);
-                    
-                    else
-                    {
-                        // Changes the base price if there was no error.
-                        h.setBasePrice(Double.parseDouble(price));
+                        // Displays the error message if there was an error.
+                        if (!errorMessage.equals(""))
+                            mhUI.setErrorMessage(errorMessage);
+                        
+                        else
+                        {
+                            // Changes the base price if there was no error.
+                            h.setBasePrice(Double.parseDouble(price));
 
-                        // Updates the UI accordingly.
-                        mfUI.reopenPage();
-                    }
+                            // Updates the UI accordingly.
+                            mfUI.reopenPage("MANAGE_HOTEL");
+                        }
+                }
             });
         }
 
@@ -218,32 +231,35 @@ public class ManageHotelCO
         {
             mhUI.setActionListener("btnDeleteReservation", (ActionEvent e) ->
             {
-                /* Setup */
+                if (!db.getHotels().isEmpty())
+                {
+                    /* Setup */
 
-                    // Gets the hotel.
-                    Hotel h = db.getHotel(mhUI.getValue("cmbHotels"));
+                        // Gets the hotel.
+                        Hotel h = db.getHotel(mhUI.getValue("cmbHotels"));
 
-                    // Gets the reservation details.
-                    String resCode = mhUI.getValue("cmbReservations");
-                    String[] resDetails = resCode.split(": ");
-                    String[] resRoom = resDetails[0].split(" ");
-                    String[] resDates = resDetails[1].split("-");
-                    int roomNum = Integer.parseInt(resRoom[1]);
-                    int checkIn = Integer.parseInt(resDates[0]);
+                        // Gets the reservation details.
+                        String resCode = mhUI.getValue("cmbReservations");
+                        String[] resDetails = resCode.split(": ");
+                        String[] resRoom = resDetails[0].split(" ");
+                        String[] resDates = resDetails[1].split("-");
+                        int roomNum = Integer.parseInt(resRoom[1]);
+                        int checkIn = Integer.parseInt(resDates[0]);
 
-                    // Gets the room based on the room number.
-                    Room room = h.getRooms().get(roomNum - 1);
+                        // Gets the room based on the room number.
+                        Room room = h.getRooms().get(roomNum - 1);
 
-                    // Gets the reservation based on the check-in date.
-                    Reservation res = room.getReservation(checkIn);
+                        // Gets the reservation based on the check-in date.
+                        Reservation res = room.getReservation(checkIn);
 
-                /* Update */
+                    /* Update */
 
-                    // Removes the reservation from the hotel.
-                    room.getReservations().remove(res);
+                        // Removes the reservation from the hotel.
+                        room.getReservations().remove(res);
 
-                    // Updates the UI accordingly.
-                    mfUI.reopenPage();
+                        // Updates the UI accordingly.
+                        mfUI.reopenPage("MANAGE_HOTEL");
+                }
             });
         }
 
@@ -254,32 +270,35 @@ public class ManageHotelCO
         {
             mhUI.setActionListener("txtChangeRate", (ActionEvent e) ->
             {
-                /* Setup */
+                if (!db.getHotels().isEmpty())
+                {
+                    /* Setup */
 
-                    // Gets the hotel.
-                    Hotel h = db.getHotel(mhUI.getValue("cmbHotels"));
+                        // Gets the hotel.
+                        Hotel h = db.getHotel(mhUI.getValue("cmbHotels"));
 
-                    // Gets the night rate details.
-                    int night = Integer.parseInt(mhUI.getValue("cmbNights"));
-                    String rate = mhUI.getValue("txtChangeRate");
+                        // Gets the night rate details.
+                        int night = Integer.parseInt(mhUI.getValue("cmbNights"));
+                        String rate = mhUI.getValue("txtChangeRate");
 
-                    // Gets the error message.
-                    String errorMessage = mhER.checkChangeRate(rate);
+                        // Gets the error message.
+                        String errorMessage = mhER.checkChangeRate(rate);
 
-                /* Update */
+                    /* Update */
 
-                    // Displays the error message if there was an error.
-                    if (!errorMessage.equals(""))
-                        mhUI.setErrorMessage(errorMessage);
-                    
-                    else
-                    {
-                        // Updates the night rate if there was no error.
-                        h.setNightRate(night, Double.parseDouble(rate));
+                        // Displays the error message if there was an error.
+                        if (!errorMessage.equals(""))
+                            mhUI.setErrorMessage(errorMessage);
+                        
+                        else
+                        {
+                            // Updates the night rate if there was no error.
+                            h.setNightRate(night, Double.parseDouble(rate));
 
-                        // Updates the UI accordingly.
-                        mfUI.reopenPage();
-                    }
+                            // Updates the UI accordingly.
+                            mfUI.reopenPage("MANAGE_HOTEL");
+                        }
+                }
             });
         }
 
@@ -361,7 +380,7 @@ public class ManageHotelCO
                                 rooms.get(i).setNum(i + 1);
 
                             // Updates the UI accordingly.
-                            mfUI.reopenPage();
+                            mfUI.reopenPage("MANAGE_HOTEL");
                         }
                     }
             };

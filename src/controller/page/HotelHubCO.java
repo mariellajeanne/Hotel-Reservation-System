@@ -8,7 +8,6 @@
 package controller.page;
 
 import java.awt.event.ActionEvent;
-import javax.swing.SwingUtilities;
 import view.frame.MainFrameUI;
 import view.page.HotelHubUI;
 
@@ -37,13 +36,10 @@ public class HotelHubCO
             hhUI = HotelHubUI.getInstance();
             mfUI = MainFrameUI.getInstance();
 
-            SwingUtilities.invokeLater(() ->
-            {
-                handleCreateHotel();
-                handleViewHotel();
-                handleManageHotel();
-                handleBookReservation();
-            });
+            handleCreateHotel();
+            handleViewHotel();
+            handleManageHotel();
+            handleBookReservation();
         }
 
         /**
@@ -69,7 +65,7 @@ public class HotelHubCO
         {
             hhUI.setActionListener("btnCreateHotel", (ActionEvent e) ->
             {
-                mfUI.openPage("CREATE_HOTEL");
+                mfUI.openPage("HOTEL_HUB", "CREATE_HOTEL");
             });
         }
 
@@ -80,7 +76,7 @@ public class HotelHubCO
         {
             hhUI.setActionListener("btnViewHotel", (ActionEvent e) ->
             {
-                mfUI.openPage("VIEW_HOTEL");
+                mfUI.openPage("HOTEL_HUB", "VIEW_HOTEL");
             });
         }
 
@@ -91,7 +87,7 @@ public class HotelHubCO
         {
             hhUI.setActionListener("btnManageHotel", (ActionEvent e) ->
             {
-                mfUI.openPage("MANAGE_HOTEL");
+                mfUI.openPage("HOTEL_HUB", "MANAGE_HOTEL");
             });
         }
 
@@ -102,7 +98,7 @@ public class HotelHubCO
         {
             hhUI.setActionListener("btnBook", (ActionEvent e) ->
             {
-                mfUI.openPage("BOOK_RESERVATION");
+                mfUI.openPage("HOTEL_HUB", "BOOK_RESERVATION");
             });
         }
     }

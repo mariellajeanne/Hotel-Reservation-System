@@ -27,6 +27,8 @@ public class Database
         private Reservation reservation;        // The reservation currently being handled.
         private int date;                       // The date currently being handled.
 
+        // TODO get hotel based on index
+
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
     /* -------------------------------------------------------------------------- */
@@ -207,5 +209,51 @@ public class Database
 
             if (hotels.isEmpty())
                 this.hotel = null;
+        }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                  UPDATERS                                  */
+    /* -------------------------------------------------------------------------- */
+
+        /**
+         * Updates the default values of the database.
+         */
+        public void updateDefaultValues()
+        {
+            // Sets the hotel to null if there exists no hotel.
+            if (db.getHotels().isEmpty())
+                hotel = null;
+        
+            else
+            {
+                // Sets the default chosen hotel to the first in the list.
+                hotel = hotels.getFirst();
+
+                // Sets the default chosen room to the hotel's first room.
+                room = (hotel.getRooms().getFirst());
+
+                // Sets the default chosen reservation to null if there exists no reservations.
+                if (hotel.getNumOfReservations() == 0)
+                    reservation = null;
+
+                // Sets the default chosen reservation to the hotel's first reservation otherwise.
+                else
+                {
+                    boolean isFound = false;
+
+                    // Loops through each room.
+                    for (int i = 0; i < hotel.getRooms().size() && !isFound; i++)
+                    {
+                        Room r = hotel.getRooms().get(i);
+
+                        // Sets the reservation if found.
+                        if (!r.getReservations().isEmpty())
+                        {
+                            db.setReservation(r.getReservations().get(0));
+                            isFound = true;
+                        }
+                    }
+                }
+            }
         }
 }

@@ -8,6 +8,7 @@
 package view.page;
 
 import java.awt.event.ActionListener;
+import view.frame.MainFrameUI;
 import view.util.*;
 
 /**
@@ -22,6 +23,7 @@ public final class CreateHotelUI extends JBlackPanel
         /* Class instances */
 
             private static CreateHotelUI chUI;
+            private static MainFrameUI mfUI;
 
         /* Components */
         
@@ -52,6 +54,8 @@ public final class CreateHotelUI extends JBlackPanel
          */
         private CreateHotelUI()
         {
+            mfUI = MainFrameUI.getInstance();
+            
             initializeComps();
             configureComps();
             addCompsToPanel();
@@ -79,8 +83,8 @@ public final class CreateHotelUI extends JBlackPanel
         @Override
         protected void initializeComps()
         {  
-            pnlTitle = new JTitlePanel("Create Hotel");
             btnBack = new JBackButton();
+            pnlTitle = new JTitlePanel("Create Hotel");
             
             lblName = new JCommonLabel("Name:", 0,false);
             lblStandard = new JCommonLabel("Number of standard rooms:", 0,false);
@@ -104,13 +108,12 @@ public final class CreateHotelUI extends JBlackPanel
         @Override
         protected void configureComps()
         {
-            lblName.setBounds(670,300,lblName.getPreferredSize().width,30);
-            lblStandard.setBounds(670,420,481,31);
-            lblDeluxe.setBounds(670,480,443,31);
-            lblExecutive.setBounds(670,540,494,31);
-            lblPrice.setBounds(670,661,322,45);
-            lblErrorMessage.setBounds(670,775, lblErrorMessage.getPreferredSize().width,
-            lblErrorMessage.getPreferredSize().height);
+            lblName.setSizePos(670,300,30);
+            lblStandard.setSizePos(670,420,31);
+            lblDeluxe.setSizePos(670,480,31);
+            lblExecutive.setSizePos(670,540,31);
+            lblPrice.setSizePos(670,661,45);
+            lblErrorMessage.setSizePos(670,775);
         }
 
         /**
@@ -119,8 +122,8 @@ public final class CreateHotelUI extends JBlackPanel
         @Override
         protected void addCompsToPanel()
         {
-            add(pnlTitle);
             add(btnBack);
+            add(pnlTitle);
 
             add(lblName);
             add(lblStandard);
@@ -173,6 +176,10 @@ public final class CreateHotelUI extends JBlackPanel
             lblErrorMessage.setText(text);
             revalidate();
             repaint();
+
+            // !DEBUGGING
+            System.out.print("CreateHotelUI: " + text);
+            mfUI.reopenPage("CREATE_HOTEL");
         }
 
         /**
@@ -192,12 +199,28 @@ public final class CreateHotelUI extends JBlackPanel
         }
 
         /**
+         * Resets values of text fields.
+         */
+        @Override
+        public void resetValues()
+        {
+            txtName.setText("");
+            txtStandard.setText("");
+            txtDeluxe.setText("");
+            txtExecutive.setText("");
+            txtPrice.setText("1299.0");
+            revalidate();
+            repaint();
+        }
+
+        /**
          * Updates the page's component values.
          */
         @Override
         public void updateValues()
         {
             configureComps();
+            revalidate();
             repaint();
         }
 }

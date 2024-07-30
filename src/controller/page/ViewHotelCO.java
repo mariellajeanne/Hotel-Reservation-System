@@ -8,7 +8,6 @@
 package controller.page;
 
 import java.awt.event.*;
-import javax.swing.SwingUtilities;
 import model.Database;
 import model.Hotel;
 import model.Room;
@@ -42,14 +41,11 @@ public class ViewHotelCO
             mfUI = MainFrameUI.getInstance();
             db = Database.getInstance();
 
-            SwingUtilities.invokeLater(() ->
-            {
-                handleBack();
-                handleSelectHotel();
-                handleSelectDate();
-                handleSelectRoom();
-                handleSelectReservation();
-            });
+            handleBack();
+            handleSelectHotel();
+            handleSelectDate();
+            handleSelectRoom();
+            handleSelectReservation();
         }
 
         /**
@@ -75,7 +71,7 @@ public class ViewHotelCO
         {
             vhUI.setActionListener("btnBack", (ActionEvent e) ->
             {
-                mfUI.openPage("HOTEL_HUB");
+                mfUI.openPage("VIEW_HOTEL", "HOTEL_HUB");
             });
         }
 
@@ -86,16 +82,19 @@ public class ViewHotelCO
         {
             vhUI.setActionListener("cmbHotels", (ActionEvent e) ->
             {
-                db.setHotel(db.getHotel(vhUI.getValue("cmbHotels")));
-                db.setDate(1);
-                db.setRoom(db.getHotel().getRooms().get(0));
-                
-                if (db.getHotel().getNumOfReservations() != 0)
-                    db.setReservation(db.getRoom().getReservations().get(0));
-                else
-                    db.setReservation(null);
+                if (!db.getHotels().isEmpty())
+                {
+                    db.setHotel(db.getHotel(vhUI.getValue("cmbHotels")));
+                    db.setDate(1);
+                    db.setRoom(db.getHotel().getRooms().get(0));
+                    
+                    if (db.getHotel().getNumOfReservations() != 0)
+                        db.setReservation(db.getRoom().getReservations().get(0));
+                    else
+                        db.setReservation(null);
 
-                mfUI.reopenPage();
+                    mfUI.reopenPage("VIEW_HOTEL");
+                }
             });   
         }
 
@@ -107,7 +106,7 @@ public class ViewHotelCO
             vhUI.setActionListener("cmbDates", (ActionEvent e) ->
             {
                 db.setDate(Integer.parseInt(vhUI.getValue("cmbDates")));
-                mfUI.reopenPage();
+                mfUI.reopenPage("VIEW_HOTEL");
             });   
         }
 
@@ -118,9 +117,12 @@ public class ViewHotelCO
         {
             vhUI.setActionListener("cmbRooms", (ActionEvent e) ->
             {
-                int num = Integer.parseInt(vhUI.getValue("cmbRooms"));
-                db.setRoom(db.getHotel().getRooms().get(num - 1));
-                mfUI.reopenPage();
+                if (db.getHotel() != null)
+                {
+                    int num = Integer.parseInt(vhUI.getValue("cmbRooms"));
+                    db.setRoom(db.getHotel().getRooms().get(num - 1));
+                    mfUI.reopenPage("VIEW_HOTEL");
+                }
             });   
         }
 
@@ -131,29 +133,32 @@ public class ViewHotelCO
         {
             vhUI.setActionListener("cmbReservations", (ActionEvent e) ->
             {
-                /* Setup */
+                if (!db.getHotels().isEmpty())
+                {
+                    /* Setup */
                 
-                    // Gets the hotel.
-                    Hotel h = db.getHotel(vhUI.getValue("cmbHotels"));
+                        // Gets the hotel.
+                        Hotel h = db.getHotel(vhUI.getValue("cmbHotels"));
 
-                    // Gets the reservation details.
-                    String resCode = vhUI.getValue("cmbReservations");
-                    String[] resDetails = resCode.split(": ");
-                    String[] resRoom = resDetails[0].split(" ");
-                    String[] resDates = resDetails[1].split("-");
-                    int roomNum = Integer.parseInt(resRoom[1]);
-                    int checkIn = Integer.parseInt(resDates[0]);
+                        // Gets the reservation details.
+                        String resCode = vhUI.getValue("cmbReservations");
+                        String[] resDetails = resCode.split(": ");
+                        String[] resRoom = resDetails[0].split(" ");
+                        String[] resDates = resDetails[1].split("-");
+                        int roomNum = Integer.parseInt(resRoom[1]);
+                        int checkIn = Integer.parseInt(resDates[0]);
 
-                    // Gets the room based on the room number.
-                    Room room = h.getRooms().get(roomNum - 1);
+                        // Gets the room based on the room number.
+                        Room room = h.getRooms().get(roomNum - 1);
 
-                /* Update */
+                    /* Update */
 
-                    // Sets the reservation based on the check-in date.
-                    db.setReservation(room.getReservation(checkIn));
+                        // Sets the reservation based on the check-in date.
+                        db.setReservation(room.getReservation(checkIn));
 
-                    // Updates the UI accordingly.
-                    mfUI.reopenPage();
+                        // Updates the UI accordingly.
+                        mfUI.reopenPage("VIEW_HOTEL");
+                }
             });   
         }
 }

@@ -151,12 +151,12 @@ public class Room
         /**
          * Returns the nights when the room is not reserved.
          * 
-         * @return {Integer[]}
+         * @return {String[]}
          */
-        public Integer[] getAvailableNights()
+        public String[] getAvailableNights()
         {
             // Gets all the reservation nights.
-            ArrayList<Integer> availNightsList =
+            ArrayList<String> availNightsList =
             new ArrayList<>(Arrays.asList(Reservation.getReservationDates(true)));
 
             // Loops through each reservation.
@@ -164,11 +164,11 @@ public class Room
             {
                 // Removes all the reserved nights.
                 for (int i = r.getCheckIn(); i < r.getCheckOut(); i++)
-                    availNightsList.remove(i);
+                    availNightsList.remove(String.valueOf(i));
             }
 
             // Stores the available nights list in an array.
-            Integer[] availNightsArray = new Integer[availNightsList.size()];
+            String[] availNightsArray = new String[availNightsList.size()];
             availNightsList.toArray(availNightsArray);
 
             return availNightsArray;

@@ -105,8 +105,8 @@ public final class ManageHotelUI extends JBlackPanel
         @Override
         protected void initializeComps()
         {
-            pnlTitle = new JTitlePanel("Manage Hotel");
             btnBack = new JBackButton();
+            pnlTitle = new JTitlePanel("Manage Hotel");
             
             lblHotel = new JCommonLabel("HOTEL:",1,true);
             lblChangeName = new JCommonLabel("Change name:",0,false);
@@ -151,16 +151,15 @@ public final class ManageHotelUI extends JBlackPanel
         protected void configureComps()
         {   
 
-            lblHotel.setBounds(470,299,lblHotel.getPreferredSize().width,31);
-            lblChangeName.setBounds(470,389,lblChangeName.getPreferredSize().width,38);
-            lblActionStandard.setBounds(468,449,488,30);
-            lblActionDeluxe.setBounds(468,508,452,31);
-            lblActionExecutive.setBounds(468,568,503,31);
-            lblChangePrice.setBounds(468,628,343,39);
-            lblRemoveReservation.setBounds(468,691,363,30);
-            lblChangeRate.setBounds(468,751,458,38);
-            lblErrorMessage.setBounds(468,830, lblErrorMessage.getPreferredSize().width,
-            lblErrorMessage.getPreferredSize().height);
+            lblHotel.setSizePos(470,299,31);
+            lblChangeName.setSizePos(470,389,38);
+            lblActionStandard.setSizePos(468,449,30);
+            lblActionDeluxe.setSizePos(468,508,31);
+            lblActionExecutive.setSizePos(468,568,31);
+            lblChangePrice.setSizePos(468,628,39);
+            lblRemoveReservation.setSizePos(468,691,30);
+            lblChangeRate.setSizePos(468,751,38);
+            lblErrorMessage.setSizePos(468,830);
 
             // Executes if there exists hotels.
             if (!db.getHotels().isEmpty())
@@ -195,8 +194,8 @@ public final class ManageHotelUI extends JBlackPanel
         @Override
         protected void addCompsToPanel()
         {
-            add(pnlTitle);
             add(btnBack);
+            add(pnlTitle);
             
             add(cmbHotels);
             add(cmbReservations);
@@ -299,8 +298,15 @@ public final class ManageHotelUI extends JBlackPanel
                 case "btnDeleteExecutive"   -> {btnDeleteExecutive.addActionListener(a);}
                 case "btnDeleteReservation" -> {btnDeleteReservation.addActionListener(a);}
                 case "btnBack"              -> {btnBack.addActionListener(a);}
+                case "btnOK"                -> {btnOK.addActionListener(a);}
             }
         }
+
+        /**
+         * Resets values of text fields.
+         */
+        @Override
+        public void resetValues(){}
 
         /**
          * Updates the page's component values.
@@ -309,6 +315,7 @@ public final class ManageHotelUI extends JBlackPanel
         public void updateValues()
         {
             configureComps();
+            revalidate();
             repaint();
         }
 }

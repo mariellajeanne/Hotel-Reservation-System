@@ -29,9 +29,10 @@ public class JCommonTextField extends JTextField
          */
         public JCommonTextField(int x, int y, int w, int h)
         {
-            setFont(new Font("Arial", Font.PLAIN, 20));
+            setFont(new Font("Arial", Font.PLAIN, (int) (20 * Scale.MIN)));
             setForeground(Color.decode("#26282e"));
-            setBounds(x, y, w, h);
+            setBounds((int) (x * Scale.X), (int) (y * Scale.Y),
+                    (int) (w * Scale.X), (int) (h * Scale.Y));
         }
 
         /**
@@ -45,8 +46,10 @@ public class JCommonTextField extends JTextField
          */
         public JCommonTextField(String text, int x, int y, int w, int h)
         {
-            setFont(new Font("Arial", Font.PLAIN, 20));
+            setText(text);
+            setFont(new Font("Arial", Font.PLAIN, (int) (20 * Scale.MIN)));
             setForeground(Color.decode("#26282e"));
-            setBounds(x, y, w, h);
+            setBounds((int) (x * Scale.X), (int) (y * Scale.Y),
+                    (int) (w * Scale.X), (int) (h * Scale.Y));
         }
 }

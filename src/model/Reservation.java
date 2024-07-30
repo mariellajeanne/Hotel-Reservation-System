@@ -23,6 +23,8 @@ public class Reservation
         private final double nightlyPrices[]; // The price per night.
         private double totalPrice;            // The total price.
 
+        // TODO get reservation based on index
+
     /* -------------------------------------------------------------------------- */
     /*                                 CONSTRUCTOR                                */
     /* -------------------------------------------------------------------------- */
@@ -52,25 +54,25 @@ public class Reservation
     /* -------------------------------------------------------------------------- */
 
         /**
-         * Returns the valid set of reservation dates.
+         * Returns a set of valid reservation dates.
          * 
          * @param isCheckIn {boolean} Determine if the dates to be returned
          *                            are the check-in dates.
-         * @return          {Integer[]}
+         * @return          {String[]}
          */
-        public static Integer[] getReservationDates(boolean isCheckIn)
+        public static String[] getReservationDates(boolean isCheckIn)
         {
-            Integer[] reservationDates = new Integer[30];
+            String[] reservationDates = new String[30];
 
             if (isCheckIn)
             {
                 for (int i = 0; i < 30; i++)
-                    reservationDates[i] = i + 1;
+                    reservationDates[i] = String.valueOf(i + 1);
             }
             else
             {
                 for (int i = 0; i < 30; i++)
-                    reservationDates[i] = i + 2;
+                    reservationDates[i] = String.valueOf(i + 2);
             }
             
             return reservationDates;

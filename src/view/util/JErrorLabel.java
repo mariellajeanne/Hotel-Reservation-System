@@ -25,7 +25,19 @@ public class JErrorLabel extends JLabel
         public JErrorLabel()
         {
             setText("");
-            setFont(new Font("Arial", Font.PLAIN, 20));
+            setFont(new Font("Arial", Font.PLAIN, (int) (20 * Scale.MIN)));
             setForeground(Color.decode("#ffa0a0"));
+        }
+
+        /**
+         * Sets the error label's size and position.
+         * 
+         * @param x {int} The x position.
+         * @param y {int} The y position.
+         */
+        public void setSizePos(int x, int y)
+        {
+            setBounds((int) (x * Scale.X), (int) (y * Scale.Y),
+                    (int) (getPreferredSize().width * 1.2), getPreferredSize().height);
         }
 }

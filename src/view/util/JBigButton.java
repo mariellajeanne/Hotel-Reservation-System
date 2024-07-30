@@ -29,13 +29,13 @@ public class JBigButton extends JButton
         public JBigButton(String text, int x, int y)
         {
             setText(text);
-            setFont(new Font("Arial", Font.BOLD, 40));
-            setSize(350, 55);
+            setFont(new Font("Arial", Font.BOLD, (int) (40 * Scale.MIN)));
+            setSize((int) (350 * Scale.X), (int) (55 * Scale.Y));
             setBackground(Color.WHITE);
             setForeground(Color.decode("#26282e"));   
             setHorizontalAlignment(SwingConstants.CENTER);
             setLayout(null);
-            setLocation(x, y);
+            setLocation((int) (x * Scale.X), (int) (y * Scale.Y));
         }
 
         /**
@@ -50,12 +50,13 @@ public class JBigButton extends JButton
         public JBigButton(String text, int x, int y, int w, int h)
         {
             setText(text);
-            setFont(new Font("Arial", Font.BOLD, 40));
+            setFont(new Font("Arial", Font.BOLD, (int) (40 * Scale.MIN)));
             setSize(350, 55);
             setBackground(Color.WHITE);
             setForeground(Color.decode("#26282e"));   
             setHorizontalAlignment(SwingConstants.CENTER);
             setLayout(null);
-            setBounds(x, y, w, h);
+            setBounds((int) (x * Scale.X), (int) (y * Scale.Y),
+                    (int) (w * Scale.X), (int) (h * Scale.Y));
         }
 }

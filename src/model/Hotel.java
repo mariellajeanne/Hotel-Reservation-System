@@ -22,6 +22,8 @@ public class Hotel
         private final double[] rates;             // The hotel's rates per date.
         private final ArrayList<Room> rooms;      // The hotel's rooms.
 
+        // TODO make a hashmap of rooms : reservation
+        // TODO room based on index
     /* -------------------------------------------------------------------------- */
     /*                                 CONSTRUCTOR                                */
     /* -------------------------------------------------------------------------- */
@@ -142,14 +144,14 @@ public class Hotel
         /**
          * Returns an array of the room numbers.
          * 
-         * @return {Integer[]}
+         * @return {String[]}
          */
-        public Integer[] getRoomNumbers()
+        public String[] getRoomNumbers()
         {
-            Integer [] numbers = new Integer[rooms.size()];
+            String[] numbers = new String[rooms.size()];
 
             for (int i = 0; i < numbers.length; i++)
-                numbers[i] = i + 1;
+                numbers[i] = String.valueOf(i + 1);
 
             return numbers;
         }
