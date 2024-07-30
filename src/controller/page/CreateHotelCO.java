@@ -77,7 +77,7 @@ public class CreateHotelCO
         /**
          * Handles hotel creation.
          */
-        public final void handleCreateHotel()
+        private void handleCreateHotel()
         {
             chUI.setActionListener("btnCreate", (ActionEvent e) ->
             {

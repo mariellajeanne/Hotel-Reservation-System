@@ -27,7 +27,7 @@ public abstract class JBlackPanel extends JPanel
         {
             setBounds(0, 0, 1920, 1080);
             setBackground(Color.decode("#26282e"));
-            setLayout(new FlowLayout());
+            setLayout(null);
             setVisible(true);
         }
 
