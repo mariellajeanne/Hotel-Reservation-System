@@ -27,7 +27,7 @@ public class BookReservationER
     /* -------------------------------------------------------------------------- */
 
         private static BookReservationER brER; // The single instance of the class.
-        private static InputER iER;            // The input error handler.
+        private static CommonER cER;           // The common error handler.
 
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
@@ -38,7 +38,7 @@ public class BookReservationER
          */
         private BookReservationER()
         {
-            iER = InputER.getInstance();
+            cER = CommonER.getInstance();
         }
 
         /**
@@ -71,9 +71,9 @@ public class BookReservationER
         public String checkBookReservation(String guest, Hotel h, String type,
             int checkIn, int checkOut, String code)
         {
-            if (!iER.checkStringChars(guest, true))
+            if (!cER.checkStringChars(guest, true))
                 return "Invalid guest name characters.";
-            else if (!iER.checkStringLength(guest))
+            else if (!cER.checkStringLength(guest))
                 return "Guest name must have 1-20 characters.";
             else if (!checkDates(checkIn, checkOut))
                 return "Invalid reservation dates.";

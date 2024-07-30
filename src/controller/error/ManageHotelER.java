@@ -19,7 +19,7 @@ public class ManageHotelER
     /* -------------------------------------------------------------------------- */
 
         private static ManageHotelER mhER; // The single instance of the class.
-        private static InputER iER;        // The input error handler.
+        private static CommonER cER;       // The common error handler.
 
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
@@ -30,7 +30,7 @@ public class ManageHotelER
          */
         private ManageHotelER()
         {
-            iER = InputER.getInstance();
+            cER = CommonER.getInstance();
         }
 
         /**
@@ -57,11 +57,11 @@ public class ManageHotelER
          */
         public String checkChangeName(String name)
         {
-            if (!iER.checkStringChars(name, false))
+            if (!cER.checkStringChars(name, false))
                 return "No spaces must be at the first and last character.";
-            else if (!iER.checkStringLength(name))
+            else if (!cER.checkStringLength(name))
                 return "Hotel name must have 1-20 characters.";
-            else if (!iER.checkNameAvailability(name))
+            else if (!cER.checkNameAvailability(name))
                 return "Hotel name already exists.";
             return "";
         }
@@ -75,7 +75,7 @@ public class ManageHotelER
          */
         public String checkAddRooms(Hotel h, String n)
         {
-            if (!iER.checkIntChars(n))
+            if (!cER.checkIntChars(n))
                 return "Invalid number input.";
             else if (checkMaxMinRoomCnt(h, true))
                 return "Maximum number of rooms reached.";
@@ -94,7 +94,7 @@ public class ManageHotelER
          */
         public String checkDeleteRooms(Hotel h, String type, String n)
         {
-            if (!iER.checkIntChars(n))
+            if (!cER.checkIntChars(n))
                 return "Invalid number input.";
             else if (checkMaxMinRoomCnt(h, false))
                 return "Minimum number of rooms reached.";
@@ -172,9 +172,9 @@ public class ManageHotelER
         {
             if (!checkHotelReservations(h))
                 return "Base price cannot change; hotel has reservations.";
-            if (!iER.checkDoubleChars(price))
+            if (!cER.checkDoubleChars(price))
                 return "Base price must be a decimal.";
-            else if (!iER.checkPriceValue(price))
+            else if (!cER.checkPriceValue(price))
                 return "Base price must be at least 100.0.";
             return "";
         }
@@ -187,7 +187,7 @@ public class ManageHotelER
          */
         public String checkChangeRate(String rate)
         {
-            if (!iER.checkDoubleChars(rate))
+            if (!cER.checkDoubleChars(rate))
                 return "Date rate must be a decimal.";
             else if (!checkRateValue(rate))
                 return "Date rate must be 0.50 to 1.50";

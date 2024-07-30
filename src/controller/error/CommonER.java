@@ -10,39 +10,39 @@ package controller.error;
 import model.Database;
 
 /**
- * The input error handler class.
+ * The common error handler class.
  */
-public class InputER
+public class CommonER
 {
     /* -------------------------------------------------------------------------- */
     /*                                 ATTRIBUTES                                 */
     /* -------------------------------------------------------------------------- */
 
-        private static InputER iER; // The single instance of the class.
-        private static Database db; // The database.
+        private static CommonER cER; // The single instance of the class.
+        private static Database db;  // The database.
 
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
     /* -------------------------------------------------------------------------- */
 
         /**
-         * Constructs the input error handler.
+         * Constructs the common error handler.
          */
-        private InputER()
+        private CommonER()
         {
             db = Database.getInstance();
         }
 
         /**
-         * Returns the instance of the input error handler.
+         * Returns the instance of the common error handler.
          * 
          * @return {InputER}
          */
-        public static InputER getInstance()
+        public static CommonER getInstance()
         {
-            if (iER == null)
-                iER = new InputER();
-            return iER;
+            if (cER == null)
+                cER = new CommonER();
+            return cER;
         }
 
     /* -------------------------------------------------------------------------- */

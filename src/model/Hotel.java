@@ -154,28 +154,6 @@ public class Hotel
             return numbers;
         }
 
-        // /**
-        //  * Returns an array of the available rooms.
-        //  * 
-        //  * @return {Integer[]}
-        //  */
-        // public Integer[] getAvailableRooms()
-        // {
-        //     int numOfAvailRooms = getNumOfAvailRooms("STANDARD") + 
-        //         getNumOfAvailRooms("DELUXE") +
-        //         getNumOfAvailRooms("EXECUTIVE");
-
-        //     Integer[] availRooms = new Integer[numOfAvailRooms];
-
-        //     for (int i = 0; i < numOfAvailRooms; i++)
-        //     {
-        //         if (rooms.get(i).getReservations().isEmpty())
-        //             availRooms[i] = rooms.get(i).getNumber();
-        //     }
-
-        //     return availRooms;
-        // }
-
         /**
          * Returns the total number of rooms without reservations.
          * 

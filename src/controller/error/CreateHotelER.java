@@ -17,7 +17,7 @@ public class CreateHotelER
     /* -------------------------------------------------------------------------- */
 
         private static CreateHotelER chER; // The single instance of the class.
-        private static InputER iER;        // The input error handler.
+        private static CommonER cER;       // The common error handler.
 
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
@@ -28,7 +28,7 @@ public class CreateHotelER
          */
         private CreateHotelER()
         {
-            iER = InputER.getInstance();
+            cER = CommonER.getInstance();
         }
 
         /**
@@ -60,18 +60,18 @@ public class CreateHotelER
         public String checkCreateHotel(String name, String standard,
             String deluxe, String executive, String price)
         {
-            if (!iER.checkStringChars(name, false))
+            if (!cER.checkStringChars(name, false))
                 return "No spaces must be at the first and last character.";
-            else if (!iER.checkStringLength(name))
+            else if (!cER.checkStringLength(name))
                 return "Hotel name must have 1-20 characters.";
-            else if (!iER.checkNameAvailability(name))
+            else if (!cER.checkNameAvailability(name))
                 return "Hotel name already exists.";
-            else if (!iER.checkIntChars(standard) || !iER.checkIntChars(deluxe) ||
-                    !iER.checkIntChars(executive) || !iER.checkDoubleChars(price))
+            else if (!cER.checkIntChars(standard) || !cER.checkIntChars(deluxe) ||
+                    !cER.checkIntChars(executive) || !cER.checkDoubleChars(price))
                 return "Invalid number input.";
             if (!checkRoomCount(standard, deluxe, executive))
                 return "Total room count must be 1-50.";
-            if (!iER.checkPriceValue(price))
+            if (!cER.checkPriceValue(price))
                 return "Base price must be at least 100.0";
             return "";
         }
