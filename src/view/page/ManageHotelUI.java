@@ -8,6 +8,7 @@
 package view.page;
 
 import java.awt.event.ActionListener;
+import javax.swing.DefaultComboBoxModel;
 import model.*;
 import view.util.*;
 
@@ -165,11 +166,11 @@ public final class ManageHotelUI extends JBlackPanel
             if (!db.getHotels().isEmpty())
             {
                 // Sets the hotel combo box's items.
-                cmbHotels.setItems(db.getHotelNames());
+                cmbHotels.setModel(new DefaultComboBoxModel<>(db.getHotelNames()));
                 
                 // Sets the reservation combo box's items.
                 if (db.getHotel().getNumOfReservations() != 0)
-                    cmbReservations.setItems(db.getHotel().getReservationCodes());
+                    cmbReservations.setModel(new DefaultComboBoxModel<>(db.getHotel().getReservationCodes()));
                 else
                     cmbReservations.removeAllItems();
             }
@@ -305,5 +306,15 @@ public final class ManageHotelUI extends JBlackPanel
          * Resets values of the error label and text fields.
          */
         @Override
-        public void resetValues(){}
+        public void resetValues()
+        {
+            lblErrorMessage.setText("");
+
+            txtChangeName.setText("");
+            txtStandardCnt.setText("");
+            txtDeluxeCnt.setText("");
+            txtExecutiveCnt.setText("");
+            txtChangePrice.setText("");
+            txtChangeRate.setText("");
+        }
 }

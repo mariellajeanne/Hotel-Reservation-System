@@ -93,7 +93,7 @@ public class ViewHotelCO
                     else
                         db.setReservation(null);
 
-                    mfUI.reopenPage("VIEW_HOTEL");
+                    vhUI.configureComps();
                 }
             });   
         }
@@ -106,7 +106,7 @@ public class ViewHotelCO
             vhUI.setActionListener("cmbDates", (ActionEvent e) ->
             {
                 db.setDate(Integer.parseInt(vhUI.getValue("cmbDates")));
-                mfUI.reopenPage("VIEW_HOTEL");
+                vhUI.configureComps();
             });   
         }
 
@@ -121,7 +121,7 @@ public class ViewHotelCO
                 {
                     int num = Integer.parseInt(vhUI.getValue("cmbRooms"));
                     db.setRoom(db.getHotel().getRooms().get(num - 1));
-                    mfUI.reopenPage("VIEW_HOTEL");
+                    vhUI.configureComps();
                 }
             });   
         }
@@ -157,7 +157,7 @@ public class ViewHotelCO
                         db.setReservation(room.getReservation(checkIn));
 
                         // Updates the UI accordingly.
-                        mfUI.reopenPage("VIEW_HOTEL");
+                        vhUI.configureComps();
                 }
             });   
         }

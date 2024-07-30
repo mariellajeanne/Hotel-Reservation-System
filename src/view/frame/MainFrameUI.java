@@ -36,7 +36,7 @@ public class MainFrameUI extends JFrame
     /* -------------------------------------------------------------------------- */
 
         // TODO REPLACE REOPEN() WITH CONFIG
-        
+
         /**
          * Constructs the frame of the system.
          */
@@ -83,43 +83,49 @@ public class MainFrameUI extends JFrame
         {
             closePage(close);
 
-            // Updates the database's default values if the page changed.
-            if (!close.equals(open))
-                db.updateDefaultValues();
-
-            // Opens each page.
-            switch (open)
+            SwingUtilities.invokeLater(() ->
             {
-                case "BOOK_RESERVATION" ->
+                // Updates the database's default values if the page changed.
+                if (!close.equals(open))
+                    db.updateDefaultValues();
+            });
+
+            SwingUtilities.invokeLater(() ->
+            {
+                // Opens each page.
+                switch (open)
                 {
-                    add(brUI);
-                    brUI.configureComps();
+                    case "BOOK_RESERVATION" ->
+                    {
+                        add(brUI);
+                        brUI.configureComps();
+                    }
+                    case "CREATE_HOTEL" -> 
+                    {  
+                        add(chUI);
+                        chUI.configureComps();
+                    }
+                    case "HOTEL_HUB" ->
+                    {
+                        add(hhUI);
+                        hhUI.configureComps();
+                    }
+                    case "MANAGE_HOTEL" ->
+                    {
+                        add(mhUI);
+                        mhUI.configureComps();
+                    }
+                    case "VIEW_HOTEL" ->
+                    {
+                        add(vhUI);
+                        vhUI.configureComps();
+                    }
+                    default -> {}
                 }
-                case "CREATE_HOTEL" -> 
-                {  
-                    add(chUI);
-                    chUI.configureComps();
-                }
-                case "HOTEL_HUB" ->
-                {
-                    add(hhUI);
-                    hhUI.configureComps();
-                }
-                case "MANAGE_HOTEL" ->
-                {
-                    add(mhUI);
-                    mhUI.configureComps();
-                }
-                case "VIEW_HOTEL" ->
-                {
-                    add(vhUI);
-                    vhUI.configureComps();
-                }
-                default -> {}
-            }
-    
-            revalidate();
-            repaint();
+        
+                revalidate();
+                repaint();
+            });
         }
 
         /**
@@ -141,15 +147,5 @@ public class MainFrameUI extends JFrame
 
             revalidate();
             repaint();
-        }
-        
-        /**
-         * Re-opens the current page.
-         * 
-         * @param page {String} The page to be re-opened.
-         */
-        public void reopenPage(String page)
-        {
-            openPage(page, page);
         }
 }

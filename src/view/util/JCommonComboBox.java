@@ -54,24 +54,4 @@ public class JCommonComboBox<E> extends JComboBox<E>
             setBounds((int) (x * Scale.X), (int) (y * Scale.Y),
                     (int) (w * Scale.X), (int) (h * Scale.Y));
         }
-
-    /* -------------------------------------------------------------------------- */
-    /*                                CONFIGURATION                               */
-    /* -------------------------------------------------------------------------- */
-
-        /**
-         * Sets the combo box's array of items.
-         * 
-         * @param items {String[]} The array of items.
-         */
-        @SuppressWarnings("unchecked")
-        public void setItems(String[] items)
-        {
-            // Removes the previous set of items.
-            removeAllItems();
-
-            // Adds the new set of items.
-            for (String item : items)
-                addItem((E) item);
-        }
 }

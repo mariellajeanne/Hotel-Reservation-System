@@ -8,6 +8,7 @@
 package view.page;
 
 import java.awt.event.ActionListener;
+import javax.swing.DefaultComboBoxModel;
 import model.*;
 import view.util.*;
 
@@ -122,7 +123,7 @@ public final class BookReservationUI extends JBlackPanel
             lblErrorMessage.setSizePos(670,775);
 
             if (!db.getHotels().isEmpty())
-                cmbHotels.setItems(db.getHotelNames());
+                cmbHotels.setModel(new DefaultComboBoxModel<>(db.getHotelNames()));
             else
                 cmbHotels.removeAllItems();
         }

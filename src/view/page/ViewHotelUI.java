@@ -177,15 +177,15 @@ public final class ViewHotelUI extends JBlackPanel
                 lblRoomType.setText("Type: " + room.getType());
                 lblPricePerNight.setText("Price per night: " + db.getRoom().getNightlyPrice());
 
-                cmbHotels.setItems(db.getHotelNames());
-                cmbDates.setItems(Reservation.getReservationDates(true));
-                cmbRooms.setItems(db.getHotel().getRoomNumbers());
-                cmbAvailNights.setItems(db.getRoom().getAvailableNights());
+                cmbHotels.setModel(new DefaultComboBoxModel<>(db.getHotelNames()));
+                cmbDates.setModel(new DefaultComboBoxModel<>(Reservation.getReservationDates(true)));
+                cmbRooms.setModel(new DefaultComboBoxModel<>(db.getHotel().getRoomNumbers()));
+                cmbAvailNights.setModel(new DefaultComboBoxModel<>(db.getRoom().getAvailableNights()));
 
                 // Executes the following if the chosen hotel has reservations.
-                if (db.getHotel().getNumOfReservations() != 0)
+                if (db.getHotel().getNumOfReservations() != 0 && db.getReservation() != null)
                 {
-                    cmbReservations.setItems(db.getRoom().getReservationCodes());
+                    cmbReservations.setModel(new DefaultComboBoxModel<>(db.getRoom().getReservationCodes()));
 
                     lblGuestName.setText("Guest: " + res.getGuest());
                     lblRoomDetails.setText("Room: Room " + res.getRoom().getNum() + ", " + res.getRoom().getType());

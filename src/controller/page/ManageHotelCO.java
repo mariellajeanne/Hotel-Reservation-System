@@ -77,11 +77,13 @@ public class ManageHotelCO
         {
             mhUI.setActionListener("btnBack", (ActionEvent e) ->
             {
+                mhUI.resetValues();
                 mfUI.openPage("MANAGE_HOTEL", "HOTEL_HUB");
             });
 
             mhUI.setActionListener("btnOK", (ActionEvent e) ->
             {
+                mhUI.resetValues();
                 mfUI.openPage("MANAGE_HOTEL", "HOTEL_HUB");
             });
         }
@@ -96,7 +98,7 @@ public class ManageHotelCO
                 if (!db.getHotels().isEmpty())
                 {
                     db.setHotel(db.getHotel(mhUI.getValue("cmbHotels")));
-                    mfUI.reopenPage("MANAGE_HOTEL");
+                    mhUI.configureComps();
                 }
             });
         }
@@ -124,7 +126,7 @@ public class ManageHotelCO
                         if (db.getHotels().isEmpty())
                             mfUI.openPage("MANAGE_HOTEL", "HOTEL_HUB");
                         else
-                            mfUI.reopenPage("MANAGE_HOTEL");
+                            mhUI.configureComps();
                 }
             });
         }
@@ -161,7 +163,7 @@ public class ManageHotelCO
                             h.setName(newName);
 
                             // Updates the UI accordingly.
-                            mfUI.reopenPage("MANAGE_HOTEL");
+                            mhUI.configureComps();
                     }
                 }
             });
@@ -218,7 +220,7 @@ public class ManageHotelCO
                             h.setBasePrice(Double.parseDouble(price));
 
                             // Updates the UI accordingly.
-                            mfUI.reopenPage("MANAGE_HOTEL");
+                            mhUI.configureComps();
                         }
                 }
             });
@@ -258,7 +260,7 @@ public class ManageHotelCO
                         room.getReservations().remove(res);
 
                         // Updates the UI accordingly.
-                        mfUI.reopenPage("MANAGE_HOTEL");
+                        mhUI.configureComps();
                 }
             });
         }
@@ -296,7 +298,7 @@ public class ManageHotelCO
                             h.setNightRate(night, Double.parseDouble(rate));
 
                             // Updates the UI accordingly.
-                            mfUI.reopenPage("MANAGE_HOTEL");
+                            mhUI.configureComps();
                         }
                 }
             });
@@ -380,7 +382,7 @@ public class ManageHotelCO
                                 rooms.get(i).setNum(i + 1);
 
                             // Updates the UI accordingly.
-                            mfUI.reopenPage("MANAGE_HOTEL");
+                            mhUI.configureComps();
                         }
                     }
             };

@@ -37,7 +37,7 @@ public class JSmallButton extends JButton
             
             // Configures the button.
             setText(text);
-            setFont(new Font("Arial", Font.BOLD, (int) (25 * Scale.MIN)));
+            setFont(new Font("Arial", Font.BOLD, (int) (20 * Scale.MIN)));
             setBackground(Color.WHITE);
             setForeground(Color.decode("#26282e"));
             setHorizontalAlignment(SwingConstants.CENTER);
