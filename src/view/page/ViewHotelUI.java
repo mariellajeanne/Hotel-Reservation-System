@@ -165,9 +165,9 @@ public final class ViewHotelUI extends JBlackPanel
                 cmbRooms.setModel(new DefaultComboBoxModel<>(db.getHotel().getRoomNumbers()));
                 cmbAvailNights.setModel(new DefaultComboBoxModel<>(db.getRoom().getAvailableNights()));
 
-                cmbHotels.setSelectedItem(db.getHotel().getName());
+                cmbHotels.setSelectedItem(h.getName());
                 cmbDates.setSelectedItem(String.valueOf(db.getDate()));
-                cmbRooms.setSelectedItem(String.valueOf(db.getRoom().getNum()));
+                cmbRooms.setSelectedItem(String.valueOf(room.getNum()));
 
                 // Executes the following if the chosen hotel has reservations.
                 if (db.getHotel().getNumOfReservations() != 0 && db.getReservation() != null)

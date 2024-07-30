@@ -98,7 +98,6 @@ public class ManageHotelCO
                 if (!db.getHotels().isEmpty())
                 {
                     db.setHotel(db.getHotel(mhUI.getValue("cmbHotels")));
-                    mhUI.setFeedbackMessage("", false);
                     mhUI.configureComps();
                 }
             });
@@ -335,7 +334,7 @@ public class ManageHotelCO
                 /* Setup */
 
                     // Gets the hotel.
-                    Hotel h = db.getHotel();
+                    Hotel h = db.getHotel(mhUI.getValue("cmbHotels"));
 
                     // Gets the number of rooms to be added/deleted.
                     String numUpdated = switch (type)
@@ -393,7 +392,7 @@ public class ManageHotelCO
                             int numDeleted = 0;
                             
                             // Loops through all rooms. Stops when enough rooms were deleted.
-                            for (int i = 0; i < numOfRooms && numDeleted <=
+                            for (int i = 0; i < numOfRooms && numDeleted <
                                 Integer.parseInt(numUpdated); i++)
                             {
                                 Room r = rooms.get(i);

@@ -10,7 +10,6 @@ package controller.page;
 import java.awt.event.*;
 import model.Database;
 import model.Hotel;
-import model.Reservation;
 import model.Room;
 import view.frame.MainFrameUI;
 import view.page.ViewHotelUI;
@@ -99,8 +98,11 @@ public class ViewHotelCO
                         db.setRoom(room);
                         
                         // Sets the default chosen reservation if the hotel has reservations.
-                        Reservation res = hotel.getFirstReservedRoom().getReservations().getFirst();
-                        db.setReservation(res);
+                        if (hotel.getNumOfReservations() != 0)
+                        {
+                            db.setReservation(hotel.getFirstReservedRoom().
+                                getReservations().getFirst());
+                        }                        
 
                         // Updates the UI accordingly.
                         vhUI.configureComps();

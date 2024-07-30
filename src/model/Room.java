@@ -18,7 +18,7 @@ public class Room
     /* -------------------------------------------------------------------------- */
     /*                                 ATTRIBUTES                                 */
     /* -------------------------------------------------------------------------- */
-
+    
         private int num;                                    // The room's number.
         private final String type;                          // The room type.
         private double nightlyPrice;                        // The room's nightly price.
