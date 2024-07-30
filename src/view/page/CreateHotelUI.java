@@ -182,6 +182,7 @@ public final class CreateHotelUI extends JBlackPanel
         public void setErrorMessage(String text)
         {
             lblErrorMessage.setText(text);
+            revalidate();
             repaint();
         }
 

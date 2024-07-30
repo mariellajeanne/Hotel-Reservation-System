@@ -88,9 +88,21 @@ public class Hotel
         }
 
         /**
-         * Returns the 
-         * @return
+         * Returns the total number of reservations.
+         * 
+         * @return {int}
          */
+        public int getNumOfReservations()
+        {
+            int n = 0;
+
+            for (Room r : rooms)
+            {
+                n += r.getReservations().size();
+            }
+
+            return n;
+        }
 
         /**
          * Returns the reservation codes of all rooms.
@@ -200,6 +212,39 @@ public class Hotel
             }
 
             return i;
+        }
+
+        /**
+         * Returns the number of available rooms given the date.
+         * 
+         * @param   date    {int}       The date.
+         * @param   isAvail {boolean}   Determines if the availability is to be determined.
+         * @return          {int}
+         */
+        public int getNumOfAvailRooms(int date, boolean isAvail)
+        {
+            int n; // The date count.
+            
+            // Assigns the initial night count.
+            if (isAvail)    n = rooms.size();
+            else            n = 0;
+
+            // Loops through each room.
+            for (Room r : rooms)
+            {
+                // Loops through each reservation.
+                for (int i = 0; i < r.getReservations().size(); i++)
+                {
+                    // Checks if the reservation has the chosen date.
+                    if (r.getReservations().get(i).hasNight(date))
+                    {
+                        if (isAvail)    n--;
+                        else            n++;
+                    }
+                        
+                }
+            }
+            return n;
         }
 
         /**

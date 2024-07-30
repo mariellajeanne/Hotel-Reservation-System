@@ -60,7 +60,7 @@ public final class BookReservationUI extends JBlackPanel
             
             initializeComps();
             configureComps();
-            addCompsToPanel();
+            addCompsToPanel(); 
         }
 
     /* -------------------------------------------------------------------------- */
@@ -87,7 +87,11 @@ public final class BookReservationUI extends JBlackPanel
             txtGuest = new JCommonTextField();
             txtCode = new JCommonTextField();
             
-            cmbHotels = new JCommonComboBox<>(db.getHotelNames());
+            if (!db.getHotels().isEmpty())
+                cmbHotels = new JCommonComboBox<>(db.getHotelNames());
+            else
+                cmbHotels = new JCommonComboBox<>();
+
             cmbRoomTypes = new JCommonComboBox<>(Room.getRoomTypes());
             cmbCheckIn = new JCommonComboBox<>(Reservation.getReservationDates(true));
             cmbCheckOut = new JCommonComboBox<>(Reservation.getReservationDates(false));
@@ -198,6 +202,7 @@ public final class BookReservationUI extends JBlackPanel
         public void setErrorMessage(String text)
         {
             lblErrorMessage.setText(text);
+            revalidate();
             repaint();
         }
 

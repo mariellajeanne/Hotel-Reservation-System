@@ -24,11 +24,11 @@ public class ManageHotelCO
     /*                                 ATTRIBUTES                                 */
     /* -------------------------------------------------------------------------- */
 
-        private static ManageHotelCO mhCO; // The single instance of the class.
-        private static ManageHotelER mhER; // The manage hotel error handler.
-        private static ManageHotelUI mhUI; // The manage hotel UI.
-        private static MainFrameUI mfUI;   // The main frame UI.
-        private static Database db;        // The database.
+        private static ManageHotelCO mhCO;  // The single instance of the class.
+        private static ManageHotelER mhER;  // The manage hotel error handler.
+        private static ManageHotelUI mhUI;  // The manage hotel UI.
+        private static MainFrameUI mfUI;    // The main frame UI.
+        private static Database db;         // The database.
 
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
@@ -45,6 +45,7 @@ public class ManageHotelCO
             db = Database.getInstance();
 
             handleBack();
+            handleSelectHotel();
             handleDeleteHotel();
             handleChangeName();
             handleRoomCount();
@@ -54,7 +55,7 @@ public class ManageHotelCO
         }
 
         /**
-         * Returns the instance of the manage hotel controller.
+         * Returns the instance of the book reservation controller.
          * 
          * @return {ManageHotelCO}
          */
@@ -85,7 +86,11 @@ public class ManageHotelCO
          */
         private void handleSelectHotel()
         {
-            
+            mhUI.setActionListener("cmbHotels", (ActionEvent e) ->
+            {
+                db.setHotel(db.getHotel(mhUI.getValue("cmbHotels")));
+                mfUI.reopenPage();
+            });
         }
 
         /**

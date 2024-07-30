@@ -46,11 +46,15 @@ public class MainFrameUI extends JFrame
             hhUI = HotelHubUI.getInstance();
             mhUI = ManageHotelUI.getInstance();
             vhUI = ViewHotelUI.getInstance();
+            db = Database.getInstance();
+
+            currentPage = "HOTEL_HUB";
 
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             openPage("HOTEL_HUB");
-            setExtendedState(JFrame.MAXIMIZED_BOTH);
             setVisible(true);
+
+            // TODO SET SIZE
         }
 
         /**
@@ -68,6 +72,8 @@ public class MainFrameUI extends JFrame
     /* -------------------------------------------------------------------------- */
     /*                                MANIPULATORS                                */
     /* -------------------------------------------------------------------------- */
+
+    // TODO USE CARD LAYOUT?
 
         /**
          * Opens a page.
@@ -95,31 +101,32 @@ public class MainFrameUI extends JFrame
                 case "BOOK_RESERVATION" ->
                 {
                     brUI.updateValues();
-                    add(brUI);
+                    getContentPane().add(brUI);
                 }
                 case "CREATE_HOTEL" -> 
                 {
                     chUI.updateValues();
-                    add(chUI);
+                    getContentPane().add(chUI);
                 }
                 case "HOTEL_HUB" ->
                 {
                     hhUI.updateValues();
-                    add(hhUI);
+                    getContentPane().add(hhUI);
                 }
                 case "MANAGE_HOTEL" ->
                 {
                     mhUI.updateValues();
-                    add(mhUI);
+                    getContentPane().add(mhUI);
                 }
                 case "VIEW_HOTEL" ->
                 {
                     vhUI.updateValues();
-                    add(vhUI);
+                    getContentPane().add(vhUI);
                 }
                 default -> {}
             }
 
+            revalidate();
             repaint();
             currentPage = page;
         }
@@ -131,15 +138,13 @@ public class MainFrameUI extends JFrame
          */
         private void closePage()
         {
-            db.setHotel(null);
-
             switch (currentPage)
             {
-                case "BOOK_RESERVATION" -> {remove(brUI);}
-                case "CREATE_HOTEL"     -> {remove(chUI);}
-                case "HOTEL_HUB"        -> {remove(hhUI);}
-                case "MANAGE_HOTEL"     -> {remove(mhUI);}
-                case "VIEW_HOTEL"       -> {remove(vhUI);}
+                case "BOOK_RESERVATION" -> {getContentPane().remove(brUI);}
+                case "CREATE_HOTEL"     -> {getContentPane().remove(chUI);}
+                case "HOTEL_HUB"        -> {getContentPane().remove(hhUI);}
+                case "MANAGE_HOTEL"     -> {getContentPane().remove(mhUI);}
+                case "VIEW_HOTEL"       -> {getContentPane().remove(vhUI);}
                 default -> {}
             }
         }

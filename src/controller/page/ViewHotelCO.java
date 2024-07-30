@@ -51,7 +51,7 @@ public class ViewHotelCO
         /**
          * Returns the instance of the view hotel controller.
          * 
-         * @return {ViewHotelCO}
+         * @return          {ViewHotelCO}
          */
         public static ViewHotelCO getInstance()
         {
@@ -86,7 +86,7 @@ public class ViewHotelCO
                 db.setDate(1);
                 db.setRoom(db.getHotel().getRooms().get(0));
                 
-                if (db.getHotel().getReservationCodes().length != 0)
+                if (db.getHotel().getNumOfReservations() != 0)
                     db.setReservation(db.getRoom().getReservations().get(0));
                 else
                     db.setReservation(null);

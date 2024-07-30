@@ -75,7 +75,7 @@ public final class ManageHotelUI extends JBlackPanel
         private ManageHotelUI()
         {
             db = Database.getInstance();
-     
+            
             initializeComps();
             configureComps();
             addCompsToPanel();
@@ -110,17 +110,23 @@ public final class ManageHotelUI extends JBlackPanel
             txtExecutiveCnt = new JCommonTextField();
             txtChangePrice = new JCommonTextField();
             txtChangeRate = new JCommonTextField();
-            
-            // TODO select item by default
-            // TODO when picking reservation, dont break down string
 
-            cmbHotels = new JCommonComboBox<>(db.getHotelNames());
-            cmbNights = new JCommonComboBox<>(Reservation.getReservationNights());
-
-            if (db.getHotel().getReservationCodes().length != 0)
-                cmbReservations = new JCommonComboBox<>(db.getHotel().getReservationCodes());
+            if (!db.getHotels().isEmpty())
+            {
+                cmbHotels = new JCommonComboBox<>(db.getHotelNames());
+                
+                if (db.getHotel().getNumOfReservations() != 0)
+                    cmbReservations = new JCommonComboBox<>(db.getHotel().getReservationCodes());
+                else
+                    cmbReservations = new JCommonComboBox<>();
+            }
             else
+            {
+                cmbHotels = new JCommonComboBox<>();
                 cmbReservations = new JCommonComboBox<>();
+            }
+                
+            cmbNights = new JCommonComboBox<>(Reservation.getReservationNights());
             
             btnSaveName = new JSmallButton("Save", 1);
             btnSavePrice = new JSmallButton("Save", 1);
@@ -133,7 +139,7 @@ public final class ManageHotelUI extends JBlackPanel
             btnDeleteDeluxe = new JSmallButton("Delete", 1);
             btnDeleteExecutive = new JSmallButton("Delete", 1);
             btnDeleteReservation = new JSmallButton("Delete", 1);
-            
+
             btnOK = new JBigButton("OK");
         }
 
@@ -177,6 +183,9 @@ public final class ManageHotelUI extends JBlackPanel
             btnDeleteDeluxe.setLocation(1328,509);
             btnDeleteExecutive.setLocation(1328,569);
             btnDeleteReservation.setLocation(1328,691);
+
+            if (!db.getHotels().isEmpty())
+                btnDeleteReservation.setEnabled(db.getHotel().getNumOfReservations() != 0);
             
             btnOK.setBounds(785,925,330,55);
         }
@@ -317,6 +326,7 @@ public final class ManageHotelUI extends JBlackPanel
         public void setErrorMessage(String text)
         {
             lblErrorMessage.setText(text);
+            revalidate();
             repaint();
         }
 }

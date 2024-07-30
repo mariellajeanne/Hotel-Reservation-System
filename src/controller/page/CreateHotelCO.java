@@ -35,7 +35,7 @@ public class CreateHotelCO
 
         /**
          * Constructs the create hotel controller.
-        */
+         */
         private CreateHotelCO()
         {
             chUI = CreateHotelUI.getInstance();
@@ -49,9 +49,9 @@ public class CreateHotelCO
 
         /**
          * Returns the instance of the create hotel controller.
-        * 
-        * @return {CreateHotelCO}
-        */
+         * 
+         * @return {CreateHotelCO}
+         */
         public static CreateHotelCO getInstance()
         {
             if (chCO == null)

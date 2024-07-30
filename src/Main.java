@@ -1,6 +1,3 @@
-
-import view.frame.MainFrameUI;
-
 /**
  * @author Stephen M. Borja
  * @author Mariella Jeanne A. Dellosa
@@ -8,11 +5,14 @@ import view.frame.MainFrameUI;
  * Contains the main function.
  */
 
+import controller.page.SystemCO;
+import view.frame.MainFrameUI;
+
 /**
  * The main class.
  */
-public class Main {
-    
+public class Main
+{    
     /**
      * The main function.
      * 
@@ -20,6 +20,7 @@ public class Main {
      */
     public static void main(String[] args) {
         
-        MainFrameUI mfUI = MainFrameUI.getInstance();
+        MainFrameUI.getInstance();
+        SystemCO.getInstance();
     }
 }
