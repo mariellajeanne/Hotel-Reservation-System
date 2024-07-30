@@ -98,6 +98,7 @@ public class ManageHotelCO
                 if (!db.getHotels().isEmpty())
                 {
                     db.setHotel(db.getHotel(mhUI.getValue("cmbHotels")));
+                    mhUI.setFeedbackMessage("", false);
                     mhUI.configureComps();
                 }
             });
@@ -123,10 +124,12 @@ public class ManageHotelCO
                         db.removeHotel(hotel);
 
                         // Updates the UI accordingly.
+                        mhUI.setFeedbackMessage("Removed " + hotel + ".", false);
                         if (db.getHotels().isEmpty())
                             mfUI.openPage("MANAGE_HOTEL", "HOTEL_HUB");
                         else
                             mhUI.configureComps();
+                        
                 }
             });
         }
@@ -156,13 +159,15 @@ public class ManageHotelCO
                     
                         // Displays the error message if the input is invalid.
                         if (!errorMessage.equals(""))
-                            mhUI.setErrorMessage(errorMessage);
+                            mhUI.setFeedbackMessage(errorMessage, true);
                         else
                         {
                             // Changes the hotel name if the input is valid.
                             h.setName(newName);
 
                             // Updates the UI accordingly.
+                            mhUI.setFeedbackMessage("Changed the name from \"" + oldName + 
+                                "\" to \"" + newName + "\".", false);
                             mhUI.configureComps();
                     }
                 }
@@ -177,23 +182,23 @@ public class ManageHotelCO
             /* Standard room addition and deletion */
 
                 mhUI.setActionListener("btnAddStandard",
-                updateRoomCount("STANDARD", true));
+                updateRoomCount("Standard", true));
                 mhUI.setActionListener("btnDeleteStandard",
-                updateRoomCount("STANDARD", false));
+                updateRoomCount("Standard", false));
 
             /* Deluxe room addition and deletion */
 
                 mhUI.setActionListener("btnAddDeluxe",
-                updateRoomCount("DELUXE", true));
+                updateRoomCount("Deluxe", true));
                 mhUI.setActionListener("btnDeleteDeluxe",
-                updateRoomCount("DELUXE", true));
+                updateRoomCount("Deluxe", false));
 
             /* Executive room addition and deletion */
 
                 mhUI.setActionListener("btnAddExecutive",
-                updateRoomCount("EXECUTIVE", true));
+                updateRoomCount("Executive", true));
                 mhUI.setActionListener("btnDeleteExecutive",
-                updateRoomCount("EXECUTIVE", true));
+                updateRoomCount("Executive", false));
         }
 
         /**
@@ -218,7 +223,7 @@ public class ManageHotelCO
 
                         // Displays the error message if there was an error.
                         if (!errorMessage.equals(""))
-                            mhUI.setErrorMessage(errorMessage);
+                            mhUI.setFeedbackMessage(errorMessage, true);
                         
                         else
                         {
@@ -266,6 +271,8 @@ public class ManageHotelCO
                         room.getReservations().remove(res);
 
                         // Updates the UI accordingly.
+                        mhUI.setFeedbackMessage("Removed " + resCode +
+                            " reservation.", false);
                         mhUI.configureComps();
                 }
             });
@@ -296,7 +303,7 @@ public class ManageHotelCO
 
                         // Displays the error message if there was an error.
                         if (!errorMessage.equals(""))
-                            mhUI.setErrorMessage(errorMessage);
+                            mhUI.setFeedbackMessage(errorMessage, true);
                         
                         else
                         {
@@ -304,6 +311,7 @@ public class ManageHotelCO
                             h.setNightRate(night, Double.parseDouble(rate));
 
                             // Updates the UI accordingly.
+                            mhUI.setFeedbackMessage("Changed the night rate.", false);
                             mhUI.configureComps();
                         }
                 }
@@ -327,21 +335,21 @@ public class ManageHotelCO
                 /* Setup */
 
                     // Gets the hotel.
-                    Hotel h = db.getHotel(mhUI.getValue("cmbHotels"));
+                    Hotel h = db.getHotel();
 
                     // Gets the number of rooms to be added/deleted.
                     String numUpdated = switch (type)
                     {
-                        case "STANDARD" -> mhUI.getValue("txtStandardCnt");
-                        case "DELUXE" -> mhUI.getValue("txtDeluxeCnt");
-                        case "EXECUTIVE" -> mhUI.getValue("txtExecutive");
+                        case "Standard" -> mhUI.getValue("txtStandardCnt");
+                        case "Deluxe" -> mhUI.getValue("txtDeluxeCnt");
+                        case "Executive" -> mhUI.getValue("txtExecutiveCnt");
                         default -> "";
                     };
 
                     // Gets the error message.
                     String errorMessage;
                     if (isAdded)
-                        errorMessage = mhER.checkAddRooms(h, type);
+                        errorMessage = mhER.checkAddRooms(h, numUpdated);
                     else
                         errorMessage = mhER.checkDeleteRooms(h, type, numUpdated);
 
@@ -349,7 +357,7 @@ public class ManageHotelCO
 
                     // Displays the error message if there was an error.
                     if (!errorMessage.equals(""))
-                        mhUI.setErrorMessage(errorMessage);
+                        mhUI.setFeedbackMessage(errorMessage, true);
 
                     // Adds/deletes rooms if there was no error.
                     else
@@ -363,19 +371,34 @@ public class ManageHotelCO
                         // Adds rooms.
                         if (isAdded)
                         {
-                            for (int i = numOfRooms + 1; i <= numOfRooms +
-                                Integer.parseInt(numUpdated); i++)
+                            // The number to be added.
+                            int numAdded = Integer.parseInt(numUpdated);
+                            // The start and end room numbers.
+                            int start = numOfRooms + 1;
+                            int end = numOfRooms + numAdded;
+
+                            // Loops through the added room numbers.
+                            for (int i = start; i <= end; i++)
                                 rooms.add(new Room(i, type, h.getBasePrice()));
+
+                            // Updates the UI accordingly.
+                            mhUI.setFeedbackMessage("Added " + numAdded + " " + 
+                                type.toLowerCase() + " rooms.", false);
                         }
+
+                        // Removes rooms.
                         else
                         {
-                            // Removes rooms.
+                            // Tracks the number of rooms deleted.
                             int numDeleted = 0;
-                            for (int i = 0; i < numOfRooms && numDeleted <
+                            
+                            // Loops through all rooms. Stops when enough rooms were deleted.
+                            for (int i = 0; i < numOfRooms && numDeleted <=
                                 Integer.parseInt(numUpdated); i++)
                             {
                                 Room r = rooms.get(i);
                                 
+                                // Gets the room type with no reservations.
                                 if (r.getType().equals(type) && r.getReservations().isEmpty())
                                 {
                                     rooms.remove(r);
@@ -388,8 +411,10 @@ public class ManageHotelCO
                                 rooms.get(i).setNum(i + 1);
 
                             // Updates the UI accordingly.
-                            mhUI.configureComps();
+                            mhUI.setFeedbackMessage("Removed " + numDeleted + " " + 
+                                type.toLowerCase() + " rooms.", false);
                         }
+                        mhUI.configureComps();
                     }
             };
         }

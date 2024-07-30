@@ -87,8 +87,6 @@ public class CommonER
          */
         public boolean checkIntChars(String text)
         {
-            if (text.equals(""))
-                return false;
             try
             {
                 Integer.valueOf(text);
@@ -108,8 +106,6 @@ public class CommonER
          */
         public boolean checkDoubleChars(String text)
         {
-            if (text.equals(""))
-                return false;
             try
             {
                 Double.valueOf(text);

@@ -7,6 +7,7 @@
 
 package view.page;
 
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
 import model.*;
@@ -39,7 +40,7 @@ public final class ManageHotelUI extends JBlackPanel
             private JCommonLabel lblChangePrice;
             private JCommonLabel lblRemoveReservation;
             private JCommonLabel lblChangeRate;
-            private JErrorLabel lblErrorMessage;
+            private JFeedbackLabel lblFeedbackMessage;
 
             private JCommonTextField txtChangeName;
             private JCommonTextField txtStandardCnt;
@@ -117,7 +118,7 @@ public final class ManageHotelUI extends JBlackPanel
             lblChangePrice = new JCommonLabel("Change base price:",0,false);
             lblRemoveReservation = new JCommonLabel("Remove reservation:",0,false);
             lblChangeRate = new JCommonLabel("Change rate of night:",0,false);
-            lblErrorMessage = new JErrorLabel();
+            lblFeedbackMessage = new JFeedbackLabel();
 
             txtChangeName = new JCommonTextField(998,389,279,30);
             txtStandardCnt = new JCommonTextField(998,449,89,30);
@@ -186,7 +187,7 @@ public final class ManageHotelUI extends JBlackPanel
             lblChangePrice.setSizePos(468,628,39);
             lblRemoveReservation.setSizePos(468,691,30);
             lblChangeRate.setSizePos(468,751,38);
-            lblErrorMessage.setSizePos(468,830);
+            lblFeedbackMessage.setSizePos(468,830);
         }
 
         /**
@@ -210,7 +211,7 @@ public final class ManageHotelUI extends JBlackPanel
             add(lblChangePrice);
             add(lblRemoveReservation);
             add(lblChangeRate);
-            add(lblErrorMessage);
+            add(lblFeedbackMessage);
             
             add(txtChangeName);
             add(txtStandardCnt);
@@ -263,15 +264,24 @@ public final class ManageHotelUI extends JBlackPanel
         }
 
         /**
-         * Sets the error message.
+         * Sets the feedback message.
          * 
-         * @param text {String} The error message.
+         * @param text      {String}    The feedback message.
+         * @param isError   {boolean}   Determines if the feedback is an error warning.
          */
         @Override
-        public void setErrorMessage(String text)
-        {
-            lblErrorMessage.setText(text);
-            lblErrorMessage.setSizePos(468, 830);
+        public void setFeedbackMessage(String text, boolean isError)
+        {   
+            // Sets the text color to blue if not an error message.
+            if (!isError)
+                lblFeedbackMessage.setForeground(Color.decode("#86d0f3"));
+
+            // Sets the text color to red otherwise.
+            else
+                lblFeedbackMessage.setForeground(Color.decode("#ffa0a0"));
+
+            lblFeedbackMessage.setText(text);
+            lblFeedbackMessage.setSizePos(468, 830);
         }
 
         /**
@@ -308,7 +318,7 @@ public final class ManageHotelUI extends JBlackPanel
         @Override
         public void resetValues()
         {
-            lblErrorMessage.setText("");
+            lblFeedbackMessage.setText("");
 
             txtChangeName.setText("");
             txtStandardCnt.setText("");

@@ -57,7 +57,7 @@ public class Room
          */
         public static String[] getRoomTypes()
         {
-            String[] roomTypes = {"STANDARD", "DELUXE", "EXECUTIVE"};
+            String[] roomTypes = {"Standard", "Deluxe", "Executive"};
             return roomTypes;
         }
 
@@ -197,8 +197,8 @@ public class Room
         {
             this.nightlyPrice = switch(type)
             {
-                case "DELUXE"       -> basePrice * 1.20;
-                case "EXECUTIVE"    -> basePrice * 1.35;
+                case "Deluxe"       -> basePrice * 1.20;
+                case "Executive"    -> basePrice * 1.35;
                 default             -> basePrice;
             };
         }
@@ -218,7 +218,7 @@ public class Room
         }
     
     /* -------------------------------------------------------------------------- */
-    /*                                   OTHERS                                   */
+    /*                                   ADDERS                                   */
     /* -------------------------------------------------------------------------- */
 
         /**

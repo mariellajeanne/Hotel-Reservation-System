@@ -99,7 +99,7 @@ public class CreateHotelCO
 
                     // Displays the error message if there was an error.
                     if (!errorMessage.equals(""))
-                        chUI.setErrorMessage(errorMessage);
+                        chUI.setFeedbackMessage(errorMessage, true);
 
                     else
                     {

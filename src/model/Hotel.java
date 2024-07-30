@@ -45,11 +45,11 @@ public class Hotel
             this.rooms = new ArrayList<>();
 
             for (int i = 1; i <= standard; i++)
-                this.rooms.add(new Room(i, "STANDARD", basePrice));
+                this.rooms.add(new Room(i, "Standard", basePrice));
             for (int i = standard + 1; i <= standard + deluxe; i++)
-                this.rooms.add(new Room(i, "DELUXE", basePrice));
+                this.rooms.add(new Room(i, "Deluxe", basePrice));
             for (int i = standard + deluxe + 1; i <= standard + deluxe + executive; i++)
-                this.rooms.add(new Room(i, "EXECUTIVE", basePrice));
+                this.rooms.add(new Room(i, "Executive", basePrice));
 
             Arrays.fill(rates, 1.0);
         }
@@ -311,7 +311,7 @@ public class Hotel
         }
 
         /* -------------------------------------------------------------------------- */
-        /*                                   OTHERS                                   */
+        /*                                   ADDERS                                   */
         /* -------------------------------------------------------------------------- */
 
         /**

@@ -34,7 +34,7 @@ public final class CreateHotelUI extends JBlackPanel
             private JCommonLabel lblDeluxe;
             private JCommonLabel lblExecutive;
             private JCommonLabel lblPrice;
-            private JErrorLabel lblErrorMessage;
+            private JFeedbackLabel lblFeedbackMessage;
             
             private JCommonTextField txtName;
             private JCommonTextField txtStandard;
@@ -90,7 +90,7 @@ public final class CreateHotelUI extends JBlackPanel
             lblDeluxe = new JCommonLabel("Number of deluxe rooms:", 0,false);
             lblExecutive = new JCommonLabel("Number of executive rooms:", 0, false);
             lblPrice = new JCommonLabel("Base nightly price:", 0, false);
-            lblErrorMessage = new JErrorLabel();
+            lblFeedbackMessage = new JFeedbackLabel();
             
             txtName = new JCommonTextField(869,300,380,30);
             txtStandard = new JCommonTextField(1184,421,65,30);
@@ -112,7 +112,7 @@ public final class CreateHotelUI extends JBlackPanel
             lblDeluxe.setSizePos(670,480,31);
             lblExecutive.setSizePos(670,540,31);
             lblPrice.setSizePos(670,661,45);
-            lblErrorMessage.setSizePos(670,775);
+            lblFeedbackMessage.setSizePos(670,775);
         }
 
         /**
@@ -129,7 +129,7 @@ public final class CreateHotelUI extends JBlackPanel
             add(lblDeluxe);
             add(lblExecutive);
             add(lblPrice);
-            add(lblErrorMessage);
+            add(lblFeedbackMessage);
 
             add(txtName);
             add(txtStandard);
@@ -165,15 +165,16 @@ public final class CreateHotelUI extends JBlackPanel
         }
 
         /**
-         * Sets the error message.
+         * Sets the feedback message.
          * 
-         * @param text {String} The error message.
+         * @param text      {String}    The feedback message.
+         * @param isError   {boolean}   Determines if the feedback is an error warning.
          */
         @Override
-        public void setErrorMessage(String text)
+        public void setFeedbackMessage(String text, boolean isError)
         {
-            lblErrorMessage.setText(text);
-            lblErrorMessage.setSizePos(670,775);
+            lblFeedbackMessage.setText(text);
+            lblFeedbackMessage.setSizePos(670,775);
         }
 
         /**
@@ -198,7 +199,7 @@ public final class CreateHotelUI extends JBlackPanel
         @Override
         public void resetValues()
         {
-            lblErrorMessage.setText("");
+            lblFeedbackMessage.setText("");
             txtName.setText("");
             txtStandard.setText("");
             txtDeluxe.setText("");

@@ -66,11 +66,12 @@ public abstract class JBlackPanel extends JPanel
         public abstract String getValue(String componentID);
 
         /**
-         * Sets the error message.
+         * Sets the feedback message.
          * 
-         * @param text {String} The error message.
+         * @param text      {String}    The feedback message.
+         * @param isError   {boolean}   Determines if the feedback is an error warning.
          */
-        public abstract void setErrorMessage(String text);
+        public abstract void setFeedbackMessage(String text, boolean isError);
 
         /**
          * Sets the action listener of a component.

@@ -104,7 +104,7 @@ public class BookReservationCO
                 
                         // Displays the error message if details are invalid.
                         if (!errorMessage.equals(""))
-                            brUI.setErrorMessage(errorMessage);
+                            brUI.setFeedbackMessage(errorMessage, true);
                         
                         else
                         {

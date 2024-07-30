@@ -37,7 +37,7 @@ public final class BookReservationUI extends JBlackPanel
             private JCommonLabel lblCheckIn;
             private JCommonLabel lblCheckOut;
             private JCommonLabel lblDiscountCode;
-            private JErrorLabel lblErrorMessage;
+            private JFeedbackLabel lblFeedbackMessage;
             
             private JCommonTextField txtGuest;
             private JCommonTextField txtCode;
@@ -95,7 +95,7 @@ public final class BookReservationUI extends JBlackPanel
             lblCheckIn = new JCommonLabel("Check-in date:", 0, false);
             lblCheckOut = new JCommonLabel("Check-out date:", 0, false);
             lblDiscountCode = new JCommonLabel("Discount code:", 0, false);
-            lblErrorMessage = new JErrorLabel();
+            lblFeedbackMessage = new JFeedbackLabel();
             
             txtGuest = new JCommonTextField(870,300,381,30);
             txtCode = new JCommonTextField(962,667,289,30);
@@ -125,7 +125,7 @@ public final class BookReservationUI extends JBlackPanel
             lblCheckIn.setSizePos(670,482,31);
             lblCheckOut.setSizePos(670,542,31);
             lblDiscountCode.setSizePos(670,667,30);
-            lblErrorMessage.setSizePos(670,775);
+            lblFeedbackMessage.setSizePos(670,775);
         }
 
         /**
@@ -143,7 +143,7 @@ public final class BookReservationUI extends JBlackPanel
             add(lblCheckIn);
             add(lblCheckOut);
             add(lblDiscountCode);
-            add(lblErrorMessage);
+            add(lblFeedbackMessage);
             
             add(txtGuest);
             add(txtCode);
@@ -182,15 +182,16 @@ public final class BookReservationUI extends JBlackPanel
         }
 
         /**
-         * Sets the error message.
+         * Sets the feedback message.
          * 
-         * @param text {String} The error message.
+         * @param text      {String}    The feedback message.
+         * @param isError   {boolean}   Determines if the feedback is an error warning.
          */
         @Override
-        public void setErrorMessage(String text)
+        public void setFeedbackMessage(String text, boolean isError)
         {
-            lblErrorMessage.setText(text);
-            lblErrorMessage.setSizePos(670, 775);
+            lblFeedbackMessage.setText(text);
+            lblFeedbackMessage.setSizePos(670, 775);
         }
 
         /**
@@ -215,7 +216,7 @@ public final class BookReservationUI extends JBlackPanel
         @Override
         public void resetValues()
         {
-            lblErrorMessage.setText("");
+            lblFeedbackMessage.setText("");
             txtGuest.setText("");
             txtCode.setText("");
         }

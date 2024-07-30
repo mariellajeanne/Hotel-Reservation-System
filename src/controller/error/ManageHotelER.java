@@ -57,7 +57,9 @@ public class ManageHotelER
          */
         public String checkChangeName(String name)
         {
-            if (!cER.checkStringChars(name, false))
+            if (name.equals(""))
+                return "Field must not be empty.";
+            else if (!cER.checkStringChars(name, false))
                 return "No spaces must be at the first and last character.";
             else if (!cER.checkStringLength(name))
                 return "Hotel name must have 1-50 characters.";
@@ -75,12 +77,14 @@ public class ManageHotelER
          */
         public String checkAddRooms(Hotel h, String n)
         {
-            if (!cER.checkIntChars(n))
+            if (n.equals(""))
+                return "Field must not be empty.";
+            else if (!cER.checkIntChars(n))
                 return "Invalid number input.";
             else if (checkMaxMinRoomCnt(h, true))
                 return "Maximum number of rooms reached.";
             else if (!checkAddedValue(h, n))
-                return "Number range must be 1-" + (50 - h.getRooms().size());
+                return "Number range must be 1-" + (50 - h.getRooms().size()) + ".";
             return "";
         }
 
@@ -94,17 +98,56 @@ public class ManageHotelER
          */
         public String checkDeleteRooms(Hotel h, String type, String n)
         {
-            if (!cER.checkIntChars(n))
+            if (n.equals(""))
+                return "Field must not be empty.";
+            else if (!cER.checkIntChars(n))
                 return "Invalid number input.";
             else if (checkMaxMinRoomCnt(h, false))
                 return "Minimum number of rooms reached.";
             else if (!checkDeletedValue(h, type, n))
             {
                 if (h.getRooms().size() == h.getNumOfAvailRooms(type))
-                    return "Number range must be 1-" + ((h.getNumOfAvailRooms(type) - 1));
+                    return "Number range must be 1-" + ((h.getNumOfAvailRooms(type) - 1)) + ".";
                 else
-                    return "Number range must be 1-" + (h.getNumOfAvailRooms(type));
+                    return "Number range must be 1-" + (h.getNumOfAvailRooms(type)) + ".";
             }
+            return "";
+        }
+
+        /**
+         * Checks all possible errors for changing the base price.
+         * 
+         * @param   hotel   {Hotel}     The hotel.
+         * @param   price   {String}    The base price.
+         * @return          {String}
+         */
+        public String checkChangePrice(Hotel h, String price)
+        {
+            if (price.equals(""))
+                return "Field must not be empty.";
+            else if (!checkHotelReservations(h))
+                return "Base price cannot change; hotel has reservations.";
+            else if (!cER.checkDoubleChars(price))
+                return "Base price must be a decimal.";
+            else if (!cER.checkPriceValue(price))
+                return "Base price must be at least 100.0.";
+            return "";
+        }
+
+        /**
+         * Checks all possible errors for changing the night rate.
+         * 
+         * @param   rate    {String}    The night rate.
+         * @return          {String}
+         */
+        public String checkChangeRate(String rate)
+        {
+            if (rate.equals(""))
+                return "Field must not be empty.";
+            else if (!cER.checkDoubleChars(rate))
+                return "Date rate must be a decimal.";
+            else if (!checkRateValue(rate))
+                return "Date rate must be 0.50 to 1.50";
             return "";
         }
 
@@ -159,39 +202,6 @@ public class ManageHotelER
                 return h.getRooms().size() == 50;
             else
                 return h.getRooms().size() == 1;
-        }
-
-        /**
-         * Checks all possible errors for changing the base price.
-         * 
-         * @param   hotel   {Hotel}     The hotel.
-         * @param   price   {String}    The base price.
-         * @return          {String}
-         */
-        public String checkChangePrice(Hotel h, String price)
-        {
-            if (!checkHotelReservations(h))
-                return "Base price cannot change; hotel has reservations.";
-            if (!cER.checkDoubleChars(price))
-                return "Base price must be a decimal.";
-            else if (!cER.checkPriceValue(price))
-                return "Base price must be at least 100.0.";
-            return "";
-        }
-
-        /**
-         * Checks all possible errors for changing the night rate.
-         * 
-         * @param   rate    {String}    The night rate.
-         * @return          {String}
-         */
-        public String checkChangeRate(String rate)
-        {
-            if (!cER.checkDoubleChars(rate))
-                return "Date rate must be a decimal.";
-            else if (!checkRateValue(rate))
-                return "Date rate must be 0.50 to 1.50";
-            return "";
         }
 
         /**

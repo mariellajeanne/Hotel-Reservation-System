@@ -305,12 +305,13 @@ public final class ViewHotelUI extends JBlackPanel
         }
 
         /**
-         * Sets the error message.
+         * Sets the feedback message.
          * 
-         * @param text {String} The error message.
+         * @param text      {String}    The feedback message.
+         * @param isError   {boolean}   Determines if the feedback is an error warning.
          */
         @Override
-        public void setErrorMessage(String text){}
+        public void setFeedbackMessage(String text, boolean isError){}
 
         /**
          * Sets the action listener of a component.
