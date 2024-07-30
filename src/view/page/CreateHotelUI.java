@@ -90,7 +90,7 @@ public final class CreateHotelUI extends JBlackPanel
             lblDeluxe = new JCommonLabel("Number of deluxe rooms:", 0,false);
             lblExecutive = new JCommonLabel("Number of executive rooms:", 0, false);
             lblPrice = new JCommonLabel("Base nightly price:", 0, false);
-            lblErrorMessage = new JErrorLabel("");
+            lblErrorMessage = new JErrorLabel();
             
             txtName = new JCommonTextField(869,300,380,30);
             txtStandard = new JCommonTextField(1184,421,65,30);

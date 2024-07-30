@@ -81,7 +81,7 @@ public class BookReservationER
                 return "Invalid reservation dates.";
             else if (!checkAvailability(h, type, checkIn, checkOut))
                 return "No available room given the details.";
-            else if (!checkCode(type))
+            else if (!checkCode(code))
                 return "Invalid discount code.";
             return "";
         }
@@ -89,8 +89,6 @@ public class BookReservationER
     /* -------------------------------------------------------------------------- */
     /*                               HELPER CHECKERS                              */
     /* -------------------------------------------------------------------------- */
-
-        // TODO Deal with empty inputs
 
         /**
          * Checks if the check-in date check-out dates are valid.

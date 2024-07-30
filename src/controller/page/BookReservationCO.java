@@ -168,20 +168,20 @@ public class BookReservationCO
          * Sets up the nightly and total price of a reservation given its code.
          * 
          * @param h     {Hotel}       The hotel.
-         * @param r     {Reservation} The reservation.
+         * @param res   {Reservation} The reservation.
          * @param code  {String}      The discount code.
          */
-        private void setUpPrice(Hotel h, Reservation r, String code)
+        private void setUpPrice(Hotel h, Reservation res, String code)
         {
             double totalPrice = 0; // The reservation's total price.
 
             // Sets the nightly prices based on the night rates.
-            for (int i = r.getCheckIn(); i < r.getCheckOut(); i++)
+            for (int i = res.getCheckIn(); i < res.getCheckOut(); i++)
             {
-                double roomPrice = r.getRoom().getNightlyPrice();
+                double roomPrice = res.getRoom().getNightlyPrice();
                 double nightlyPrice = roomPrice * h.getNightRate(i);
 
-                r.setNightlyPrice(i, nightlyPrice);
+                res.setNightlyPrice(i, nightlyPrice);
                 totalPrice += nightlyPrice;
             }
 
@@ -196,22 +196,22 @@ public class BookReservationCO
                 // Makes the first day free if the reservation has 5 days or more.
                 case "STAY4_GET1" ->
                 {
-                    if (r.getCheckOut() - r.getCheckIn() >= 5)
+                    if (res.getCheckOut() - res.getCheckIn() >= 5)
                     {
-                        double firstDayPrice = r.getNightlyPrice(r.getCheckIn());
+                        double firstDayPrice = res.getNightlyPrice(res.getCheckIn());
                 
                         totalPrice -= firstDayPrice;
-                        r.setNightlyPrice(r.getCheckIn(), 0);
+                        res.setNightlyPrice(res.getCheckIn(), 0);
                     }
                 }
                 // Gives a 7% discount if the reservation has date 15 or 30.
                 case "PAYDAY" ->
                 {
-                    if (r.hasNight(15) || r.hasNight(30))
+                    if (res.hasNight(15) || res.hasNight(30))
                         totalPrice *= 0.7;
                 }
             }
 
-            r.setTotalPrice(totalPrice);
+            res.setTotalPrice(totalPrice);
         }    
 }

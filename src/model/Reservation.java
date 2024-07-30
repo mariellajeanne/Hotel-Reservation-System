@@ -197,7 +197,7 @@ public class Reservation
          */
         public void setNightlyPrice(int night, double price)
         {
-            this.nightlyPrices[checkIn - night] = price;
+            this.nightlyPrices[night - checkIn] = price;
         }
 
         /**

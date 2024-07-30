@@ -249,7 +249,7 @@ public class Database
                         // Sets the reservation if found.
                         if (!r.getReservations().isEmpty())
                         {
-                            db.setReservation(r.getReservations().get(0));
+                            reservation = r.getReservations().getFirst();
                             isFound = true;
                         }
                     }

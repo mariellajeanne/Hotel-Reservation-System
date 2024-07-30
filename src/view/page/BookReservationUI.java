@@ -94,15 +94,15 @@ public final class BookReservationUI extends JBlackPanel
             lblCheckIn = new JCommonLabel("Check-in date:", 0, false);
             lblCheckOut = new JCommonLabel("Check-out date:", 0, false);
             lblDiscountCode = new JCommonLabel("Discount code:", 0, false);
-            lblErrorMessage = new JErrorLabel("");
+            lblErrorMessage = new JErrorLabel();
             
             txtGuest = new JCommonTextField(870,300,381,30);
             txtCode = new JCommonTextField(962,667,289,30);
 
             cmbHotels = new JCommonComboBox<>(870,361,380,30);
-            cmbRoomTypes = new JCommonComboBox<>(1031,422,220,30);
-            cmbCheckIn = new JCommonComboBox<>(1186,483,65,30);
-            cmbCheckOut = new JCommonComboBox<>(1186,543,65,30);
+            cmbRoomTypes = new JCommonComboBox<>(Room.getRoomTypes(), 1031,422,220,30);
+            cmbCheckIn = new JCommonComboBox<>(Reservation.getReservationDates(true), 1186,483,65,30);
+            cmbCheckOut = new JCommonComboBox<>(Reservation.getReservationDates(false), 1186,543,65,30);
 
             btnBook = new JBigButton("Book", 785,925,330,55);
         }
@@ -125,8 +125,6 @@ public final class BookReservationUI extends JBlackPanel
                 cmbHotels.setItems(db.getHotelNames());
             else
                 cmbHotels.removeAllItems();
-
-            // TODO set room types and check in / check out
         }
 
         /**
@@ -158,7 +156,7 @@ public final class BookReservationUI extends JBlackPanel
         }
 
     /* -------------------------------------------------------------------------- */
-    /*                         GETTERS, SETTERS, UPDATERS                         */
+    /*                             GETTERS AND SETTERS                            */
     /* -------------------------------------------------------------------------- */
 
         /**

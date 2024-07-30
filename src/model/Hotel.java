@@ -120,8 +120,8 @@ public class Hotel
             {
                 ArrayList<String> roomResCodes =
                 new ArrayList<>(Arrays.asList(r.getReservationCodes()));
-                resCodesList.addAll(roomResCodes);
 
+                resCodesList.addAll(roomResCodes);
                 count += r.getReservations().size();
             }
 

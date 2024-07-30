@@ -101,7 +101,7 @@ public final class ManageHotelUI extends JBlackPanel
         /**
          * Initializes components.
          */
-        @SuppressWarnings({ "rawtypes", "unchecked" })
+        // @SuppressWarnings({ "rawtypes", "unchecked" })
         @Override
         protected void initializeComps()
         {
@@ -116,7 +116,7 @@ public final class ManageHotelUI extends JBlackPanel
             lblChangePrice = new JCommonLabel("Change base price:",0,false);
             lblRemoveReservation = new JCommonLabel("Remove reservation:",0,false);
             lblChangeRate = new JCommonLabel("Change rate of night:",0,false);
-            lblErrorMessage = new JErrorLabel("");
+            lblErrorMessage = new JErrorLabel();
 
             txtChangeName = new JCommonTextField(998,389,279,30);
             txtStandardCnt = new JCommonTextField(998,449,89,30);
@@ -125,7 +125,7 @@ public final class ManageHotelUI extends JBlackPanel
             txtChangePrice = new JCommonTextField(998,628,180,30);
             txtChangeRate = new JCommonTextField(1190,751,89,30);
             
-            cmbHotels = new JCommonComboBox(673,300,341,30);
+            cmbHotels = new JCommonComboBox<>(673,300,341,30);
             cmbNights = new JCommonComboBox<>(998,751,89,30);
             cmbReservations = new JCommonComboBox<>(998,691,279,30);
             

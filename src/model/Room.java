@@ -66,7 +66,7 @@ public class Room
          * 
          * @return {int}
          */
-        public int getNumber()
+        public int getNum()
         {
             return this.num;
         }

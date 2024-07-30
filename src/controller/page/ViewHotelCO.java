@@ -117,7 +117,7 @@ public class ViewHotelCO
         {
             vhUI.setActionListener("cmbRooms", (ActionEvent e) ->
             {
-                if (db.getHotel() != null)
+                if (!db.getHotels().isEmpty())
                 {
                     int num = Integer.parseInt(vhUI.getValue("cmbRooms"));
                     db.setRoom(db.getHotel().getRooms().get(num - 1));
