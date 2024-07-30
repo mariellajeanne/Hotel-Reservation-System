@@ -64,8 +64,11 @@ public class MainFrameUI extends JFrame
          */
         public static MainFrameUI getInstance()
         {
-            if (mfUI == null)
+            if (mfUI == null){
                 mfUI = new MainFrameUI();
+                mfUI.setSize(1920,1080);
+            }
+
             return mfUI;
         }
 
@@ -134,7 +137,7 @@ public class MainFrameUI extends JFrame
         /**
          * Closes a page.
          * 
-         * @param page {String} The page to close.
+//         * @param page {String} The page to close.
          */
         private void closePage()
         {

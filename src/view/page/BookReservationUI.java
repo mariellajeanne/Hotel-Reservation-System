@@ -105,12 +105,12 @@ public final class BookReservationUI extends JBlackPanel
         @Override
         protected void configureComps()
         {
-            lblGuest.setBounds(670, 300, lblGuest.getPreferredSize().width,30);
-            lblHotel.setBounds(670, 361, lblHotel.getPreferredSize().width,30);
-            lblRoomType.setBounds(670,422,lblRoomType.getPreferredSize().width,38);
+            lblGuest.setBounds(670, 300, lblGuest.getPreferredSize().width,lblGuest.getPreferredSize().height);
+            lblHotel.setBounds(670, 361, lblHotel.getPreferredSize().width,lblHotel.getPreferredSize().height);
+            lblRoomType.setBounds(670,422,lblRoomType.getPreferredSize().width,lblRoomType.getPreferredSize().height);
             lblCheckIn.setBounds(670,482,254,31);
             lblCheckOut.setBounds(670,542,278,31);
-            lblDiscountCode.setBounds(670,667,lblDiscountCode.getPreferredSize().width,30);
+            lblDiscountCode.setBounds(670,667,lblDiscountCode.getPreferredSize().width,lblDiscountCode.getPreferredSize().height);
             
             lblErrorMessage.setBounds(670,775, lblErrorMessage.getPreferredSize().width,
             lblErrorMessage.getPreferredSize().height);

@@ -88,8 +88,8 @@ public final class HotelHubUI extends JBlackPanel
             pnlTitle.setLocation(382,196);
             pnlTitle.setSize(pnlTitle.getPreferredSize().width, 182);
 
-            lblAuthor1.setBounds(382, 440, 306, 39);
-            lblAuthor2.setBounds(382, 494, 470, 30);
+            lblAuthor1.setBounds(382, 440, lblAuthor1.getPreferredSize().width, lblAuthor1.getPreferredSize().height);
+            lblAuthor2.setBounds(382, 494, lblAuthor2.getPreferredSize().width, lblAuthor2.getPreferredSize().height);
 
             btnCreateHotel.setLocation(785,590);
             btnViewHotel.setLocation(785, 670);
