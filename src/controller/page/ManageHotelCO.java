@@ -174,20 +174,26 @@ public class ManageHotelCO
          */
         private void handleRoomCount()
         {
-            mhUI.setActionListener("btnAddStandard",
-            updateRoomCount("STANDARD", true));
-            mhUI.setActionListener("btnDeleteStandard",
-            updateRoomCount("STANDARD", false));
+            /* Standard room addition and deletion */
 
-            mhUI.setActionListener("btnAddDeluxe",
-            updateRoomCount("DELUXE", true));
-            mhUI.setActionListener("btnDeleteDeluxe",
-            updateRoomCount("DELUXE", true));
+                mhUI.setActionListener("btnAddStandard",
+                updateRoomCount("STANDARD", true));
+                mhUI.setActionListener("btnDeleteStandard",
+                updateRoomCount("STANDARD", false));
 
-            mhUI.setActionListener("btnAddExecutive",
-            updateRoomCount("EXECUTIVE", true));
-            mhUI.setActionListener("btnDeleteExecutive",
-            updateRoomCount("EXECUTIVE", true));
+            /* Deluxe room addition and deletion */
+
+                mhUI.setActionListener("btnAddDeluxe",
+                updateRoomCount("DELUXE", true));
+                mhUI.setActionListener("btnDeleteDeluxe",
+                updateRoomCount("DELUXE", true));
+
+            /* Executive room addition and deletion */
+
+                mhUI.setActionListener("btnAddExecutive",
+                updateRoomCount("EXECUTIVE", true));
+                mhUI.setActionListener("btnDeleteExecutive",
+                updateRoomCount("EXECUTIVE", true));
         }
 
         /**

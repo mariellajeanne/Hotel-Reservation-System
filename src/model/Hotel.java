@@ -255,6 +255,21 @@ public class Hotel
             return sum;
         }
 
+        /**
+         * Returns the first room with a reservation.
+         * 
+         * @return {Room}
+         */
+        public Room getFirstReservedRoom()
+        {
+            for (Room r : rooms)
+            {
+                if (!r.getReservations().isEmpty())
+                    return r;
+            }
+            return null;
+        }
+
     /* -------------------------------------------------------------------------- */
     /*                                   SETTERS                                  */
     /* -------------------------------------------------------------------------- */

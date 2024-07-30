@@ -46,6 +46,8 @@ public class Reservation
             this.checkOut = checkOut;
             this.room = room;
             this.nightlyPrices = new double[this.checkOut - this. checkIn];
+
+            this.room.setReservedDates(checkIn, checkOut);
         }
 
     /* -------------------------------------------------------------------------- */

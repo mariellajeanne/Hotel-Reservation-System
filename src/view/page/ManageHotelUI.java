@@ -127,7 +127,7 @@ public final class ManageHotelUI extends JBlackPanel
             txtChangeRate = new JCommonTextField(1190,751,89,30);
             
             cmbHotels = new JCommonComboBox<>(673,300,341,30);
-            cmbNights = new JCommonComboBox<>(998,751,89,30);
+            cmbNights = new JCommonComboBox<>(Reservation.getReservationDates(true),998,751,89,30);
             cmbReservations = new JCommonComboBox<>(998,691,279,30);
             
             btnSaveName = new JSmallButton("Save", 1,1328,389);

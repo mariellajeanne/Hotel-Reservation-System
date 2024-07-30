@@ -83,49 +83,43 @@ public class MainFrameUI extends JFrame
         {
             closePage(close);
 
-            SwingUtilities.invokeLater(() ->
-            {
-                // Updates the database's default values if the page changed.
-                if (!close.equals(open))
-                    db.updateDefaultValues();
-            });
+            // Updates the database's default values if the page changed.
+            if (!close.equals(open))
+                db.updateDefaultValues();
 
-            SwingUtilities.invokeLater(() ->
+            // Opens each page.
+            switch (open)
             {
-                // Opens each page.
-                switch (open)
+                case "BOOK_RESERVATION" ->
                 {
-                    case "BOOK_RESERVATION" ->
-                    {
-                        add(brUI);
-                        brUI.configureComps();
-                    }
-                    case "CREATE_HOTEL" -> 
-                    {  
-                        add(chUI);
-                        chUI.configureComps();
-                    }
-                    case "HOTEL_HUB" ->
-                    {
-                        add(hhUI);
-                        hhUI.configureComps();
-                    }
-                    case "MANAGE_HOTEL" ->
-                    {
-                        add(mhUI);
-                        mhUI.configureComps();
-                    }
-                    case "VIEW_HOTEL" ->
-                    {
-                        add(vhUI);
-                        vhUI.configureComps();
-                    }
-                    default -> {}
+                    add(brUI);
+                    brUI.configureComps();
                 }
-        
-                revalidate();
-                repaint();
-            });
+                case "CREATE_HOTEL" -> 
+                {  
+                    add(chUI);
+                    chUI.configureComps();
+                }
+                case "HOTEL_HUB" ->
+                {
+                    add(hhUI);
+                    hhUI.configureComps();
+                }
+                case "MANAGE_HOTEL" ->
+                {
+                    add(mhUI);
+                    mhUI.configureComps();
+                }
+                case "VIEW_HOTEL" ->
+                {
+                    add(vhUI);
+                    vhUI.configureComps();
+                }
+                default -> {}
+            }
+    
+            revalidate();
+            repaint();
         }
 
         /**

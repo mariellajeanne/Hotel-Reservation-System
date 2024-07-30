@@ -10,6 +10,7 @@ package controller.page;
 import java.awt.event.*;
 import model.Database;
 import model.Hotel;
+import model.Reservation;
 import model.Room;
 import view.frame.MainFrameUI;
 import view.page.ViewHotelUI;
@@ -84,16 +85,25 @@ public class ViewHotelCO
             {
                 if (!db.getHotels().isEmpty())
                 {
-                    db.setHotel(db.getHotel(vhUI.getValue("cmbHotels")));
-                    db.setDate(1);
-                    db.setRoom(db.getHotel().getRooms().get(0));
-                    
-                    if (db.getHotel().getNumOfReservations() != 0)
-                        db.setReservation(db.getRoom().getReservations().get(0));
-                    else
-                        db.setReservation(null);
+                    /* Setup */
 
-                    vhUI.configureComps();
+                        // Gets the default chosen hotel and room.
+                        Hotel hotel = db.getHotel(vhUI.getValue("cmbHotels"));
+                        Room room = hotel.getRooms().getFirst();
+
+                    /* Update */
+
+                        // Sets the default chosen hotel, date, and room.
+                        db.setHotel(hotel);
+                        db.setDate(1);
+                        db.setRoom(room);
+                        
+                        // Sets the default chosen reservation if the hotel has reservations.
+                        Reservation res = hotel.getFirstReservedRoom().getReservations().getFirst();
+                        db.setReservation(res);
+
+                        // Updates the UI accordingly.
+                        vhUI.configureComps();
                 }
             });   
         }
@@ -105,8 +115,18 @@ public class ViewHotelCO
         {
             vhUI.setActionListener("cmbDates", (ActionEvent e) ->
             {
-                db.setDate(Integer.parseInt(vhUI.getValue("cmbDates")));
-                vhUI.configureComps();
+                /* Setup */
+
+                    // Gets the chosen date.
+                    int date = Integer.parseInt(vhUI.getValue("cmbDates"));
+
+                /* Update */
+
+                    // Sets the chosen date.
+                    db.setDate(date);
+
+                    // Updates the UI accordingly.
+                    vhUI.configureComps();
             });   
         }
 
@@ -119,9 +139,19 @@ public class ViewHotelCO
             {
                 if (!db.getHotels().isEmpty())
                 {
-                    int num = Integer.parseInt(vhUI.getValue("cmbRooms"));
-                    db.setRoom(db.getHotel().getRooms().get(num - 1));
-                    vhUI.configureComps();
+                    /* Setup */
+
+                        // Gets the chosen room.
+                        int num = Integer.parseInt(vhUI.getValue("cmbRooms"));
+                        Room room = db.getHotel().getRooms().get(num - 1);
+
+                    /* Update */
+
+                        // Sets the chosen room.
+                        db.setRoom(room);
+
+                        // Updates the UI accordingly.
+                        vhUI.configureComps();
                 }
             });   
         }
