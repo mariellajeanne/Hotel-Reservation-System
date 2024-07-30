@@ -117,9 +117,9 @@ public class BookReservationER
             {
                 if (r.getType().equals(type))
                 {
-                    for (int j = checkIn; j < checkOut; j++)
+                    for (int i = checkIn; i < checkOut; i++)
                     {
-                        if (r.getReservedDates().contains(j))
+                        if (r.getReservedDates().contains(i))
                             return false;
                     }
                 }

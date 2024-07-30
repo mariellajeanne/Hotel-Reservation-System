@@ -114,6 +114,11 @@ public final class BookReservationUI extends JBlackPanel
         @Override
         public void configureComps()
         {
+            if (!db.getHotels().isEmpty())
+                cmbHotels.setModel(new DefaultComboBoxModel<>(db.getHotelNames()));
+            else
+                cmbHotels.removeAllItems();
+
             lblGuest.setSizePos(670,300,30);
             lblHotel.setSizePos(670,361,30);
             lblRoomType.setSizePos(670,422,38);
@@ -121,11 +126,6 @@ public final class BookReservationUI extends JBlackPanel
             lblCheckOut.setSizePos(670,542,31);
             lblDiscountCode.setSizePos(670,667,30);
             lblErrorMessage.setSizePos(670,775);
-
-            if (!db.getHotels().isEmpty())
-                cmbHotels.setModel(new DefaultComboBoxModel<>(db.getHotelNames()));
-            else
-                cmbHotels.removeAllItems();
         }
 
         /**

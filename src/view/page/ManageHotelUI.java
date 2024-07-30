@@ -151,17 +151,6 @@ public final class ManageHotelUI extends JBlackPanel
         @Override
         public void configureComps()
         {   
-
-            lblHotel.setSizePos(470,299,31);
-            lblChangeName.setSizePos(470,389,38);
-            lblActionStandard.setSizePos(468,449,30);
-            lblActionDeluxe.setSizePos(468,508,31);
-            lblActionExecutive.setSizePos(468,568,31);
-            lblChangePrice.setSizePos(468,628,39);
-            lblRemoveReservation.setSizePos(468,691,30);
-            lblChangeRate.setSizePos(468,751,38);
-            lblErrorMessage.setSizePos(468,830);
-
             // Executes if there exists hotels.
             if (!db.getHotels().isEmpty())
             {
@@ -187,6 +176,17 @@ public final class ManageHotelUI extends JBlackPanel
                 btnDeleteReservation.setEnabled(db.getHotel().getNumOfReservations() != 0);
             else
                 btnDeleteReservation.setEnabled(false);
+
+            // Sets the label sizes according to text content.
+            lblHotel.setSizePos(470,299,31);
+            lblChangeName.setSizePos(470,389,38);
+            lblActionStandard.setSizePos(468,449,30);
+            lblActionDeluxe.setSizePos(468,508,31);
+            lblActionExecutive.setSizePos(468,568,31);
+            lblChangePrice.setSizePos(468,628,39);
+            lblRemoveReservation.setSizePos(468,691,30);
+            lblChangeRate.setSizePos(468,751,38);
+            lblErrorMessage.setSizePos(468,830);
         }
 
         /**

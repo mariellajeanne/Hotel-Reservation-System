@@ -145,23 +145,6 @@ public final class ViewHotelUI extends JBlackPanel
         @Override
         public void configureComps()
         {
-            lblHotel.setSizePos(200,249,30);
-            lblNumRooms.setSizePos(250,308,39);
-            lblEstEarnings.setSizePos(250,371,38);
-            lblRoomAvailability.setSizePos(250,432,43);
-            lblAvailRoomCnt.setSizePos(304,493,43);
-            lblBookedRoomCnt.setSizePos(304,556,43);
-            lblRoom.setSizePos(200,681,31);
-            lblRoomType.setSizePos(248,743,43);
-            lblPricePerNight.setSizePos(248,806,43);
-            lblAvailNights.setSizePos(248,868,43);
-            lblReservation.setSizePos(960,249,31);
-            lblGuestName.setSizePos(1010,308,43);
-            lblRoomDetails.setSizePos(1010,371,43);
-            lblCheckInAndOut.setSizePos(1010,435,43);
-            lblResPrice.setSizePos(1010,494,43);
-            lblResPricePerNight.setSizePos(1010,556,43);
-
             // Stores the hotel, room, and reservation being currently handled.
             Hotel h = db.getHotel();
             Room room = db.getRoom();
@@ -243,6 +226,24 @@ public final class ViewHotelUI extends JBlackPanel
                 cmbRooms.removeAllItems();
                 cmbAvailNights.removeAllItems();
             }
+
+            // Sets the label sizes according to text content.
+            lblHotel.setSizePos(200,249,30);
+            lblNumRooms.setSizePos(250,308,39);
+            lblEstEarnings.setSizePos(250,371,38);
+            lblRoomAvailability.setSizePos(250,432,43);
+            lblAvailRoomCnt.setSizePos(304,493,43);
+            lblBookedRoomCnt.setSizePos(304,556,43);
+            lblRoom.setSizePos(200,681,31);
+            lblRoomType.setSizePos(248,743,43);
+            lblPricePerNight.setSizePos(248,806,43);
+            lblAvailNights.setSizePos(248,868,43);
+            lblReservation.setSizePos(960,249,31);
+            lblGuestName.setSizePos(1010,308,43);
+            lblRoomDetails.setSizePos(1010,371,43);
+            lblCheckInAndOut.setSizePos(1010,435,43);
+            lblResPrice.setSizePos(1010,494,43);
+            lblResPricePerNight.setSizePos(1010,556,43);
         }
 
         /**
