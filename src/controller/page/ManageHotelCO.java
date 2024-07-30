@@ -164,8 +164,7 @@ public class ManageHotelCO
                             h.setName(newName);
 
                             // Updates the UI accordingly.
-                            mhUI.setFeedbackMessage("Changed the name from \"" + oldName + 
-                                "\" to \"" + newName + "\".", false);
+                            mhUI.setFeedbackMessage("Changed the hotel name.", false);
                             mhUI.configureComps();
                     }
                 }

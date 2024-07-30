@@ -155,7 +155,7 @@ public final class ViewHotelUI extends JBlackPanel
             if (!db.getHotels().isEmpty())
             {
                 lblNumRooms.setText("Number of rooms: " + h.getRooms().size());
-                lblEstEarnings.setText("Estimated earnings: " + h.getTotalEarnings());
+                lblEstEarnings.setText("Estimated earnings: " + String.format("%.2f", h.getTotalEarnings()));
                 lblAvailRoomCnt.setText("Number of rooms available: " + h.getNumOfAvailRooms(db.getDate(), true));
                 lblBookedRoomCnt.setText("Number of rooms booked: " + h.getNumOfAvailRooms(db.getDate(), false));
                 lblRoomType.setText("Type: " + room.getType());
@@ -179,8 +179,8 @@ public final class ViewHotelUI extends JBlackPanel
                     lblGuestName.setText("Guest: " + res.getGuest());
                     lblRoomDetails.setText("Room: Room " + res.getRoom().getNum() + ", " + res.getRoom().getType());
                     lblCheckInAndOut.setText("Check-in and check-out: " + res.getCheckInAndOut());
-                    lblResPrice.setText("Price (w/discount if any): " + res.getTotalPrice());
-                    lblResPricePerNight.setText("Price per night: " + res.getRoom().getNightlyPrice());
+                    lblResPrice.setText("Price (w/discount if any): " + String.format("%.2f", res.getTotalPrice()));
+                    lblResPricePerNight.setText("Price per night: " + String.format("%.2f", res.getRoom().getNightlyPrice()));
 
                     dtmTableModel.setRowCount(0);
 
