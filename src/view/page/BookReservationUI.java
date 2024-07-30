@@ -48,7 +48,7 @@ public final class BookReservationUI extends JBlackPanel
             private JBigButton btnBook;
 
     /* -------------------------------------------------------------------------- */
-    /*                                 CONSTRUCTOR                                */
+    /*                                INSTANTIATION                               */
     /* -------------------------------------------------------------------------- */
 
         /**
@@ -57,10 +57,22 @@ public final class BookReservationUI extends JBlackPanel
         private BookReservationUI()
         {
             db = Database.getInstance();
-            
+
             initializeComps();
             configureComps();
             addCompsToPanel(); 
+        }
+
+        /**
+         * Returns the instance of the book reservation UI.
+         * 
+         * @return {BookReservationUI}
+         */
+        public static BookReservationUI getInstance()
+        {
+            if (brUI == null)
+                brUI = new BookReservationUI();
+            return brUI;
         }
 
     /* -------------------------------------------------------------------------- */
@@ -84,19 +96,15 @@ public final class BookReservationUI extends JBlackPanel
             lblDiscountCode = new JCommonLabel("Discount code:", 0, false);
             lblErrorMessage = new JErrorLabel();
             
-            txtGuest = new JCommonTextField();
-            txtCode = new JCommonTextField();
-            
-            if (!db.getHotels().isEmpty())
-                cmbHotels = new JCommonComboBox<>(db.getHotelNames());
-            else
-                cmbHotels = new JCommonComboBox<>();
+            txtGuest = new JCommonTextField(870,300,381,30);
+            txtCode = new JCommonTextField(962,667,289,30);
 
-            cmbRoomTypes = new JCommonComboBox<>(Room.getRoomTypes());
-            cmbCheckIn = new JCommonComboBox<>(Reservation.getReservationDates(true));
-            cmbCheckOut = new JCommonComboBox<>(Reservation.getReservationDates(false));
+            cmbHotels = new JCommonComboBox<>(870,361,380,30);
+            cmbRoomTypes = new JCommonComboBox<>(1031,422,220,30);
+            cmbCheckIn = new JCommonComboBox<>(1186,483,65,30);
+            cmbCheckOut = new JCommonComboBox<>(1186,543,65,30);
 
-            btnBook = new JBigButton("Book");
+            btnBook = new JBigButton("Book", 785,925,330,55);
         }
 
         /**
@@ -105,25 +113,19 @@ public final class BookReservationUI extends JBlackPanel
         @Override
         protected void configureComps()
         {
-            lblGuest.setBounds(670, 300, lblGuest.getPreferredSize().width,30);
+            lblGuest.setBounds(670, 300, lblGuest.getPreferredSize().width, 30);
             lblHotel.setBounds(670, 361, lblHotel.getPreferredSize().width,30);
             lblRoomType.setBounds(670,422,lblRoomType.getPreferredSize().width,38);
             lblCheckIn.setBounds(670,482,254,31);
             lblCheckOut.setBounds(670,542,278,31);
             lblDiscountCode.setBounds(670,667,lblDiscountCode.getPreferredSize().width,30);
-            
             lblErrorMessage.setBounds(670,775, lblErrorMessage.getPreferredSize().width,
             lblErrorMessage.getPreferredSize().height);
 
-            txtGuest.setBounds(870,300,381,30);
-            txtCode.setBounds(962,667,289,30);
-            
-            cmbHotels.setBounds(870,361,380,30);
-            cmbRoomTypes.setBounds(1031,422,220,30);
-            cmbCheckIn.setBounds(1186,483,65,30);
-            cmbCheckOut.setBounds(1186,543,65,30);
-            
-            btnBook.setBounds(785,925,330,55);
+            if (!db.getHotels().isEmpty())
+                cmbHotels.setItems(db.getHotelNames());
+            else
+                cmbHotels.removeAllItems();
         }
 
         /**
@@ -155,20 +157,8 @@ public final class BookReservationUI extends JBlackPanel
         }
 
     /* -------------------------------------------------------------------------- */
-    /*                                   GETTERS                                  */
+    /*                         GETTERS, SETTERS, UPDATERS                         */
     /* -------------------------------------------------------------------------- */
-
-        /**
-         * Returns the instance of the book reservation UI.
-         * 
-         * @return {BookReservationUI}
-         */
-        public static BookReservationUI getInstance()
-        {
-            if (brUI == null)
-                brUI = new BookReservationUI();
-            return brUI;
-        }
 
         /**
          * Returns the input of a component.
@@ -176,6 +166,7 @@ public final class BookReservationUI extends JBlackPanel
          * @param componentID   {String}    The component ID.
          * @return              {JComponent}
          */
+        @Override
         public String getValue(String componentID)
         {
             return switch (componentID)
@@ -190,15 +181,12 @@ public final class BookReservationUI extends JBlackPanel
             };
         }
 
-    /* -------------------------------------------------------------------------- */
-    /*                                   SETTERS                                  */
-    /* -------------------------------------------------------------------------- */
-
         /**
          * Sets the error message.
          * 
          * @param text {String} The error message.
          */
+        @Override
         public void setErrorMessage(String text)
         {
             lblErrorMessage.setText(text);
@@ -222,17 +210,13 @@ public final class BookReservationUI extends JBlackPanel
             }
         }
 
-    /* -------------------------------------------------------------------------- */
-    /*                                  UPDATERS                                  */
-    /* -------------------------------------------------------------------------- */
-
         /**
          * Updates the page's component values.
          */
         @Override
         public void updateValues()
         {
-            brUI = new BookReservationUI();
+            configureComps();
+            repaint();
         }
-        
 }

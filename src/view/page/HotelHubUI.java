@@ -30,7 +30,7 @@ public final class HotelHubUI extends JBlackPanel
 
         /* Components */
 
-            private JLabel pnlTitle;
+            private JLabel lblTitle;
 
             private JCommonLabel lblAuthor1;
             private JCommonLabel lblAuthor2;
@@ -56,71 +56,6 @@ public final class HotelHubUI extends JBlackPanel
             addCompsToPanel();
         }
 
-    /* -------------------------------------------------------------------------- */
-    /*                           COMPONENT CONFIGURATION                          */
-    /* -------------------------------------------------------------------------- */
-
-        /**
-         * Initializes components.
-         */
-        @Override
-        protected void initializeComps()
-        {
-            pnlTitle = new JLabel("Hotel Hub");
-            
-            lblAuthor1 = new JCommonLabel("Stephen M. Borja", 0, false);
-            lblAuthor2 = new JCommonLabel("Mariella Jeanne A. Dellosa", 0, false);
-            
-            btnCreateHotel = new JBigButton("Create Hotel");
-            btnViewHotel = new JBigButton("View Hotel");
-            btnManageHotel = new JBigButton("Manage Hotel");
-            btnBook = new JBigButton("Book");
-        }
-
-        /**
-         * Configures components.
-         */
-        @Override
-        protected void configureComps()
-        {
-            pnlTitle.setFont(new Font("Arial", Font.BOLD, 250));
-            pnlTitle.setForeground(Color.decode("#86d0f3"));
-            pnlTitle.setLocation(382,196);
-            pnlTitle.setSize(pnlTitle.getPreferredSize().width, 182);
-
-            lblAuthor1.setBounds(382, 440, 306, 39);
-            lblAuthor2.setBounds(382, 494, 470, 30);
-
-            btnCreateHotel.setLocation(785,590);
-            btnViewHotel.setLocation(785, 670);
-            btnViewHotel.setEnabled(!db.getHotels().isEmpty());
-            btnManageHotel.setLocation(785, 750);
-            btnManageHotel.setEnabled(!db.getHotels().isEmpty());
-            btnBook.setLocation(785,830);
-            btnBook.setEnabled(!db.getHotels().isEmpty());
-        }
-
-        /**
-         * Adds components to the panel.
-         */
-        @Override
-        protected void addCompsToPanel()
-        {
-            add(pnlTitle);
-            
-            add(lblAuthor1);
-            add(lblAuthor2);
-            
-            add(btnCreateHotel);
-            add(btnViewHotel);
-            add(btnManageHotel);
-            add(btnBook);
-        }
-
-    /* -------------------------------------------------------------------------- */
-    /*                                   GETTERS                                  */
-    /* -------------------------------------------------------------------------- */
-
         /**
          * Returns the instance of the hotel hub UI.
          * 
@@ -134,8 +69,82 @@ public final class HotelHubUI extends JBlackPanel
         }
 
     /* -------------------------------------------------------------------------- */
-    /*                                   SETTERS                                  */
+    /*                           COMPONENT CONFIGURATION                          */
     /* -------------------------------------------------------------------------- */
+
+        /**
+         * Initializes components.
+         */
+        @Override
+        protected void initializeComps()
+        {
+            lblTitle = new JLabel("Hotel Hub");
+            
+            lblAuthor1 = new JCommonLabel("Stephen M. Borja", 0, false);
+            lblAuthor2 = new JCommonLabel("Mariella Jeanne A. Dellosa", 0, false);
+            
+            btnCreateHotel = new JBigButton("Create Hotel",785,590);
+            btnViewHotel = new JBigButton("View Hotel",785, 670);
+            btnManageHotel = new JBigButton("Manage Hotel",785, 750);
+            btnBook = new JBigButton("Book",785,830);
+        }
+
+        /**
+         * Configures components.
+         */
+        @Override
+        protected void configureComps()
+        {
+            lblTitle.setFont(new Font("Arial", Font.BOLD, 250));
+            lblTitle.setForeground(Color.decode("#86d0f3"));
+            lblTitle.setLocation(382,196);
+            lblTitle.setSize(lblTitle.getPreferredSize().width, 182);
+
+            lblAuthor1.setBounds(382, 440, 306, 39);
+            lblAuthor2.setBounds(382, 494, 470, 30);
+
+            btnViewHotel.setEnabled(!db.getHotels().isEmpty());
+            btnManageHotel.setEnabled(!db.getHotels().isEmpty());
+            btnBook.setEnabled(!db.getHotels().isEmpty());
+        }
+
+        /**
+         * Adds components to the panel.
+         */
+        @Override
+        protected void addCompsToPanel()
+        {
+            add(lblTitle);
+            
+            add(lblAuthor1);
+            add(lblAuthor2);
+            
+            add(btnCreateHotel);
+            add(btnViewHotel);
+            add(btnManageHotel);
+            add(btnBook);
+        }
+
+    /* -------------------------------------------------------------------------- */
+    /*                         GETTERS, SETTERS, UPDATERS                         */
+    /* -------------------------------------------------------------------------- */
+
+        /**
+         * Returns the input of a component.
+         *
+         * @param componentID   {String}    The component ID.
+         * @return              {JComponent}
+         */
+        @Override
+        public String getValue(String componentID){return "";}
+
+        /**
+         * Sets the error message.
+         * 
+         * @param text {String} The error message.
+         */
+        @Override
+        public void setErrorMessage(String text){}
 
         /**
          * Sets the action listener of a component.
@@ -155,16 +164,13 @@ public final class HotelHubUI extends JBlackPanel
             }
         }
 
-    /* -------------------------------------------------------------------------- */
-    /*                                MANIPULATORS                                */
-    /* -------------------------------------------------------------------------- */
-
         /**
          * Updates the page's component values.
          */
         @Override
         public void updateValues()
         {   
-            hhUI = new HotelHubUI();
+            configureComps();
+            repaint();
         }
 }

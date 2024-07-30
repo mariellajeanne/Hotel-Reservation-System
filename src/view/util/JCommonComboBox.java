@@ -20,24 +20,55 @@ public class JCommonComboBox<E> extends JComboBox<E>
     /* -------------------------------------------------------------------------- */
 
         /**
-         * Constructs an empty common combo box.
+         * Constructs the common combo box.
+         * 
+         * @param x {int} The x position.
+         * @param y {int} The y position
+         * @param w {int} The width.
+         * @param h {int} The height.
          */
-        public JCommonComboBox()
+        public JCommonComboBox(int x, int y, int w, int h)
         {
             setBackground(Color.WHITE);
             setFont(new Font("Arial", Font.PLAIN, 20));
             setForeground(Color.decode("#26282e"));
+            setBounds(x, y, w, h);
         }
 
         /**
-         * Constructs a common combo box given the items.
-         *
-         * @param items {E[]} array of items.
+         * Constructs the common combo box given the items.
+         * 
+         * @param items {E[]} The items.
+         * @param x     {int} The x position.
+         * @param y     {int} The y position
+         * @param w     {int} The width.
+         * @param h     {int} The height.
          */
-        public JCommonComboBox(E[] items) {
+        public JCommonComboBox(E[] items, int x, int y, int w, int h)
+        {
             super(items);
             setBackground(Color.WHITE);
             setFont(new Font("Arial", Font.PLAIN, 20));
             setForeground(Color.decode("#26282e"));
+            setBounds(x, y, w, h);
+        }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                CONFIGURATION                               */
+    /* -------------------------------------------------------------------------- */
+
+        /**
+         * Sets the combo box's array of items.
+         * 
+         * @param items {E[]} The array of items.
+         */
+        public void setItems(E[] items)
+        {
+            // Removes the previous set of items.
+            removeAllItems();
+
+            // Adds the new set of items.
+            for (E item : items)
+                addItem(item);
         }
 }

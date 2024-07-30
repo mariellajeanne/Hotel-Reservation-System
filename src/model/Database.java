@@ -204,5 +204,8 @@ public class Database
         public void removeHotel(String name)
         {
             hotels.remove(getHotel(name));
+
+            if (hotels.isEmpty())
+                this.hotel = null;
         }
 }

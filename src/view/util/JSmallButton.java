@@ -24,8 +24,10 @@ public class JSmallButton extends JButton
          * 
          * @param text      {String}    The button's text.
          * @param sizeMode  {int}       The button's size mode.
+         * @param x         {int}       The x position.
+         * @param y         {int}       The y position.
          */
-        public JSmallButton(String text, int sizeMode)
+        public JSmallButton(String text, int sizeMode, int x, int y)
         {
             // Sets the size of the small button.
             if (sizeMode == 0)
@@ -40,5 +42,6 @@ public class JSmallButton extends JButton
             setForeground(Color.decode("#26282e"));
             setHorizontalAlignment(SwingConstants.CENTER);
             setLayout(null);
+            setLocation(x, y);
         }
 }

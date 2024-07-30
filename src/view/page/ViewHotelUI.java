@@ -38,7 +38,7 @@ public final class ViewHotelUI extends JBlackPanel
             private JCommonLabel lblEstEarnings;
             private JCommonLabel lblRoomAvailability;
             private JCommonLabel lblAvailRoomCnt;
-            private JCommonLabel lblRoomTypeCnt;
+            private JCommonLabel lblBookedRoomCnt;
             private JCommonLabel lblRoom;
             private JCommonLabel lblRoomType;
             private JCommonLabel lblPricePerNight;
@@ -59,9 +59,10 @@ public final class ViewHotelUI extends JBlackPanel
             private JPanel pnlScrollTable;
             private JScrollPane scrScroll;
             private JTable tblPricePerNight;
+            private DefaultTableModel dtmTableModel;
 
     /* -------------------------------------------------------------------------- */
-    /*                                 CONSTRUCTOR                                */
+    /*                                INSTANTIATION                               */
     /* -------------------------------------------------------------------------- */
 
         /**
@@ -76,6 +77,18 @@ public final class ViewHotelUI extends JBlackPanel
             addCompsToPanel();
         }
 
+        /**
+         * Returns the single instance of the view hotel UI.
+         * 
+         * @return {ViewHotelUI}
+         */
+        public static ViewHotelUI getInstance()
+        {
+            if (vhUI == null)
+                vhUI = new ViewHotelUI();
+            return vhUI;
+        }
+
     /* -------------------------------------------------------------------------- */
     /*                           COMPONENT CONFIGURATION                          */
     /* -------------------------------------------------------------------------- */
@@ -86,77 +99,43 @@ public final class ViewHotelUI extends JBlackPanel
         @Override
         protected void initializeComps()
         {
-            Hotel h = db.getHotel();
-            Room room = db.getRoom();
-            Reservation res =  db.getReservation();
-            
             pnlTitle = new JTitlePanel("View Hotel");
             btnBack = new JBackButton();
             
             lblHotel = new JCommonLabel("HOTEL:", 1,true);
-            
-            if (!db.getHotels().isEmpty())
-            {
-                lblNumRooms = new JCommonLabel("Number of rooms: " + h.getRooms().size(), 0,false);
-                lblEstEarnings = new JCommonLabel("Estimated earnings: " + h.getTotalEarnings(), 0,false);
-                lblRoomAvailability = new JCommonLabel("Room availability of date:", 1,false);
-                lblAvailRoomCnt = new JCommonLabel("Number of rooms available: " + h.getNumOfAvailRooms(db.getDate(), true), 0,false);
-                lblRoomTypeCnt = new JCommonLabel("Number of rooms booked: " + h.getNumOfAvailRooms(db.getDate(), false), 0,false);
-                lblRoom = new JCommonLabel("ROOM:", 1,true);
-                lblRoomType = new JCommonLabel("Type: " + room.getType(), 0, false);
-                lblPricePerNight = new JCommonLabel("Price per night: " + db.getRoom().getNightlyPrice(), 0, false);
-
-                cmbHotels = new JCommonComboBox<>(db.getHotelNames());
-                cmbDates = new JCommonComboBox<>(Reservation.getReservationDates(true));
-                cmbRooms = new JCommonComboBox<>(db.getHotel().getRoomNumbers());
-                cmbAvailNights = new JCommonComboBox<>(db.getRoom().getAvailableNights());
-            }
-            else
-            {
-                lblNumRooms = new JCommonLabel("Number of rooms: ", 0,false);
-                lblEstEarnings = new JCommonLabel("Estimated earnings: ", 0,false);
-                lblRoomAvailability = new JCommonLabel("Room availability of date:", 1,false);
-                lblAvailRoomCnt = new JCommonLabel("Number of rooms available: ", 0,false);
-                lblRoomTypeCnt = new JCommonLabel("Number of rooms booked: ", 0,false);
-                lblRoom = new JCommonLabel("ROOM:", 1,true);
-                lblRoomType = new JCommonLabel("Type: ", 0,false);
-                lblPricePerNight = new JCommonLabel("Price per night: ", 0, false);
-
-                cmbHotels = new JCommonComboBox<>();
-                cmbDates = new JCommonComboBox<>(Reservation.getReservationDates(true));
-                cmbRooms = new JCommonComboBox<>();
-                cmbAvailNights = new JCommonComboBox<>();
-            }
-            
+            lblNumRooms = new JCommonLabel(0,false);
+            lblEstEarnings = new JCommonLabel(0,false);
+            lblRoomAvailability = new JCommonLabel("Room availability of date:", 1,false);
+            lblAvailRoomCnt = new JCommonLabel(0,false);
+            lblBookedRoomCnt = new JCommonLabel(0,false);
+            lblRoom = new JCommonLabel("ROOM:", 1,true);
+            lblRoomType = new JCommonLabel(0,false);
+            lblPricePerNight = new JCommonLabel(0, false);
             lblAvailNights = new JCommonLabel("Available nights:", 0, false);
             lblReservation = new JCommonLabel("RESERVATION:", 1, true);
+            lblGuestName = new JCommonLabel("Guest: N/A", 0,false);
+            lblRoomDetails = new JCommonLabel("Room: N/A", 0,false);
+            lblCheckInAndOut = new JCommonLabel(0,false);
+            lblResPrice = new JCommonLabel(0,false);
+            lblResPricePerNight = new JCommonLabel(0,false);
 
-            if (db.getReservation() != null)
-            {
-                lblGuestName = new JCommonLabel("Guest: " + res.getGuest(), 0,false);
-                lblRoomDetails = new JCommonLabel("Room: Room " + res.getRoom().getNumber() + ", " + res.getRoom().getType(), 0,false);
-                lblCheckInAndOut = new JCommonLabel("Check-in and check-out: " + res.getCheckInAndOut(), 0,false);
-                lblResPrice = new JCommonLabel("Price (w/discount if any): " + res.getTotalPrice(), 0,false);
-                lblResPricePerNight = new JCommonLabel("Price per night: " + res.getRoom().getNightlyPrice(), 0,false);
-                cmbReservations = new JCommonComboBox<>(db.getRoom().getReservationCodes());
+            cmbHotels = new JCommonComboBox<>(372,249,396,29);
+            cmbDates = new JCommonComboBox<>(711,440,63,29);
+            cmbRooms = new JCommonComboBox<>(351,683,63,29);
+            cmbAvailNights = new JCommonComboBox<>(546,877,63,29);
+            cmbReservations = new JCommonComboBox<>(1273,251,272,29);
 
-                pnlScrollTable = new JPanel(new GridLayout(1,1));
-                scrScroll = new JScrollPane();
-                tblPricePerNight = new JTable(new DefaultTableModel(res.getNightlyPrices(), res.getNightlyPrices().length));
-            }
-            else
-            {
-                lblGuestName = new JCommonLabel("Guest: N/A", 0,false);
-                lblRoomDetails = new JCommonLabel("Room: N/A", 0,false);
-                lblCheckInAndOut = new JCommonLabel("Check-in and check-out: N/A", 0,false);
-                lblResPrice = new JCommonLabel("Price (w/discount if any): N/A", 0,false);
-                lblResPricePerNight = new JCommonLabel("Price per night: N/A", 0,false);
-                cmbReservations = new JCommonComboBox<>();
+            dtmTableModel = new DefaultTableModel();
+            tblPricePerNight = new JTable(dtmTableModel);
+            
+            scrScroll = new JScrollPane();
+            scrScroll.setViewportView(tblPricePerNight);
+            scrScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            scrScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-                pnlScrollTable = new JPanel(new GridLayout(1,1));
-                scrScroll = new JScrollPane();
-                tblPricePerNight = new JTable(new DefaultTableModel());
-            }
+            pnlScrollTable = new JPanel(new GridLayout(1,1));
+            pnlScrollTable.add(scrScroll);
+            pnlScrollTable.setBounds(1010,618,536,290);
         }
 
         /**
@@ -170,7 +149,7 @@ public final class ViewHotelUI extends JBlackPanel
             lblEstEarnings.setBounds(250,371,lblEstEarnings.getPreferredSize().width,38);
             lblRoomAvailability.setBounds(250,432,441,43);
             lblAvailRoomCnt.setBounds(304,493,lblAvailRoomCnt.getPreferredSize().width,43);
-            lblRoomTypeCnt.setBounds(304,556,lblRoomTypeCnt.getPreferredSize().width,43);
+            lblBookedRoomCnt.setBounds(304,556,lblBookedRoomCnt.getPreferredSize().width,43);
             lblRoom.setBounds(200,681,lblRoom.getPreferredSize().width,31);
             lblRoomType.setBounds(248,743,lblRoomType.getPreferredSize().width,43);
             lblPricePerNight.setBounds(248,806, lblPricePerNight.getPreferredSize().width,43);
@@ -182,18 +161,75 @@ public final class ViewHotelUI extends JBlackPanel
             lblResPrice.setBounds(1010,494, lblResPrice.getPreferredSize().width,43);
             lblResPricePerNight.setBounds(1010,556,lblResPricePerNight.getPreferredSize().width,43);
 
-            cmbHotels.setBounds(372,249,396,29);
-            cmbDates.setBounds(711,440,63,29);
-            cmbRooms.setBounds(351,683,63,29);
-            cmbAvailNights.setBounds(546,877,63,29);
-            cmbReservations.setBounds(1273,251,272,29);
+            // Stores the hotel, room, and reservation being currently handled.
+            Hotel h = db.getHotel();
+            Room room = db.getRoom();
+            Reservation res =  db.getReservation();
 
-            scrScroll.setViewportView(tblPricePerNight);
-            scrScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-            scrScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            // Executes the following if there exists hotels.
+            if (!db.getHotels().isEmpty())
+            {
+                lblNumRooms.setText("Number of rooms: " + h.getRooms().size());
+                lblEstEarnings.setText("Estimated earnings: " + h.getTotalEarnings());
+                lblAvailRoomCnt.setText("Number of rooms available: " + h.getNumOfAvailRooms(db.getDate(), true));
+                lblBookedRoomCnt.setText("Number of rooms booked: " + h.getNumOfAvailRooms(db.getDate(), false));
+                lblRoomType.setText("Type: " + room.getType());
+                lblPricePerNight.setText("Price per night: " + db.getRoom().getNightlyPrice());
 
-            pnlScrollTable.add(scrScroll);
-            pnlScrollTable.setBounds(1010,618,536,290);
+                cmbHotels.setItems(db.getHotelNames());
+                cmbDates.setItems(Reservation.getReservationDates(true));
+                cmbRooms.setItems(db.getHotel().getRoomNumbers());
+                cmbAvailNights.setItems(db.getRoom().getAvailableNights());
+            }
+
+            // Executes the following if there exists no hotels.
+            else
+            {
+                lblNumRooms.setText("Number of rooms: N/A");
+                lblEstEarnings.setText("Estimated earnings: N/A");
+                lblAvailRoomCnt.setText("Number of rooms available: N/A");
+                lblBookedRoomCnt.setText("Number of rooms booked: N/A");
+                lblRoomType.setText("Type: ");
+                lblPricePerNight.setText("Price per night: N/A");
+
+                cmbHotels.removeAllItems();
+                cmbDates.removeAllItems();
+                cmbRooms.removeAllItems();
+                cmbAvailNights.removeAllItems();
+            }
+
+            // Executes the following if the chosen hotel has a reservation.
+            if (db.getReservation() != null)
+            {
+                lblGuestName.setText("Guest: " + res.getGuest());
+                lblRoomDetails.setText("Room: Room " + res.getRoom().getNumber() + ", " + res.getRoom().getType());
+                lblCheckInAndOut.setText("Check-in and check-out: " + res.getCheckInAndOut());
+                lblResPrice.setText("Price (w/discount if any): " + res.getTotalPrice());
+                lblResPricePerNight.setText("Price per night: " + res.getRoom().getNightlyPrice());
+                cmbReservations.setItems(db.getRoom().getReservationCodes());
+
+                dtmTableModel.setRowCount(0);
+
+                // Adds rows to the price breakdown table.
+                for (String s : res.getNightlyPrices())
+                {
+                    String[] row = new String[1];
+                    row[0] = s;
+                    dtmTableModel.addRow(row);
+                }
+            }
+
+            // Executes the following if the chosen hotel has no reservations.
+            else
+            {
+                lblGuestName.setText("Guest: N/A");
+                lblRoomDetails.setText("Room: N/A");
+                lblCheckInAndOut.setText("Check-in and check-out: N/A");
+                lblResPrice.setText("Price (w/discount if any): N/A");
+                lblResPricePerNight.setText("Price per night: N/A");
+                cmbReservations.removeAllItems();
+                dtmTableModel.setRowCount(0);
+            }
         }
 
         /**
@@ -210,7 +246,7 @@ public final class ViewHotelUI extends JBlackPanel
             add(lblEstEarnings);
             add(lblRoomAvailability);
             add(lblAvailRoomCnt);
-            add(lblRoomTypeCnt);
+            add(lblBookedRoomCnt);
             add(lblRoom);
             add(lblRoomType);
             add(lblPricePerNight);
@@ -232,20 +268,8 @@ public final class ViewHotelUI extends JBlackPanel
         }
 
     /* -------------------------------------------------------------------------- */
-    /*                                   GETTERS                                  */
+    /*                         GETTERS, SETTERS, UPDATERS                         */
     /* -------------------------------------------------------------------------- */
-
-        /**
-         * Returns the single instance of the view hotel UI.
-         * 
-         * @return {ViewHotelUI}
-         */
-        public static ViewHotelUI getInstance()
-        {
-            if (vhUI == null)
-                vhUI = new ViewHotelUI();
-            return vhUI;
-        }
 
         /**
          * Returns the input of a component.
@@ -253,6 +277,7 @@ public final class ViewHotelUI extends JBlackPanel
          * @param componentID   {String}    The component ID.
          * @return              {JComponent}
          */
+        @Override
         public String getValue(String componentID)
         {
             return switch (componentID)
@@ -265,9 +290,13 @@ public final class ViewHotelUI extends JBlackPanel
             };
         }
 
-    /* -------------------------------------------------------------------------- */
-    /*                                   SETTERS                                  */
-    /* -------------------------------------------------------------------------- */
+        /**
+         * Sets the error message.
+         * 
+         * @param text {String} The error message.
+         */
+        @Override
+        public void setErrorMessage(String text){}
 
         /**
          * Sets the action listener of a component.
@@ -288,16 +317,13 @@ public final class ViewHotelUI extends JBlackPanel
             }
         }
 
-    /* -------------------------------------------------------------------------- */
-    /*                                  UPDATERS                                  */
-    /* -------------------------------------------------------------------------- */
-
         /**
          * Updates the page's component values.
          */
         @Override
         public void updateValues()
         {
-            vhUI = new ViewHotelUI();
+            configureComps();
+            repaint();
         }
 }

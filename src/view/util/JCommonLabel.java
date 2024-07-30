@@ -20,26 +20,62 @@ public class JCommonLabel extends JLabel
     /* -------------------------------------------------------------------------- */
 
         /**
-         * Constructs the small button.
+         * Constructs the common label.
          *
+         * @param colorMode {int}       The text color mode.
+         * @param isBold    {boolean}   Determines if the text must be bold.
+         */
+        public JCommonLabel(int colorMode, boolean isBold)
+        {
+            setFontStyle(isBold);
+            setColor(colorMode);
+        }
+
+        /**
+         * Constructs the common label given the text.
+         * 
          * @param text      {String}    The text.
          * @param colorMode {int}       The text color mode.
          * @param isBold    {boolean}   Determines if the text must be bold.
+         * @param x         {int}       The x position.
+         * @param y         {int}       The y position.
+         * @param w         {int}       The width.
+         * @param h         {int}       The height.
          */
         public JCommonLabel(String text, int colorMode, boolean isBold)
         {
             setText(text);
+            setFontStyle(isBold);
+            setColor(colorMode);
+        }
 
-            // Sets the font style to plain/bold.
-            if (isBold == false)
-                setFont(new Font("Arial", Font.PLAIN, 40));
-            else
-                setFont(new Font("Arial", Font.BOLD, 40));
-            
-            // Sets the color of the text to white/blue.
+    /* -------------------------------------------------------------------------- */
+    /*                                CONFIGURATION                               */
+    /* -------------------------------------------------------------------------- */
+
+        /**
+         * Sets the common label's color.
+         * 
+         * @param colorMode {int} The color mode (0: white, 1: blue)
+         */
+        private void setColor(int colorMode)
+        {
             if (colorMode == 0)
                 setForeground(Color.WHITE);
             else
                 setForeground(Color.decode("#86d0f3"));
+        }
+
+        /**
+         * Sets the color labels' font style.
+         * 
+         * @param isBold {boolean} Determines if the font must be bold.
+         */
+        private void setFontStyle(boolean isBold)
+        {
+            if (!isBold)
+                setFont(new Font("Arial", Font.PLAIN, 40));
+            else
+                setFont(new Font("Arial", Font.BOLD, 40));
         }
 }

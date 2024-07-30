@@ -8,6 +8,7 @@
 package controller.page;
 
 import java.awt.event.*;
+import javax.swing.SwingUtilities;
 import model.Database;
 import model.Hotel;
 import model.Room;
@@ -41,11 +42,14 @@ public class ViewHotelCO
             mfUI = MainFrameUI.getInstance();
             db = Database.getInstance();
 
-            handleBack();
-            handleSelectHotel();
-            handleSelectDate();
-            handleSelectRoom();
-            handleSelectReservation();
+            SwingUtilities.invokeLater(() ->
+            {
+                handleBack();
+                handleSelectHotel();
+                handleSelectDate();
+                handleSelectRoom();
+                handleSelectReservation();
+            });
         }
 
         /**

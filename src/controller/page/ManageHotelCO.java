@@ -10,6 +10,7 @@ package controller.page;
 import controller.error.ManageHotelER;
 import java.awt.event.*;
 import java.util.ArrayList;
+import javax.swing.SwingUtilities;
 import model.*;
 import view.frame.MainFrameUI;
 import view.page.ManageHotelUI;
@@ -44,14 +45,17 @@ public class ManageHotelCO
             mfUI = MainFrameUI.getInstance();
             db = Database.getInstance();
 
-            handleBack();
-            handleSelectHotel();
-            handleDeleteHotel();
-            handleChangeName();
-            handleRoomCount();
-            handleChangePrice();
-            handleRemoveReservation();
-            handleChangeRate();
+            SwingUtilities.invokeLater(() ->
+            {
+                handleBack();
+                handleSelectHotel();
+                handleDeleteHotel();
+                handleChangeName();
+                handleRoomCount();
+                handleChangePrice();
+                handleRemoveReservation();
+                handleChangeRate();
+            });
         }
 
         /**

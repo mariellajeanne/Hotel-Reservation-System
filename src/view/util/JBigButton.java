@@ -20,11 +20,13 @@ public class JBigButton extends JButton
     /* -------------------------------------------------------------------------- */
 
         /**
-         * Constructs the big button.
+         * Constructs the big button given the width and height.
          * 
-         * @param text {String} The text.
+         * @param text  {String}    The text.
+         * @param x     {int}       The x position.
+         * @param y     {int}       The y position.
          */
-        public JBigButton(String text)
+        public JBigButton(String text, int x, int y)
         {
             setText(text);
             setFont(new Font("Arial", Font.BOLD, 40));
@@ -33,5 +35,27 @@ public class JBigButton extends JButton
             setForeground(Color.decode("#26282e"));   
             setHorizontalAlignment(SwingConstants.CENTER);
             setLayout(null);
+            setLocation(x, y);
+        }
+
+        /**
+         * Constructs the big button given the width and height.
+         * 
+         * @param text  {String}    The text.
+         * @param x     {int}       The x position.
+         * @param y     {int}       The y position.
+         * @param w     {int}       The width.
+         * @param h     {int}       The height.
+         */
+        public JBigButton(String text, int x, int y, int w, int h)
+        {
+            setText(text);
+            setFont(new Font("Arial", Font.BOLD, 40));
+            setSize(350, 55);
+            setBackground(Color.WHITE);
+            setForeground(Color.decode("#26282e"));   
+            setHorizontalAlignment(SwingConstants.CENTER);
+            setLayout(null);
+            setBounds(x, y, w, h);
         }
 }

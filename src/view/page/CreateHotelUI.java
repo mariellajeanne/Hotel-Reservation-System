@@ -44,7 +44,7 @@ public final class CreateHotelUI extends JBlackPanel
             private JBigButton btnCreate;
 
     /* -------------------------------------------------------------------------- */
-    /*                                 CONSTRUCTOR                                */
+    /*                                INSTANTIATION                               */
     /* -------------------------------------------------------------------------- */
 
         /**
@@ -55,6 +55,18 @@ public final class CreateHotelUI extends JBlackPanel
             initializeComps();
             configureComps();
             addCompsToPanel();
+        }
+
+        /**
+         * Returns the instance of the create hotel UI.
+         * 
+         * @return {CreateHotelUI}
+         */
+        public static CreateHotelUI getInstance()
+        {
+            if (chUI == null)
+                chUI = new CreateHotelUI();
+            return chUI;
         }
 
     /* -------------------------------------------------------------------------- */
@@ -77,13 +89,13 @@ public final class CreateHotelUI extends JBlackPanel
             lblPrice = new JCommonLabel("Base nightly price:", 0, false);
             lblErrorMessage = new JErrorLabel();
             
-            txtName = new JCommonTextField();
-            txtStandard = new JCommonTextField();
-            txtDeluxe = new JCommonTextField();
-            txtExecutive = new JCommonTextField();
-            txtPrice = new JCommonTextField("1299.0");
+            txtName = new JCommonTextField(869,300,380,30);
+            txtStandard = new JCommonTextField(1184,421,65,30);
+            txtDeluxe = new JCommonTextField(1184,481,65,30);
+            txtExecutive = new JCommonTextField(1184,541,65,30);
+            txtPrice = new JCommonTextField("1299.0",1018,670,231,30);
             
-            btnCreate = new JBigButton("Create");
+            btnCreate = new JBigButton("Create", 785,925,330,55);
         }
 
         /**
@@ -97,17 +109,8 @@ public final class CreateHotelUI extends JBlackPanel
             lblDeluxe.setBounds(670,480,443,31);
             lblExecutive.setBounds(670,540,494,31);
             lblPrice.setBounds(670,661,322,45);
-
             lblErrorMessage.setBounds(670,775, lblErrorMessage.getPreferredSize().width,
             lblErrorMessage.getPreferredSize().height);
-            
-            txtName.setBounds(869,300,380,30);
-            txtStandard.setBounds(1184,421,65,30);
-            txtDeluxe.setBounds(1184,481,65,30);
-            txtExecutive.setBounds(1184,541,65,30);
-            txtPrice.setBounds(1018,670,231,30);
-            
-            btnCreate.setBounds(785,925,330,55);
         }
 
         /**
@@ -136,20 +139,8 @@ public final class CreateHotelUI extends JBlackPanel
         }
 
     /* -------------------------------------------------------------------------- */
-    /*                                   GETTERS                                  */
+    /*                         GETTERS, SETTERS, UPDATERS                         */
     /* -------------------------------------------------------------------------- */
-
-        /**
-         * Returns the instance of the create hotel UI.
-         * 
-         * @return {CreateHotelUI}
-         */
-        public static CreateHotelUI getInstance()
-        {
-            if (chUI == null)
-                chUI = new CreateHotelUI();
-            return chUI;
-        }
 
         /**
          * Returns the input of a component.
@@ -157,6 +148,7 @@ public final class CreateHotelUI extends JBlackPanel
          * @param componentID   {String}    The component ID.
          * @return              {JComponent}
          */
+        @Override
         public String getValue(String componentID)
         {
             return switch (componentID)
@@ -170,15 +162,12 @@ public final class CreateHotelUI extends JBlackPanel
             };
         }
 
-    /* -------------------------------------------------------------------------- */
-    /*                                   SETTERS                                  */
-    /* -------------------------------------------------------------------------- */
-
         /**
          * Sets the error message.
          * 
          * @param text {String} The error message.
          */
+        @Override
         public void setErrorMessage(String text)
         {
             lblErrorMessage.setText(text);
@@ -201,10 +190,6 @@ public final class CreateHotelUI extends JBlackPanel
                 case "btnBack"      -> {btnBack.addActionListener(a);}
             }
         }
-    
-    /* -------------------------------------------------------------------------- */
-    /*                                  UPDATERS                                  */
-    /* -------------------------------------------------------------------------- */
 
         /**
          * Updates the page's component values.
@@ -212,6 +197,7 @@ public final class CreateHotelUI extends JBlackPanel
         @Override
         public void updateValues()
         {
-            chUI = new CreateHotelUI();
+            configureComps();
+            repaint();
         }
 }

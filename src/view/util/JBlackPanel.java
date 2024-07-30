@@ -21,7 +21,7 @@ public abstract class JBlackPanel extends JPanel
     /* -------------------------------------------------------------------------- */
 
         /**
-         * Constructs the back button.
+         * Constructs the black panel.
          */
         public JBlackPanel()
         {
@@ -30,6 +30,18 @@ public abstract class JBlackPanel extends JPanel
             setLayout(new FlowLayout());
             setVisible(true);
         }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                   GETTERS                                  */
+    /* -------------------------------------------------------------------------- */
+
+        /**
+         * Returns the input of a component.
+         *
+         * @param componentID   {String}    The component ID.
+         * @return              {JComponent}
+         */
+        public abstract String getValue(String componentID);
 
     /* -------------------------------------------------------------------------- */
     /*                           COMPONENT CONFIGURATION                          */
@@ -53,6 +65,13 @@ public abstract class JBlackPanel extends JPanel
     /* -------------------------------------------------------------------------- */
     /*                                   SETTERS                                  */
     /* -------------------------------------------------------------------------- */
+
+        /**
+         * Sets the error message.
+         * 
+         * @param text {String} The error message.
+         */
+        public abstract void setErrorMessage(String text);
 
         /**
          * Sets the action listener of a component.

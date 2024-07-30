@@ -66,7 +66,7 @@ public final class ManageHotelUI extends JBlackPanel
             private JBigButton btnOK;
 
    /* -------------------------------------------------------------------------- */
-   /*                                 CONSTRUCTOR                                */
+   /*                                INSTANTIATION                               */
    /* -------------------------------------------------------------------------- */
 
         /**
@@ -75,11 +75,24 @@ public final class ManageHotelUI extends JBlackPanel
         private ManageHotelUI()
         {
             db = Database.getInstance();
-            
+
             initializeComps();
             configureComps();
             addCompsToPanel();
         }
+
+        /**
+         * Returns the single instance of the manage hotel UI.
+         * 
+         * @return {ManageHotelUI}
+         */
+        public static ManageHotelUI getInstance()
+        {
+            if (mhUI == null)
+                mhUI = new ManageHotelUI();
+            return mhUI;
+        }
+
 
     /* -------------------------------------------------------------------------- */
     /*                           COMPONENT CONFIGURATION                          */
@@ -88,6 +101,7 @@ public final class ManageHotelUI extends JBlackPanel
         /**
          * Initializes components.
          */
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         @Override
         protected void initializeComps()
         {
@@ -104,43 +118,30 @@ public final class ManageHotelUI extends JBlackPanel
             lblChangeRate = new JCommonLabel("Change rate of night:",0,false);
             lblErrorMessage = new JErrorLabel();
 
-            txtChangeName = new JCommonTextField();
-            txtStandardCnt = new JCommonTextField();
-            txtDeluxeCnt = new JCommonTextField();
-            txtExecutiveCnt = new JCommonTextField();
-            txtChangePrice = new JCommonTextField();
-            txtChangeRate = new JCommonTextField();
-
-            if (!db.getHotels().isEmpty())
-            {
-                cmbHotels = new JCommonComboBox<>(db.getHotelNames());
-                
-                if (db.getHotel().getNumOfReservations() != 0)
-                    cmbReservations = new JCommonComboBox<>(db.getHotel().getReservationCodes());
-                else
-                    cmbReservations = new JCommonComboBox<>();
-            }
-            else
-            {
-                cmbHotels = new JCommonComboBox<>();
-                cmbReservations = new JCommonComboBox<>();
-            }
-                
-            cmbNights = new JCommonComboBox<>(Reservation.getReservationNights());
+            txtChangeName = new JCommonTextField(998,389,279,30);
+            txtStandardCnt = new JCommonTextField(998,449,89,30);
+            txtDeluxeCnt = new JCommonTextField(998,508,89,30);
+            txtExecutiveCnt = new JCommonTextField(998,568,89,30);
+            txtChangePrice = new JCommonTextField(998,628,180,30);
+            txtChangeRate = new JCommonTextField(1190,751,89,30);
             
-            btnSaveName = new JSmallButton("Save", 1);
-            btnSavePrice = new JSmallButton("Save", 1);
-            btnSaveRate = new JSmallButton("Save", 1);
-            btnAddStandard = new JSmallButton("Add", 0);
-            btnAddDeluxe = new JSmallButton("Add", 0);
-            btnAddExecutive = new JSmallButton("Add", 0);
-            btnDeleteHotel = new JSmallButton("Delete", 1);
-            btnDeleteStandard = new JSmallButton("Delete", 1);
-            btnDeleteDeluxe = new JSmallButton("Delete", 1);
-            btnDeleteExecutive = new JSmallButton("Delete", 1);
-            btnDeleteReservation = new JSmallButton("Delete", 1);
+            cmbHotels = new JCommonComboBox(673,300,341,30);
+            cmbNights = new JCommonComboBox<>(998,751,89,30);
+            cmbReservations = new JCommonComboBox<>(998,691,279,30);
+            
+            btnSaveName = new JSmallButton("Save", 1,1328,389);
+            btnSavePrice = new JSmallButton("Save", 1,1328,628);
+            btnSaveRate = new JSmallButton("Save", 1,1328,749);
+            btnAddStandard = new JSmallButton("Add", 0,1189,450);
+            btnAddDeluxe = new JSmallButton("Add", 0,1189,509);
+            btnAddExecutive = new JSmallButton("Add", 0,1189,569);
+            btnDeleteHotel = new JSmallButton("Delete", 1,1328,299);
+            btnDeleteStandard = new JSmallButton("Delete", 1,1328,450);
+            btnDeleteDeluxe = new JSmallButton("Delete", 1,1328,509);
+            btnDeleteExecutive = new JSmallButton("Delete", 1,1328,569);
+            btnDeleteReservation = new JSmallButton("Delete", 1,1328,691);
 
-            btnOK = new JBigButton("OK");
+            btnOK = new JBigButton("OK",785,925,330,55);
         }
 
         /**
@@ -148,11 +149,8 @@ public final class ManageHotelUI extends JBlackPanel
          */
         @Override
         protected void configureComps()
-        {
-            cmbHotels.setBounds(673,300,341,30);
-            cmbNights.setBounds(998,751,89,30);
-            cmbReservations.setBounds(998,691,279,30);
-            
+        {   
+
             lblHotel.setBounds(470,299,lblHotel.getPreferredSize().width,31);
             lblChangeName.setBounds(470,389,lblChangeName.getPreferredSize().width,38);
             lblActionStandard.setBounds(468,449,488,30);
@@ -163,31 +161,32 @@ public final class ManageHotelUI extends JBlackPanel
             lblChangeRate.setBounds(468,751,458,38);
             lblErrorMessage.setBounds(468,830, lblErrorMessage.getPreferredSize().width,
             lblErrorMessage.getPreferredSize().height);
-            lblErrorMessage.setVisible(false);
-            
-            txtChangeName.setBounds(998,389,279,30);
-            txtStandardCnt.setBounds(998,449,89,30);
-            txtDeluxeCnt.setBounds(998,508,89,30);
-            txtExecutiveCnt.setBounds(998,568,89,30);
-            txtChangePrice.setBounds(998,628,180,30);
-            txtChangeRate.setBounds(1190,751,89,30);
-            
-            btnSaveName.setLocation(1328,389);
-            btnSavePrice.setLocation(1328,628);
-            btnSaveRate.setLocation(1328,749);
-            btnAddStandard.setLocation(1189,450);
-            btnAddDeluxe.setLocation(1189,509);
-            btnAddExecutive.setLocation(1189,569);
-            btnDeleteHotel.setLocation(1328,299);
-            btnDeleteStandard.setLocation(1328,450);
-            btnDeleteDeluxe.setLocation(1328,509);
-            btnDeleteExecutive.setLocation(1328,569);
-            btnDeleteReservation.setLocation(1328,691);
 
+            // Executes if there exists hotels.
+            if (!db.getHotels().isEmpty())
+            {
+                // Sets the hotel combo box's items.
+                cmbHotels.setItems(db.getHotelNames());
+                
+                // Sets the reservation combo box's items.
+                if (db.getHotel().getNumOfReservations() != 0)
+                    cmbReservations.setItems(db.getHotel().getReservationCodes());
+                else
+                    cmbReservations.removeAllItems();
+            }
+
+            // Makes the combo boxes empty if there exists no hotels.
+            else
+            {
+                cmbHotels.removeAllItems();
+                cmbReservations.removeAllItems();
+            }
+
+            // Enables the delete reservation button only if the hotel's reservations exist.
             if (!db.getHotels().isEmpty())
                 btnDeleteReservation.setEnabled(db.getHotel().getNumOfReservations() != 0);
-            
-            btnOK.setBounds(785,925,330,55);
+            else
+                btnDeleteReservation.setEnabled(false);
         }
 
         /**
@@ -236,27 +235,16 @@ public final class ManageHotelUI extends JBlackPanel
         }
 
     /* -------------------------------------------------------------------------- */
-    /*                                   GETTERS                                  */
+    /*                         GETTERS, SETTERS, UPDATERS                         */
     /* -------------------------------------------------------------------------- */
-
-        /**
-         * Returns the single instance of the manage hotel UI.
-         * 
-         * @return {ManageHotelUI}
-         */
-        public static ManageHotelUI getInstance()
-        {
-            if (mhUI == null)
-                mhUI = new ManageHotelUI();
-            return mhUI;
-        }
-
+        
         /**
          * Returns the input of a component.
          *
          * @param componentID   {String}    The component ID.
          * @return              {JComponent}
          */
+        @Override
         public String getValue(String componentID)
         {
             return switch (componentID)
@@ -274,9 +262,18 @@ public final class ManageHotelUI extends JBlackPanel
             };
         }
 
-    /* -------------------------------------------------------------------------- */
-    /*                                   SETTERS                                  */
-    /* -------------------------------------------------------------------------- */
+        /**
+         * Sets the error message.
+         * 
+         * @param text {String} The error message.
+         */
+        @Override
+        public void setErrorMessage(String text)
+        {
+            lblErrorMessage.setText(text);
+            revalidate();
+            repaint();
+        }
 
         /**
          * Sets the action listener of a component.
@@ -305,28 +302,13 @@ public final class ManageHotelUI extends JBlackPanel
             }
         }
 
-    /* -------------------------------------------------------------------------- */
-    /*                                MANIPULATORS                                */
-    /* -------------------------------------------------------------------------- */
-
         /**
          * Updates the page's component values.
          */
         @Override
         public void updateValues()
         {
-            mhUI = new ManageHotelUI();
-        }
-
-        /**
-         * Sets the error message.
-         * 
-         * @param text {String} The error message.
-         */
-        public void setErrorMessage(String text)
-        {
-            lblErrorMessage.setText(text);
-            revalidate();
+            configureComps();
             repaint();
         }
 }

@@ -9,6 +9,7 @@ package controller.page;
 
 import controller.error.CreateHotelER;
 import java.awt.event.*;
+import javax.swing.SwingUtilities;
 import model.Database;
 import model.Hotel;
 import view.frame.MainFrameUI;
@@ -43,8 +44,11 @@ public class CreateHotelCO
             mfUI = MainFrameUI.getInstance();
             db = Database.getInstance();
 
-            handleBack();
-            handleCreateHotel();
+            SwingUtilities.invokeLater(() ->
+            {
+                handleBack();
+                handleCreateHotel();
+            });
         }
 
         /**

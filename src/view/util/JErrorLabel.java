@@ -20,7 +20,7 @@ public class JErrorLabel extends JLabel
     /* -------------------------------------------------------------------------- */
 
         /**
-         * Constructs an empty error label.
+         * Constructs the error label.
          */
         public JErrorLabel()
         {
@@ -28,18 +28,4 @@ public class JErrorLabel extends JLabel
             setFont(new Font("Arial", Font.PLAIN, 20));
             setForeground(Color.decode("#ffa0a0"));
         }
-
-        /**
-         * Constructs an error label given the text.
-         *
-         * @param text {String} The text.
-         */
-        public JErrorLabel(String text)
-        {
-            setText(text);
-            setFont(new Font("Arial", Font.PLAIN, 20));
-            setForeground(Color.decode("#ffa0a0"));
-        }
-
-        
 }

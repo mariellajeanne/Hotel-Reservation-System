@@ -8,6 +8,7 @@
 package controller.page;
 
 import java.awt.event.ActionEvent;
+import javax.swing.SwingUtilities;
 import view.frame.MainFrameUI;
 import view.page.HotelHubUI;
 
@@ -36,10 +37,13 @@ public class HotelHubCO
             hhUI = HotelHubUI.getInstance();
             mfUI = MainFrameUI.getInstance();
 
-            handleCreateHotel();
-            handleViewHotel();
-            handleManageHotel();
-            handleBookReservation();
+            SwingUtilities.invokeLater(() ->
+            {
+                handleCreateHotel();
+                handleViewHotel();
+                handleManageHotel();
+                handleBookReservation();
+            });
         }
 
         /**

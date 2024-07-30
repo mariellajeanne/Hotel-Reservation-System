@@ -9,6 +9,8 @@ package view.frame;
 
 import javax.swing.*;
 import model.Database;
+import model.Hotel;
+import model.Room;
 import view.page.*;
 
 /**
@@ -48,7 +50,7 @@ public class MainFrameUI extends JFrame
             vhUI = ViewHotelUI.getInstance();
             db = Database.getInstance();
 
-            currentPage = "HOTEL_HUB";
+            currentPage = "";
 
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             openPage("HOTEL_HUB");
@@ -73,8 +75,6 @@ public class MainFrameUI extends JFrame
     /*                                MANIPULATORS                                */
     /* -------------------------------------------------------------------------- */
 
-    // TODO USE CARD LAYOUT?
-
         /**
          * Opens a page.
          * 
@@ -82,17 +82,50 @@ public class MainFrameUI extends JFrame
          */
         public final void openPage(String page)
         {
-            closePage();
+            if (!currentPage.equals(""))
+                closePage();
 
-            // Sets the default hotel, reservation, and room.
-            if (!db.getHotels().isEmpty() && !page.equals(currentPage))
-            {
-                db.setHotel(db.getHotels().get(0));
-                db.setRoom(db.getHotel().getRooms().get(0));
-                db.setDate(1);
+            // Executes if the page had been changed.
+            if (!page.equals(currentPage))
+            {   
+                // Sets the hotel to null if there exists no hotel.
+                if (db.getHotels().isEmpty())
+                    db.setHotel(null);
+                
+                else
+                {
+                    Hotel hotel = db.getHotels().get(0);
+                    Room room = hotel.getRooms().get(0);
+                    
+                    // Sets the default chosen hotel to the first in the list.
+                    db.setHotel(hotel);
 
-                if (!db.getRoom().getReservations().isEmpty())
-                    db.setReservation(db.getRoom().getReservations().get(0));
+                    // Sets the default chosen room to the hotel's first room.
+                    db.setRoom(room);
+
+                    // Sets the default chosen reservation to null if there exists no reservations.
+                    if (hotel.getNumOfReservations() == 0)
+                        db.setReservation(null);
+
+                    // Sets the default chosen reservation to the hotel's first reservation otherwise.
+                    else
+                    {
+                        boolean isFound = false;
+
+                        // Loops through each room.
+                        for (int i = 0; i < hotel.getRooms().size() && !isFound; i++)
+                        {
+                            Room r = hotel.getRooms().get(i);
+
+                            // Sets the reservation if found.
+                            if (!r.getReservations().isEmpty())
+                            {
+                                db.setReservation(r.getReservations().get(0));
+                                isFound = true;
+                            }
+                        }
+                    }
+                }
             }
 
             // Opens each page.

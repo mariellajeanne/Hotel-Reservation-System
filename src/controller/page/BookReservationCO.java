@@ -9,6 +9,7 @@ package controller.page;
 
 import controller.error.BookReservationER;
 import java.awt.event.*;
+import javax.swing.SwingUtilities;
 import model.Database;
 import model.Hotel;
 import model.Reservation;
@@ -44,9 +45,12 @@ public class BookReservationCO
             brUI = BookReservationUI.getInstance();
             mfUI = MainFrameUI.getInstance();
             db = Database.getInstance();
-            
-            handleBack();
-            handleBookReservation();
+
+            SwingUtilities.invokeLater(() ->
+            {
+                handleBack();
+                handleBookReservation();
+            });
         }
 
         /**
