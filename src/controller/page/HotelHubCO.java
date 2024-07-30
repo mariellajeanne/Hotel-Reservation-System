@@ -61,19 +61,18 @@ public class HotelHubCO
         /**
          * Handles the opening of the create hotel page.
          */
-        private void handleCreateHotel()
+        public final void handleCreateHotel()
         {
             hhUI.setActionListener("btnCreateHotel", (ActionEvent e) ->
             {
                 mfUI.openPage("CREATE_HOTEL");
-                System.out.println("Button pressed!");
             });
         }
 
         /**
          * Handles the opening of the view hotel page.
          */
-        private void handleViewHotel()
+        public final void handleViewHotel()
         {
             hhUI.setActionListener("btnViewHotel", (ActionEvent e) ->
             {
@@ -84,7 +83,7 @@ public class HotelHubCO
         /**
          * Handles the opening of the manage hotel page.
          */
-        private void handleManageHotel()
+        public final void handleManageHotel()
         {
             hhUI.setActionListener("btnManageHotel", (ActionEvent e) ->
             {
@@ -95,7 +94,7 @@ public class HotelHubCO
         /**
          * Handles the opening of the book reservation page.
          */
-        private void handleBookReservation()
+        public final void handleBookReservation()
         {
             hhUI.setActionListener("btnBook", (ActionEvent e) ->
             {

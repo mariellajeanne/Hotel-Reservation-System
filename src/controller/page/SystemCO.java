@@ -18,6 +18,12 @@ public class SystemCO
 
         private static SystemCO sCO;     // The single instance of the class.
 
+        private static BookReservationCO brCO;  // The book reservation controller.
+        private static CreateHotelCO chCO;      // The create hotel controller.
+        private static HotelHubCO hhCO;         // The hotel hub controller.
+        private static ManageHotelCO mhCO;      // The manage hotel controller.
+        private static ViewHotelCO vhCO;        // The view hotel controller.
+
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
     /* -------------------------------------------------------------------------- */
@@ -27,11 +33,11 @@ public class SystemCO
          */
         private SystemCO()
         {
-            BookReservationCO.getInstance();
-            CreateHotelCO.getInstance();
-            HotelHubCO.getInstance();
-            ManageHotelCO.getInstance();
-            ViewHotelCO.getInstance();
+            brCO = BookReservationCO.getInstance();
+            chCO = CreateHotelCO.getInstance();
+            hhCO = HotelHubCO.getInstance();
+            mhCO = ManageHotelCO.getInstance();
+            vhCO = ViewHotelCO.getInstance();
         }
 
         /**
