@@ -132,6 +132,7 @@ public final class ViewHotelUI extends JBlackPanel
             scrScroll.setViewportView(tblPricePerNight);
             scrScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
             scrScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            scrScroll.add(tblPricePerNight);
 
             pnlScrollTable = new JPanel(new GridLayout(1,1));
             pnlScrollTable.add(scrScroll);

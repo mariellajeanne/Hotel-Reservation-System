@@ -282,7 +282,7 @@ public class ManageHotelCO
          */
         private void handleChangeRate()
         {
-            mhUI.setActionListener("txtChangeRate", (ActionEvent e) ->
+            mhUI.setActionListener("btnSaveRate", (ActionEvent e) ->
             {
                 if (!db.getHotels().isEmpty())
                 {

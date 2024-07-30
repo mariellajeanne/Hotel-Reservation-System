@@ -103,7 +103,6 @@ public final class ManageHotelUI extends JBlackPanel
         /**
          * Initializes components.
          */
-        // @SuppressWarnings({ "rawtypes", "unchecked" })
         @Override
         protected void initializeComps()
         {
