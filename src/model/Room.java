@@ -137,10 +137,7 @@ public class Room
             ArrayList<String> resCodesList = new ArrayList<>();
 
             for (Reservation res : reservations)
-            {
-                resCodesList.add("Room " + num + ": " + res.getCheckIn() +
-                    "-" + res.getCheckOut());
-            }
+                resCodesList.add(res.getCode());
 
             String[] resCodesArray = new String[resCodesList.size()];
             resCodesList.toArray(resCodesArray);

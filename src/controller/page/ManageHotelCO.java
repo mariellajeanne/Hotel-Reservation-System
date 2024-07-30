@@ -129,7 +129,6 @@ public class ManageHotelCO
                             mfUI.openPage("MANAGE_HOTEL", "HOTEL_HUB");
                         else
                             mhUI.configureComps();
-                        
                 }
             });
         }
@@ -231,6 +230,7 @@ public class ManageHotelCO
                             h.setBasePrice(Double.parseDouble(price));
 
                             // Updates the UI accordingly.
+                            mhUI.setFeedbackMessage("Changed the base price.", false);
                             mhUI.configureComps();
                         }
                 }
@@ -279,7 +279,7 @@ public class ManageHotelCO
         }
 
         /**
-         * Handles the change of a night rate.
+         * Handles the change of a night's price rate.
          */
         private void handleChangeRate()
         {

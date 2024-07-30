@@ -232,11 +232,17 @@ public class Database
                 // Sets the default chosen room to the hotel's first room.
                 room = (hotel.getRooms().getFirst());
 
-                // Sets the default chosen reservation to null if there exists no reservations.
+                /*
+                 * Sets the default chosen reservation to null
+                 * if there exists no reservations.
+                 */
                 if (hotel.getNumOfReservations() == 0)
                     reservation = null;
 
-                // Sets the default chosen reservation to the hotel's first reservation otherwise.
+                /*
+                 * Sets the default chosen reservation to the hotel's
+                 * first reservation otherwise.
+                 */
                 else
                 {
                     boolean isFound = false;

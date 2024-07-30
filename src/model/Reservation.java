@@ -187,6 +187,17 @@ public class Reservation
             return this.totalPrice;
         }
 
+        /**
+         * Gets the reservation code.
+         * 
+         * @return {String} The reservation code.
+         */
+        public String getCode()
+        {
+            return "Room " + room.getNum() + ": " +
+                checkIn + "-" + checkOut;
+        }
+
     /* -------------------------------------------------------------------------- */
     /*                                   SETTERS                                  */
     /* -------------------------------------------------------------------------- */

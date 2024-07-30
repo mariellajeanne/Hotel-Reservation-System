@@ -115,7 +115,11 @@ public final class BookReservationUI extends JBlackPanel
         public void configureComps()
         {
             if (!db.getHotels().isEmpty())
+            {
                 cmbHotels.setModel(new DefaultComboBoxModel<>(db.getHotelNames()));
+                cmbHotels.setSelectedItem(db.getHotel().getName());
+            }
+                
             else
                 cmbHotels.removeAllItems();
 
