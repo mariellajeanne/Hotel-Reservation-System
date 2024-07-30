@@ -62,15 +62,16 @@ public class JCommonComboBox<E> extends JComboBox<E>
         /**
          * Sets the combo box's array of items.
          * 
-         * @param items {E[]} The array of items.
+         * @param items {String[]} The array of items.
          */
-        public void setItems(E[] items)
+        @SuppressWarnings("unchecked")
+        public void setItems(String[] items)
         {
             // Removes the previous set of items.
             removeAllItems();
 
             // Adds the new set of items.
-            for (E item : items)
-                addItem(item);
+            for (String item : items)
+                addItem((E) item);
         }
 }

@@ -39,8 +39,7 @@ public class Reservation
          * @param room       {Room}      The reserved room.
          * @param code       {String}    The discount code.
          */
-        public Reservation(String guest, int checkIn, int checkOut,
-                        Room room, String code)
+        public Reservation(String guest, int checkIn, int checkOut, Room room)
         {
             this.guest = guest;
             this.checkIn = checkIn;

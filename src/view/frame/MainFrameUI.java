@@ -35,6 +35,8 @@ public class MainFrameUI extends JFrame
     /*                                INSTANTIATION                               */
     /* -------------------------------------------------------------------------- */
 
+        // TODO REPLACE REOPEN() WITH CONFIG
+        
         /**
          * Constructs the frame of the system.
          */

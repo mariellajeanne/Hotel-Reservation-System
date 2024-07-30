@@ -153,9 +153,6 @@ public class Hotel
             for (int i = 0; i < numbers.length; i++)
                 numbers[i] = String.valueOf(i + 1);
 
-            //! 
-            System.out.println(numbers.length);
-
             return numbers;
         }
 

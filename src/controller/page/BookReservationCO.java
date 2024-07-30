@@ -125,6 +125,7 @@ public class BookReservationCO
 
         /**
          * Books a reservation.
+         * 
          * @param guest     {String}    The guest.
          * @param h         {Hotel}     The hotel.
          * @param type      {String}    The room type.
@@ -153,7 +154,7 @@ public class BookReservationCO
                     // Reserves the first found available room.
                     if (isAvailable)
                     {
-                        Reservation res = new Reservation(guest, checkIn, checkOut, room, code);
+                        Reservation res = new Reservation(guest, checkIn, checkOut, room);
                         setUpPrice(h, res, code);
                         room.addReservation(res);
                         

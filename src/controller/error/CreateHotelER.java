@@ -94,9 +94,13 @@ public class CreateHotelER
          */
         private boolean checkRoomCount(String standard, String deluxe, String executive)
         {
-            int sum =   Integer.parseInt(standard) + Integer.parseInt(deluxe) +
-                        Integer.parseInt(executive);
+            int standardCnt = Integer.parseInt(standard);
+            int deluxeCnt = Integer.parseInt(deluxe);
+            int executiveCnt = Integer.parseInt(executive);
 
-            return  sum <= 50 && sum >= 1;
+            int sum = standardCnt + deluxeCnt + executiveCnt;
+
+            return  sum >= 1 && sum <= 50 && standardCnt >= 0 &&
+                    deluxeCnt >= 0 && executiveCnt >= 0;
         }
 }
