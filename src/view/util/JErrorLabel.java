@@ -21,10 +21,12 @@ public class JErrorLabel extends JLabel
 
         /**
          * Constructs the error label.
+         * 
+         * @param text {String} The text.
          */
-        public JErrorLabel()
+        public JErrorLabel(String text)
         {
-            setText("");
+            setText(text);
             setFont(new Font("Arial", Font.PLAIN, (int) (20 * Scale.MIN)));
             setForeground(Color.decode("#ffa0a0"));
         }
@@ -40,4 +42,6 @@ public class JErrorLabel extends JLabel
             setBounds((int) (x * Scale.X), (int) (y * Scale.Y),
                     (int) (getPreferredSize().width * 1.2), getPreferredSize().height);
         }
+
+        // TODO LABEL UPDATES MUST HAVE LOCATION/SIZE UPDATES
 }

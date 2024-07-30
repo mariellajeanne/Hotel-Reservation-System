@@ -94,7 +94,7 @@ public final class BookReservationUI extends JBlackPanel
             lblCheckIn = new JCommonLabel("Check-in date:", 0, false);
             lblCheckOut = new JCommonLabel("Check-out date:", 0, false);
             lblDiscountCode = new JCommonLabel("Discount code:", 0, false);
-            lblErrorMessage = new JErrorLabel();
+            lblErrorMessage = new JErrorLabel("");
             
             txtGuest = new JCommonTextField(870,300,381,30);
             txtCode = new JCommonTextField(962,667,289,30);
@@ -111,7 +111,7 @@ public final class BookReservationUI extends JBlackPanel
          * Configures components.
          */
         @Override
-        protected void configureComps()
+        public void configureComps()
         {
             lblGuest.setSizePos(670,300,30);
             lblHotel.setSizePos(670,361,30);
@@ -191,8 +191,7 @@ public final class BookReservationUI extends JBlackPanel
         public void setErrorMessage(String text)
         {
             lblErrorMessage.setText(text);
-            revalidate();
-            repaint();
+            lblErrorMessage.setSizePos(670, 775);
         }
 
         /**
@@ -212,25 +211,13 @@ public final class BookReservationUI extends JBlackPanel
         }
 
         /**
-         * Resets values of text fields.
+         * Resets values of the error label and text fields.
          */
         @Override
         public void resetValues()
         {
+            lblErrorMessage.setText("");
             txtGuest.setText("");
             txtCode.setText("");
-            revalidate();
-            repaint();
-        }
-
-        /**
-         * Updates the page's component values.
-         */
-        @Override
-        public void updateValues()
-        {
-            configureComps();
-            revalidate();
-            repaint();
         }
 }

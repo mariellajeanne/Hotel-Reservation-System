@@ -58,9 +58,6 @@ public class CommonER
          */
         public boolean checkStringChars(String text, boolean isAlpha)
         {
-            if (text.equals(""))
-                return false;
-
             if (text.charAt(0) == ' ' ||
                 text.charAt(text.length() - 1) == ' ')
                 return false;
@@ -79,8 +76,6 @@ public class CommonER
          */
         public boolean checkStringLength(String text)
         {
-            if (text.equals(""))
-                return false;
             return text.length() >= 1 && text.length() <= 50;
         }
 

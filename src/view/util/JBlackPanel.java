@@ -35,18 +35,6 @@ public abstract class JBlackPanel extends JPanel
         }
 
     /* -------------------------------------------------------------------------- */
-    /*                                   GETTERS                                  */
-    /* -------------------------------------------------------------------------- */
-
-        /**
-         * Returns the input of a component.
-         *
-         * @param componentID   {String}    The component ID.
-         * @return              {JComponent}
-         */
-        public abstract String getValue(String componentID);
-
-    /* -------------------------------------------------------------------------- */
     /*                           COMPONENT CONFIGURATION                          */
     /* -------------------------------------------------------------------------- */
     
@@ -66,8 +54,16 @@ public abstract class JBlackPanel extends JPanel
         protected abstract void addCompsToPanel();
 
     /* -------------------------------------------------------------------------- */
-    /*                                   SETTERS                                  */
+    /*                             GETTERS AND SETTERS                            */
     /* -------------------------------------------------------------------------- */
+
+        /**
+         * Returns the input of a component.
+         *
+         * @param componentID   {String}    The component ID.
+         * @return              {JComponent}
+         */
+        public abstract String getValue(String componentID);
 
         /**
          * Sets the error message.
@@ -84,17 +80,8 @@ public abstract class JBlackPanel extends JPanel
          */
         public abstract void setActionListener(String componentID, ActionListener a);
 
-    /* -------------------------------------------------------------------------- */
-    /*                                  UPDATERS                                  */
-    /* -------------------------------------------------------------------------- */
-
         /**
-         * Resets values of text fields.
+         * Resets values of the error label and text fields.
          */
         public abstract void resetValues();
-
-        /**
-         * Updates the page's component values.
-         */
-        public abstract void updateValues();
 }

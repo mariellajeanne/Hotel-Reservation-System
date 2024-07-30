@@ -63,7 +63,7 @@ public class CreateHotelER
             if (name.equals("") || standard.equals("") ||
                 deluxe.equals("") || executive.equals("") ||
                 price.equals(""))
-                return "Some fields are empty.";
+                return "All fields must be filled out.";
             if (!cER.checkStringChars(name, false))
                 return "No spaces must be at the first and last character.";
             else if (!cER.checkStringLength(name))
@@ -76,7 +76,7 @@ public class CreateHotelER
             if (!checkRoomCount(standard, deluxe, executive))
                 return "Total room count must be 1-50.";
             if (!cER.checkPriceValue(price))
-                return "Base price must be at least 100.0";
+                return "Base price must be at least 100.0.";
             return "";
         }
 

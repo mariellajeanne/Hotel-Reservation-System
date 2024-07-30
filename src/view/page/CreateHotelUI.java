@@ -8,7 +8,6 @@
 package view.page;
 
 import java.awt.event.ActionListener;
-import view.frame.MainFrameUI;
 import view.util.*;
 
 /**
@@ -23,7 +22,7 @@ public final class CreateHotelUI extends JBlackPanel
         /* Class instances */
 
             private static CreateHotelUI chUI;
-            private static MainFrameUI mfUI;
+            // !private static MainFrameUI mfUI;
 
         /* Components */
         
@@ -54,7 +53,7 @@ public final class CreateHotelUI extends JBlackPanel
          */
         private CreateHotelUI()
         {
-            mfUI = MainFrameUI.getInstance();
+            // !mfUI = MainFrameUI.getInstance();
             
             initializeComps();
             configureComps();
@@ -91,7 +90,7 @@ public final class CreateHotelUI extends JBlackPanel
             lblDeluxe = new JCommonLabel("Number of deluxe rooms:", 0,false);
             lblExecutive = new JCommonLabel("Number of executive rooms:", 0, false);
             lblPrice = new JCommonLabel("Base nightly price:", 0, false);
-            lblErrorMessage = new JErrorLabel();
+            lblErrorMessage = new JErrorLabel("");
             
             txtName = new JCommonTextField(869,300,380,30);
             txtStandard = new JCommonTextField(1184,421,65,30);
@@ -106,7 +105,7 @@ public final class CreateHotelUI extends JBlackPanel
          * Configures components.
          */
         @Override
-        protected void configureComps()
+        public void configureComps()
         {
             lblName.setSizePos(670,300,30);
             lblStandard.setSizePos(670,420,31);
@@ -142,7 +141,7 @@ public final class CreateHotelUI extends JBlackPanel
         }
 
     /* -------------------------------------------------------------------------- */
-    /*                         GETTERS, SETTERS, UPDATERS                         */
+    /*                             GETTERS AND SETTERS                            */
     /* -------------------------------------------------------------------------- */
 
         /**
@@ -174,12 +173,7 @@ public final class CreateHotelUI extends JBlackPanel
         public void setErrorMessage(String text)
         {
             lblErrorMessage.setText(text);
-            revalidate();
-            repaint();
-
-            // !DEBUGGING
-            System.out.print("CreateHotelUI: " + text);
-            mfUI.reopenPage("CREATE_HOTEL");
+            lblErrorMessage.setSizePos(670,775);
         }
 
         /**
@@ -199,28 +193,16 @@ public final class CreateHotelUI extends JBlackPanel
         }
 
         /**
-         * Resets values of text fields.
+         * Resets values of the error label and text fields.
          */
         @Override
         public void resetValues()
         {
+            lblErrorMessage.setText("");
             txtName.setText("");
             txtStandard.setText("");
             txtDeluxe.setText("");
             txtExecutive.setText("");
             txtPrice.setText("1299.0");
-            revalidate();
-            repaint();
-        }
-
-        /**
-         * Updates the page's component values.
-         */
-        @Override
-        public void updateValues()
-        {
-            configureComps();
-            revalidate();
-            repaint();
         }
 }

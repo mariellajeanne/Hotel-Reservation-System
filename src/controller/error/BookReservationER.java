@@ -71,6 +71,8 @@ public class BookReservationER
         public String checkBookReservation(String guest, Hotel h, String type,
             int checkIn, int checkOut, String code)
         {
+            if (guest.equals(""))
+                return "Guest name must be entered.";
             if (!cER.checkStringChars(guest, true))
                 return "Invalid guest name characters.";
             else if (!cER.checkStringLength(guest))

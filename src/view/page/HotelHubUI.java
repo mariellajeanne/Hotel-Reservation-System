@@ -93,7 +93,7 @@ public final class HotelHubUI extends JBlackPanel
          * Configures components.
          */
         @Override
-        protected void configureComps()
+        public void configureComps()
         {
             lblTitle.setFont(new Font("Arial", Font.BOLD, (int) (250 * Scale.MIN)));
             lblTitle.setForeground(Color.decode("#86d0f3"));
@@ -126,7 +126,7 @@ public final class HotelHubUI extends JBlackPanel
         }
 
     /* -------------------------------------------------------------------------- */
-    /*                         GETTERS, SETTERS, UPDATERS                         */
+    /*                             GETTERS AND SETTERS                            */
     /* -------------------------------------------------------------------------- */
 
         /**
@@ -165,19 +165,8 @@ public final class HotelHubUI extends JBlackPanel
         }
 
         /**
-         * Resets values of text fields.
+         * Resets values of the error label and text fields.
          */
         @Override
         public void resetValues(){}
-
-        /**
-         * Updates the page's component values.
-         */
-        @Override
-        public void updateValues()
-        {   
-            configureComps();
-            revalidate();
-            repaint();
-        }
 }

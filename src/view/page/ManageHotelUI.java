@@ -116,7 +116,7 @@ public final class ManageHotelUI extends JBlackPanel
             lblChangePrice = new JCommonLabel("Change base price:",0,false);
             lblRemoveReservation = new JCommonLabel("Remove reservation:",0,false);
             lblChangeRate = new JCommonLabel("Change rate of night:",0,false);
-            lblErrorMessage = new JErrorLabel();
+            lblErrorMessage = new JErrorLabel("");
 
             txtChangeName = new JCommonTextField(998,389,279,30);
             txtStandardCnt = new JCommonTextField(998,449,89,30);
@@ -148,7 +148,7 @@ public final class ManageHotelUI extends JBlackPanel
          * Configures components.
          */
         @Override
-        protected void configureComps()
+        public void configureComps()
         {   
 
             lblHotel.setSizePos(470,299,31);
@@ -234,7 +234,7 @@ public final class ManageHotelUI extends JBlackPanel
         }
 
     /* -------------------------------------------------------------------------- */
-    /*                         GETTERS, SETTERS, UPDATERS                         */
+    /*                             GETTERS AND SETTERS                            */
     /* -------------------------------------------------------------------------- */
         
         /**
@@ -270,8 +270,7 @@ public final class ManageHotelUI extends JBlackPanel
         public void setErrorMessage(String text)
         {
             lblErrorMessage.setText(text);
-            revalidate();
-            repaint();
+            lblErrorMessage.setSizePos(468, 830);
         }
 
         /**
@@ -303,19 +302,8 @@ public final class ManageHotelUI extends JBlackPanel
         }
 
         /**
-         * Resets values of text fields.
+         * Resets values of the error label and text fields.
          */
         @Override
         public void resetValues(){}
-
-        /**
-         * Updates the page's component values.
-         */
-        @Override
-        public void updateValues()
-        {
-            configureComps();
-            revalidate();
-            repaint();
-        }
 }

@@ -143,7 +143,7 @@ public final class ViewHotelUI extends JBlackPanel
          * Configures components.
          */
         @Override
-        protected void configureComps()
+        public void configureComps()
         {
             lblHotel.setSizePos(200,249,30);
             lblNumRooms.setSizePos(250,308,39);
@@ -269,7 +269,7 @@ public final class ViewHotelUI extends JBlackPanel
         }
 
     /* -------------------------------------------------------------------------- */
-    /*                         GETTERS, SETTERS, UPDATERS                         */
+    /*                             GETTERS AND SETTERS                            */
     /* -------------------------------------------------------------------------- */
 
         /**
@@ -289,8 +289,6 @@ public final class ViewHotelUI extends JBlackPanel
                 case "cmbReservations"  -> (String) cmbReservations.getSelectedItem();
                 default                 -> "";
             };
-
-            // TODO FIX INTEGER CASTING
         }
 
         /**
@@ -321,19 +319,8 @@ public final class ViewHotelUI extends JBlackPanel
         }
 
         /**
-         * Resets values of text fields.
+         * Resets values of the error label and text fields.
          */
         @Override
         public void resetValues(){}
-
-        /**
-         * Updates the page's component values.
-         */
-        @Override
-        public void updateValues()
-        {
-            configureComps();
-            revalidate();
-            repaint();
-        }
 }

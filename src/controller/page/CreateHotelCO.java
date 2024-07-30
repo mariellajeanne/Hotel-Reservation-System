@@ -94,9 +94,6 @@ public class CreateHotelCO
                     // Gets the error message.
                     String errorMessage = chER.checkCreateHotel(name,
                         standard, deluxe, executive, price);
-                    
-                    // !DEBUGGING
-                    System.out.print("CreateHotelCO: " + errorMessage);
 
                 /* Update */
 

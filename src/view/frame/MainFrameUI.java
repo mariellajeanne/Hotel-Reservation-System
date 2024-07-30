@@ -35,7 +35,6 @@ public class MainFrameUI extends JFrame
     /*                                INSTANTIATION                               */
     /* -------------------------------------------------------------------------- */
 
-    // TODO SET TEXT FIELDS TO EMPTY WHEN GOING BACK OR ACTION PERFORMED
         /**
          * Constructs the frame of the system.
          */
@@ -50,8 +49,8 @@ public class MainFrameUI extends JFrame
             vhUI = ViewHotelUI.getInstance();
 
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            setExtendedState(JFrame.MAXIMIZED_BOTH);
             setBackground(Color.decode("#26282e"));
+            setExtendedState(JFrame.MAXIMIZED_BOTH);
             openPage("", "HOTEL_HUB");
             setVisible(true);
         }
@@ -92,27 +91,27 @@ public class MainFrameUI extends JFrame
                 case "BOOK_RESERVATION" ->
                 {
                     add(brUI);
-                    brUI.updateValues();
+                    brUI.configureComps();
                 }
                 case "CREATE_HOTEL" -> 
                 {  
                     add(chUI);
-                    chUI.updateValues();
+                    chUI.configureComps();
                 }
                 case "HOTEL_HUB" ->
                 {
                     add(hhUI);
-                    hhUI.updateValues();
+                    hhUI.configureComps();
                 }
                 case "MANAGE_HOTEL" ->
                 {
                     add(mhUI);
-                    mhUI.updateValues();
+                    mhUI.configureComps();
                 }
                 case "VIEW_HOTEL" ->
                 {
                     add(vhUI);
-                    vhUI.updateValues();
+                    vhUI.configureComps();
                 }
                 default -> {}
             }
