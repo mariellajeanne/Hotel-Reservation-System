@@ -160,17 +160,17 @@ public class Reservation
         }
 
         /**
-         * Returns an array of the total price breakdown.
+         * Returns a 2D array of the total price breakdown.
          * 
-         * @return {String[]}
+         * @return {String[][]}
          */
-        public String[] getNightlyPrices()
+        public String[][] getNightlyPrices()
         {
-            String[] pricePerNight = new String[nightlyPrices.length];
+            String[][] pricePerNight = new String[nightlyPrices.length][1];
 
             for (int i = checkIn; i < checkOut; i++)
             {
-                pricePerNight[i - checkIn] = "Night " +
+                pricePerNight[i - checkIn][0] = "Night " +
                     (i) + (i + 1) + ": " + getNightlyPrice(i);
             }
                 

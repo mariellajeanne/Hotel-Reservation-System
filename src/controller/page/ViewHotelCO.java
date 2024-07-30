@@ -165,7 +165,7 @@ public class ViewHotelCO
         {
             vhUI.setActionListener("cmbReservations", (ActionEvent e) ->
             {
-                if (!db.getHotels().isEmpty())
+                if (!db.getHotels().isEmpty() && db.getHotel().getNumOfReservations() != 0)
                 {
                     /* Setup */
                 

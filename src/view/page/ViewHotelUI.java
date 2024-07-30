@@ -59,7 +59,6 @@ public final class ViewHotelUI extends JBlackPanel
             private JPanel pnlScrollTable;
             private JScrollPane scrScroll;
             private JTable tblPricePerNight;
-            private DefaultTableModel dtmTableModel;
 
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
@@ -74,7 +73,7 @@ public final class ViewHotelUI extends JBlackPanel
 
             initializeComps();
             configureComps();
-            addCompsToPanel();
+            addComps();
         }
 
         /**
@@ -125,19 +124,10 @@ public final class ViewHotelUI extends JBlackPanel
             cmbAvailNights = new JCommonComboBox<>(546,877,63,29);
             cmbReservations = new JCommonComboBox<>(1273,251,272,29);
 
-            dtmTableModel = new DefaultTableModel();
-            tblPricePerNight = new JTable(dtmTableModel);
-            
+            tblPricePerNight = new JTable();
             scrScroll = new JScrollPane();
-            scrScroll.setViewportView(tblPricePerNight);
-            scrScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-            scrScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-            scrScroll.add(tblPricePerNight);
-
             pnlScrollTable = new JPanel(new GridLayout(1,1));
-            pnlScrollTable.add(scrScroll);
-            pnlScrollTable.setBounds((int) (1010 * Scale.X), (int) (618 * Scale.Y),
-                                    (int) (536 * Scale.X),(int) (290 * Scale.Y));
+            
         }
 
         /**
@@ -182,16 +172,7 @@ public final class ViewHotelUI extends JBlackPanel
                     lblResPrice.setText("Price (w/discount if any): " + String.format("%.2f", res.getTotalPrice()));
                     lblResPricePerNight.setText("Price per night: " + String.format("%.2f", res.getRoom().getNightlyPrice()));
 
-                    dtmTableModel.setRowCount(0);
-
-                    // Adds rows to the price breakdown table.
-                    for (String s : res.getNightlyPrices())
-                    {
-                        String[] row = new String[1];
-                        row[0] = s;
-                        dtmTableModel.addRow(row);
-                    }
-                    tblPricePerNight.setModel(dtmTableModel);
+                    tblPricePerNight.setModel(new DefaultTableModel(db.getReservation().getNightlyPrices(), new Object[]{}));
                 }
 
                 // Executes the following if the chosen hotel has no reservations.
@@ -203,7 +184,6 @@ public final class ViewHotelUI extends JBlackPanel
                     lblResPrice.setText("Price (w/discount if any): N/A");
                     lblResPricePerNight.setText("Price per night: N/A");
                     cmbReservations.removeAllItems();
-                    dtmTableModel.setRowCount(0);
                     tblPricePerNight.setModel(new DefaultTableModel());
                 }
             }
@@ -224,7 +204,6 @@ public final class ViewHotelUI extends JBlackPanel
                 lblResPrice.setText("Price (w/discount if any): N/A");
                 lblResPricePerNight.setText("Price per night: N/A");
                 cmbReservations.removeAllItems();
-                dtmTableModel.setRowCount(0);
                 tblPricePerNight.setModel(new DefaultTableModel());
 
                 cmbHotels.removeAllItems();
@@ -232,6 +211,14 @@ public final class ViewHotelUI extends JBlackPanel
                 cmbRooms.removeAllItems();
                 cmbAvailNights.removeAllItems();
             }
+
+            // Sets the scroll panel containing the table.
+            scrScroll.setViewportView(tblPricePerNight);
+            scrScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            scrScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            
+            pnlScrollTable.setBounds((int) (1010 * Scale.X), (int) (618 * Scale.Y),
+                                    (int) (536 * Scale.X),(int) (290 * Scale.Y));
 
             // Sets the label sizes according to text content.
             lblHotel.setSizePos(200,249,30);
@@ -256,7 +243,7 @@ public final class ViewHotelUI extends JBlackPanel
          * Adds components to the panel.
          */
         @Override
-        protected void addCompsToPanel()
+        protected void addComps()
         {
             add(btnBack);
             add(pnlTitle);
@@ -284,6 +271,8 @@ public final class ViewHotelUI extends JBlackPanel
             add(cmbAvailNights);
             add(cmbReservations);
             
+            scrScroll.add(tblPricePerNight);
+            pnlScrollTable.add(scrScroll);
             add(pnlScrollTable);
         }
 

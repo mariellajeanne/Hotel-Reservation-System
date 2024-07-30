@@ -61,7 +61,7 @@ public final class BookReservationUI extends JBlackPanel
 
             initializeComps();
             configureComps();
-            addCompsToPanel(); 
+            addComps(); 
         }
 
         /**
@@ -136,7 +136,7 @@ public final class BookReservationUI extends JBlackPanel
          * Adds components to the panel.
          */
         @Override
-        protected void addCompsToPanel()
+        protected void addComps()
         {
             add(btnBack);
             add(pnlTitle);

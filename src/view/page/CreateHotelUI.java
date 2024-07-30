@@ -57,7 +57,7 @@ public final class CreateHotelUI extends JBlackPanel
             
             initializeComps();
             configureComps();
-            addCompsToPanel();
+            addComps();
         }
 
         /**
@@ -119,7 +119,7 @@ public final class CreateHotelUI extends JBlackPanel
          * Adds components to the panel.
          */
         @Override
-        protected void addCompsToPanel()
+        protected void addComps()
         {
             add(btnBack);
             add(pnlTitle);

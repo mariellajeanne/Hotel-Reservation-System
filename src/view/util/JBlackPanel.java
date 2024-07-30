@@ -51,7 +51,7 @@ public abstract class JBlackPanel extends JPanel
         /**
          * Adds components to the panel.
          */
-        protected abstract void addCompsToPanel();
+        protected abstract void addComps();
 
     /* -------------------------------------------------------------------------- */
     /*                             GETTERS AND SETTERS                            */
