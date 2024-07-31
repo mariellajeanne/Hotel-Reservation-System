@@ -2,7 +2,7 @@
  * @author Stephen M. Borja
  * @author Mariella Jeanne A. Dellosa
  *
- * Creates a label for feedback.
+ * Creates a label for errors.
  */
 
 package view.util;
@@ -11,26 +11,26 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
- * The feedback label class.
+ * The error label class.
  */
-public class JFeedbackLabel extends JLabel
+public class JErrorLabel extends JLabel
 {
     /* -------------------------------------------------------------------------- */
     /*                                 CONSTRUCTOR                                */
     /* -------------------------------------------------------------------------- */
 
         /**
-         * Constructs the feedback label.
+         * Constructs the error label.
          *
          */
-        public JFeedbackLabel()
+        public JErrorLabel()
         {
-            setFont(new Font("Arial", Font.PLAIN, (int) (30 * Scale.MIN)));
+            setFont(new Font("Arial", Font.PLAIN, (int) (20 * Scale.MIN)));
             setForeground(Color.decode("#ffa0a0"));
         }
 
         /**
-         * Sets the feedback label's size and position.
+         * Sets the error label's size and position.
          * 
          * @param x {int} The x position.
          * @param y {int} The y position.
@@ -40,4 +40,6 @@ public class JFeedbackLabel extends JLabel
             setBounds((int) (x * Scale.X), (int) (y * Scale.Y),
                     (int) (getPreferredSize().width * 1.2), getPreferredSize().height);
         }
+
+        // TODO LABEL UPDATES MUST HAVE LOCATION/SIZE UPDATES
 }

@@ -37,10 +37,7 @@ public class JCommonLabel extends JLabel
          * @param text      {String}    The text.
          * @param colorMode {int}       The text color mode.
          * @param isBold    {boolean}   Determines if the text must be bold.
-         * @param x         {int}       The x position.
-         * @param y         {int}       The y position.
-         * @param w         {int}       The width.
-         * @param h         {int}       The height.
+         *
          */
         public JCommonLabel(String text, int colorMode, boolean isBold)
         {
