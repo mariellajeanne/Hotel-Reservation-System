@@ -171,18 +171,18 @@ public final class ManageHotelUI extends JBlackPanel
                 // Disables the delete reservation button.
                 else
                     cmbReservations.setEnabled(false);
-            }
 
-            // Sets the label sizes according to text content.
-            lblHotel.setSizePos(470,299,31);
-            lblChangeName.setSizePos(470,389,38);
-            lblActionStandard.setSizePos(468,449,30);
-            lblActionDeluxe.setSizePos(468,508,31);
-            lblActionExecutive.setSizePos(468,568,31);
-            lblChangePrice.setSizePos(468,628,39);
-            lblRemoveReservation.setSizePos(468,691,30);
-            lblChangeRate.setSizePos(468,751,38);
-            lblFeedbackMessage.setSizePos(468,830);
+                // Sets the label sizes according to text content.
+                lblHotel.setSizePos(470,299,31);
+                lblChangeName.setSizePos(470,389,38);
+                lblActionStandard.setSizePos(468,449,30);
+                lblActionDeluxe.setSizePos(468,508,31);
+                lblActionExecutive.setSizePos(468,568,31);
+                lblChangePrice.setSizePos(468,628,39);
+                lblRemoveReservation.setSizePos(468,691,30);
+                lblChangeRate.setSizePos(468,751,38);
+                lblFeedbackMessage.setSizePos(468,830);
+            }
         }
 
         /**

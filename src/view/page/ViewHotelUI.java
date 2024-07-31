@@ -162,22 +162,22 @@ public final class ViewHotelUI extends JBlackPanel
                 setUpdatedValues("cmbDates");
                 setUpdatedValues("cmbRooms");
                 setUpdatedValues("cmbReservations");
+
+                // Sets the price per night table panels.
+                scrPricePerNight.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                scrPricePerNight.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+                scrPricePerNight.setBounds((int) (1010 * Scale.X), (int) (618 * Scale.Y),
+                                        (int) (536 * Scale.X),(int) (290 * Scale.Y));
+
+                // Sets the label sizes according to text content.
+                lblHotel.setSizePos(200,249,30);
+                lblNumRooms.setSizePos(250,308,39);
+                lblEstEarnings.setSizePos(250,371,38);
+                lblRoomAvailability.setSizePos(250,432,43);
+                lblRoom.setSizePos(200,681,31);
+                lblAvailNights.setSizePos(248,868,43);
+                lblReservation.setSizePos(960,249,31);
             }
-
-            // Sets the price per night table panels.
-            scrPricePerNight.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-            scrPricePerNight.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-            scrPricePerNight.setBounds((int) (1010 * Scale.X), (int) (618 * Scale.Y),
-                                    (int) (536 * Scale.X),(int) (290 * Scale.Y));
-
-            // Sets the label sizes according to text content.
-            lblHotel.setSizePos(200,249,30);
-            lblNumRooms.setSizePos(250,308,39);
-            lblEstEarnings.setSizePos(250,371,38);
-            lblRoomAvailability.setSizePos(250,432,43);
-            lblRoom.setSizePos(200,681,31);
-            lblAvailNights.setSizePos(248,868,43);
-            lblReservation.setSizePos(960,249,31);
         }
 
         /**
