@@ -56,7 +56,6 @@ public final class ViewHotelUI extends JBlackPanel
             private JCommonComboBox<String> cmbAvailNights;
 
             private DefaultTableModel dtmPricePerNight;
-            // !private JPanel pnlPricePerNight;
             private JScrollPane scrPricePerNight;
             private JTable tblPricePerNight;
 

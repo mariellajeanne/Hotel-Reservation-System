@@ -76,7 +76,7 @@ public class CommonER
          */
         public boolean checkStringLength(String text)
         {
-            return text.length() >= 1 && text.length() <= 50;
+            return text.length() >= 1 && text.length() <= 30;
         }
 
         /**
