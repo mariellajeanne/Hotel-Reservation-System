@@ -138,10 +138,9 @@ public final class ViewHotelUI extends JBlackPanel
             // Executes the following if there exists hotels.
             if (!db.getHotels().isEmpty())
             {
-                // Stores the hotel, room, and reservation being currently handled.
+                // Stores the hotel and room currently being handled.
                 Hotel h = db.getHotel();
                 Room room = db.getRoom();
-                Reservation res =  db.getReservation();
 
                 // Sets the models of the combo boxes.
                 cmbHotels.setModel(new DefaultComboBoxModel<>(db.getHotelNames()));
@@ -149,39 +148,21 @@ public final class ViewHotelUI extends JBlackPanel
                 cmbRooms.setModel(new DefaultComboBoxModel<>(h.getRoomNumbers()));
                 cmbAvailNights.setModel(new DefaultComboBoxModel<>(room.getAvailableNights()));
 
+                // Sets the reservation combo box values if the hotel has reservations.
+                if (db.getHotel().getNumOfReservations() != 0)
+                    cmbReservations.setModel(new DefaultComboBoxModel<>(db.getHotel().getReservationCodes()));
+                else
+                    cmbReservations.removeAllItems();
+
                 // Sets the displayed hotel information.
                 cmbHotels.setSelectedItem(h.getName());
                 lblNumRooms.setText("Number of rooms: " + h.getRooms().size());
                 lblEstEarnings.setText("Estimated earnings: " + String.format("%.2f", h.getTotalEarnings()));
                 
-                // Sets the displayed date and room information.
+                // Sets the displayed date, room, and reservation information.
                 setUpdatedValues("cmbDates");
                 setUpdatedValues("cmbRooms");
-
-                // Displays reservation information if the chosen hotel has reservations.
-                if (db.getHotel().getNumOfReservations() != 0 && db.getReservation() != null)
-                {
-                    // Displays the reservation details.
-                    cmbReservations.setModel(new DefaultComboBoxModel<>(db.getHotel().getReservationCodes()));
-                    setUpdatedValues("cmbReservations");
-
-                    // Displays the reservation price breakdown.
-                    dtmPricePerNight.setDataVector(res.getNightlyPrices(), null);
-                }
-
-                // Executes the following if the chosen hotel has no reservations.
-                else
-                {
-                    cmbReservations.removeAllItems();
-
-                    lblGuestName.setText("Guest: N/A");
-                    lblRoomDetails.setText("Room: N/A");
-                    lblCheckInAndOut.setText("Check-in and check-out: N/A");
-                    lblResPrice.setText("Price (w/discount if any): N/A");
-                    lblResPricePerNight.setText("Price per night: N/A");
-                    
-                    dtmPricePerNight.setRowCount(0);
-                }
+                setUpdatedValues("cmbReservations");
             }
 
             // Sets the price per night table panels.
@@ -195,18 +176,9 @@ public final class ViewHotelUI extends JBlackPanel
             lblNumRooms.setSizePos(250,308,39);
             lblEstEarnings.setSizePos(250,371,38);
             lblRoomAvailability.setSizePos(250,432,43);
-            lblAvailRoomCnt.setSizePos(304,493,43);
-            lblBookedRoomCnt.setSizePos(304,556,43);
             lblRoom.setSizePos(200,681,31);
-            lblRoomType.setSizePos(248,743,43);
-            lblPricePerNight.setSizePos(248,806,43);
             lblAvailNights.setSizePos(248,868,43);
             lblReservation.setSizePos(960,249,31);
-            lblGuestName.setSizePos(1010,308,43);
-            lblRoomDetails.setSizePos(1010,371,43);
-            lblCheckInAndOut.setSizePos(1010,435,43);
-            lblResPrice.setSizePos(1010,494,43);
-            lblResPricePerNight.setSizePos(1010,556,43);
         }
 
         /**
@@ -310,6 +282,7 @@ public final class ViewHotelUI extends JBlackPanel
         {
             switch (componentID)
             {
+                // Displays the chosen date information.
                 case "cmbDates" ->
                 {
                     Hotel h = db.getHotel();
@@ -317,7 +290,10 @@ public final class ViewHotelUI extends JBlackPanel
                     cmbDates.setSelectedItem(String.valueOf(db.getDate()));
                     lblAvailRoomCnt.setText("Number of rooms available: " + h.getNumOfAvailRooms(db.getDate(), true));
                     lblBookedRoomCnt.setText("Number of rooms booked: " + h.getNumOfAvailRooms(db.getDate(), false));
+                    lblAvailRoomCnt.setSizePos(304,493,43);
+                    lblBookedRoomCnt.setSizePos(304,556,43);
                 }
+                // Displays the chosen room information.
                 case "cmbRooms" ->
                 {
                     Room r = db.getRoom();
@@ -325,17 +301,44 @@ public final class ViewHotelUI extends JBlackPanel
                     cmbRooms.setSelectedItem(String.valueOf(r.getNum()));
                     lblRoomType.setText("Type: " + r.getType());
                     lblPricePerNight.setText("Base price per night: " + String.format("%.2f", r.getNightlyPrice()));
+                    lblRoomType.setSizePos(248,743,43);
+                    lblPricePerNight.setSizePos(248,806,43);    
                 }
                 case "cmbReservations" ->
                 {
-                    Reservation r = db.getReservation();
+                    // Displays the chosen reservation information if the chosen hotel has reservations.
+                    if (db.getHotel().getNumOfReservations() != 0 && db.getReservation() != null)
+                    {
+                        Reservation r = db.getReservation();
 
-                    cmbReservations.setSelectedItem(r.getCode());
-                    lblGuestName.setText("Guest: " + r.getGuest());
-                    lblRoomDetails.setText("Room: Room " + r.getRoom().getNum() + ", " + r.getRoom().getType());
-                    lblCheckInAndOut.setText("Check-in and check-out: " + r.getCheckInAndOut());
-                    lblResPrice.setText("Price (w/discount if any): " + String.format("%.2f", r.getTotalPrice()));
-                    lblResPricePerNight.setText("Price per night: " + String.format("%.2f", r.getRoom().getNightlyPrice()));
+                        cmbReservations.setSelectedItem(r.getCode());
+
+                        lblGuestName.setText("Guest: " + r.getGuest());
+                        lblRoomDetails.setText("Room: Room " + r.getRoom().getNum() + ", " + r.getRoom().getType());
+                        lblCheckInAndOut.setText("Check-in and check-out: " + r.getCheckInAndOut());
+                        lblResPrice.setText("Price (w/discount if any): " + String.format("%.2f", r.getTotalPrice()));
+                        lblResPricePerNight.setText("Price per night: " + String.format("%.2f", r.getRoom().getNightlyPrice()));
+
+                        dtmPricePerNight.setDataVector(r.getNightlyPrices(), null);
+                    }
+
+                    // Does not display the chosen reservation information if the chosen hotel has no reservations.
+                    else
+                    {
+                        lblGuestName.setText("Guest: N/A");
+                        lblRoomDetails.setText("Room: N/A");
+                        lblCheckInAndOut.setText("Check-in and check-out: N/A");
+                        lblResPrice.setText("Price (w/discount if any): N/A");
+                        lblResPricePerNight.setText("Price per night: N/A");
+
+                        dtmPricePerNight.setRowCount(0);
+                    }
+
+                    lblGuestName.setSizePos(1010,308,43);
+                    lblRoomDetails.setSizePos(1010,371,43);
+                    lblCheckInAndOut.setSizePos(1010,435,43);
+                    lblResPrice.setSizePos(1010,494,43);
+                    lblResPricePerNight.setSizePos(1010,556,43);
 
                     // TODO Update table
                 }

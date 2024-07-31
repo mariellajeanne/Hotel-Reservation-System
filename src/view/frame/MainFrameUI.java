@@ -83,9 +83,8 @@ public class MainFrameUI extends JFrame
         {
             closePage(close);
 
-            // Updates the database's default values if the page changed.
-            if (!close.equals(open))
-                db.updateDefaultValues();
+            // Updates the database's default values.
+            db.updateDefaultValues();
 
             // Opens each page.
             switch (open)
