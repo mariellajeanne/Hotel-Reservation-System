@@ -81,7 +81,7 @@ public class Reservation
         /**
          * Returns an array of reservation nights.
          * 
-         * @retun String[]
+         * @return String[]
          */
         public static String[] getReservationNights()
         {
