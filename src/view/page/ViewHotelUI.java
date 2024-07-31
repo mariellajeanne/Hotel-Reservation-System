@@ -7,7 +7,6 @@
 
 package view.page;
 
-import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -56,8 +55,9 @@ public final class ViewHotelUI extends JBlackPanel
             private JCommonComboBox<String> cmbReservations;
             private JCommonComboBox<String> cmbAvailNights;
 
-            private JPanel pnlScrollTable;
-            private JScrollPane scrScroll;
+            private DefaultTableModel dtmPricePerNight;
+            // !private JPanel pnlPricePerNight;
+            private JScrollPane scrPricePerNight;
             private JTable tblPricePerNight;
 
     /* -------------------------------------------------------------------------- */
@@ -124,10 +124,9 @@ public final class ViewHotelUI extends JBlackPanel
             cmbAvailNights = new JCommonComboBox<>(546,877,63,29);
             cmbReservations = new JCommonComboBox<>(1273,251,272,29);
 
-            tblPricePerNight = new JTable();
-            scrScroll = new JScrollPane();
-            pnlScrollTable = new JPanel(new GridLayout(1,1));
-            
+            dtmPricePerNight = new DefaultTableModel(0, 1);
+            tblPricePerNight = new JTable(dtmPricePerNight);
+            scrPricePerNight = new JScrollPane(tblPricePerNight);
         }
 
         /**
@@ -136,25 +135,25 @@ public final class ViewHotelUI extends JBlackPanel
         @Override
         public void configureComps()
         {
-            // Stores the hotel, room, and reservation being currently handled.
-            Hotel h = db.getHotel();
-            Room room = db.getRoom();
-            Reservation res =  db.getReservation();
-
             // Executes the following if there exists hotels.
             if (!db.getHotels().isEmpty())
             {
+                // Stores the hotel, room, and reservation being currently handled.
+                Hotel h = db.getHotel();
+                Room room = db.getRoom();
+                Reservation res =  db.getReservation();
+
                 lblNumRooms.setText("Number of rooms: " + h.getRooms().size());
                 lblEstEarnings.setText("Estimated earnings: " + String.format("%.2f", h.getTotalEarnings()));
                 lblAvailRoomCnt.setText("Number of rooms available: " + h.getNumOfAvailRooms(db.getDate(), true));
                 lblBookedRoomCnt.setText("Number of rooms booked: " + h.getNumOfAvailRooms(db.getDate(), false));
                 lblRoomType.setText("Type: " + room.getType());
-                lblPricePerNight.setText("Price per night: " + db.getRoom().getNightlyPrice());
+                lblPricePerNight.setText("Base price per night: " + String.format("%.2f", db.getRoom().getNightlyPrice()));
 
                 cmbHotels.setModel(new DefaultComboBoxModel<>(db.getHotelNames()));
                 cmbDates.setModel(new DefaultComboBoxModel<>(Reservation.getReservationDates(true)));
-                cmbRooms.setModel(new DefaultComboBoxModel<>(db.getHotel().getRoomNumbers()));
-                cmbAvailNights.setModel(new DefaultComboBoxModel<>(db.getRoom().getAvailableNights()));
+                cmbRooms.setModel(new DefaultComboBoxModel<>(h.getRoomNumbers()));
+                cmbAvailNights.setModel(new DefaultComboBoxModel<>(room.getAvailableNights()));
 
                 cmbHotels.setSelectedItem(h.getName());
                 cmbDates.setSelectedItem(String.valueOf(db.getDate()));
@@ -163,8 +162,8 @@ public final class ViewHotelUI extends JBlackPanel
                 // Executes the following if the chosen hotel has reservations.
                 if (db.getHotel().getNumOfReservations() != 0 && db.getReservation() != null)
                 {
-                    cmbReservations.setModel(new DefaultComboBoxModel<>(db.getRoom().getReservationCodes()));
-                    cmbReservations.setSelectedItem(db.getReservation().getCode());
+                    cmbReservations.setModel(new DefaultComboBoxModel<>(room.getReservationCodes()));
+                    cmbReservations.setSelectedItem(res.getCode());
 
                     lblGuestName.setText("Guest: " + res.getGuest());
                     lblRoomDetails.setText("Room: Room " + res.getRoom().getNum() + ", " + res.getRoom().getType());
@@ -172,25 +171,33 @@ public final class ViewHotelUI extends JBlackPanel
                     lblResPrice.setText("Price (w/discount if any): " + String.format("%.2f", res.getTotalPrice()));
                     lblResPricePerNight.setText("Price per night: " + String.format("%.2f", res.getRoom().getNightlyPrice()));
 
-                    tblPricePerNight.setModel(new DefaultTableModel(db.getReservation().getNightlyPrices(), new Object[]{}));
+                    dtmPricePerNight.setDataVector(res.getNightlyPrices(), null);
                 }
 
                 // Executes the following if the chosen hotel has no reservations.
                 else
                 {
+                    cmbReservations.removeAllItems();
+
                     lblGuestName.setText("Guest: N/A");
                     lblRoomDetails.setText("Room: N/A");
                     lblCheckInAndOut.setText("Check-in and check-out: N/A");
                     lblResPrice.setText("Price (w/discount if any): N/A");
                     lblResPricePerNight.setText("Price per night: N/A");
-                    cmbReservations.removeAllItems();
-                    tblPricePerNight.setModel(new DefaultTableModel());
+                    
+                    dtmPricePerNight.setRowCount(0);
                 }
             }
 
             // Executes the following if there exists no hotels.
             else
             {
+                cmbHotels.removeAllItems();
+                cmbDates.removeAllItems();
+                cmbRooms.removeAllItems();
+                cmbAvailNights.removeAllItems();
+                cmbReservations.removeAllItems();
+
                 lblNumRooms.setText("Number of rooms: N/A");
                 lblEstEarnings.setText("Estimated earnings: N/A");
                 lblAvailRoomCnt.setText("Number of rooms available: N/A");
@@ -203,21 +210,15 @@ public final class ViewHotelUI extends JBlackPanel
                 lblCheckInAndOut.setText("Check-in and check-out: N/A");
                 lblResPrice.setText("Price (w/discount if any): N/A");
                 lblResPricePerNight.setText("Price per night: N/A");
-                cmbReservations.removeAllItems();
+                
+                dtmPricePerNight.setRowCount(0);
                 tblPricePerNight.setModel(new DefaultTableModel());
-
-                cmbHotels.removeAllItems();
-                cmbDates.removeAllItems();
-                cmbRooms.removeAllItems();
-                cmbAvailNights.removeAllItems();
             }
 
-            // Sets the scroll panel containing the table.
-            scrScroll.setViewportView(tblPricePerNight);
-            scrScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-            scrScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-            
-            pnlScrollTable.setBounds((int) (1010 * Scale.X), (int) (618 * Scale.Y),
+            // Sets the price per night table panels.
+            scrPricePerNight.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            scrPricePerNight.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            scrPricePerNight.setBounds((int) (1010 * Scale.X), (int) (618 * Scale.Y),
                                     (int) (536 * Scale.X),(int) (290 * Scale.Y));
 
             // Sets the label sizes according to text content.
@@ -270,10 +271,8 @@ public final class ViewHotelUI extends JBlackPanel
             add(cmbRooms);
             add(cmbAvailNights);
             add(cmbReservations);
-            
-            scrScroll.add(tblPricePerNight);
-            pnlScrollTable.add(scrScroll);
-            add(pnlScrollTable);
+
+            add(scrPricePerNight);
         }
 
     /* -------------------------------------------------------------------------- */
@@ -332,4 +331,39 @@ public final class ViewHotelUI extends JBlackPanel
          */
         @Override
         public void resetValues(){}
+
+        /**
+         * Updates displayed values.
+         * 
+         * @param componentID {String} The component ID.
+         */
+        public void setUpdatedValues(String componentID)
+        {
+            switch (componentID)
+            {
+                case "cmbDates" ->
+                {
+                    cmbDates.setSelectedItem(String.valueOf(db.getDate()));
+                    lblAvailRoomCnt.setText("Number of rooms available: " + db.getHotel().getNumOfAvailRooms(db.getDate(), true));
+                    lblBookedRoomCnt.setText("Number of rooms booked: " + db.getHotel().getNumOfAvailRooms(db.getDate(), false));
+                }
+                case "cmbRooms" ->
+                {
+                    cmbRooms.setSelectedItem(String.valueOf(db.getRoom().getNum()));
+                    lblRoomType.setText("Type: " + db.getRoom().getType());
+                    lblPricePerNight.setText("Base price per night: " + String.format("%.2f", db.getRoom().getNightlyPrice()));
+                }
+                case "cmbReservations" ->
+                {
+                    cmbReservations.setSelectedItem(db.getReservation().getCode());
+                    lblGuestName.setText("Guest: " + db.getReservation().getGuest());
+                    lblRoomDetails.setText("Room: Room " + db.getReservation().getRoom().getNum() + ", " + db.getReservation().getRoom().getType());
+                    lblCheckInAndOut.setText("Check-in and check-out: " + db.getReservation().getCheckInAndOut());
+                    lblResPrice.setText("Price (w/discount if any): " + String.format("%.2f", db.getReservation().getTotalPrice()));
+                    lblResPricePerNight.setText("Price per night: " + String.format("%.2f", db.getReservation().getRoom().getNightlyPrice()));
+
+                    // TODO Update table
+                }
+            }
+        }
 }

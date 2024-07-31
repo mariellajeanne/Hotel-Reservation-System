@@ -22,8 +22,6 @@ public class Hotel
         private final double[] rates;             // The hotel's rates per date.
         private final ArrayList<Room> rooms;      // The hotel's rooms.
 
-        // TODO make a hashmap of rooms : reservation
-        // TODO room based on index
     /* -------------------------------------------------------------------------- */
     /*                                 CONSTRUCTOR                                */
     /* -------------------------------------------------------------------------- */
@@ -198,7 +196,8 @@ public class Hotel
          * Returns the number of available rooms given the date.
          * 
          * @param   date    {int}       The date.
-         * @param   isAvail {boolean}   Determines if the availability is to be determined.
+         * @param   isAvail {boolean}   Determines if the availability
+         *                              is to be determined.
          * @return          {int}
          */
         public int getNumOfAvailRooms(int date, boolean isAvail)

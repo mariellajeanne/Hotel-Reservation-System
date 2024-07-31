@@ -113,7 +113,8 @@ public class BookReservationER
          */
         private boolean checkAvailability(Hotel h, String type, int checkIn, int checkOut)
         {
-            boolean hasType = false; // Checks if the chosen room type exists.
+            // Checks if the chosen room type exists.
+            boolean hasType = false; 
 
             // Loops through each room.
             for (Room r : h.getRooms())

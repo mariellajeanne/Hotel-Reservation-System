@@ -10,6 +10,7 @@ package controller.page;
 import java.awt.event.*;
 import model.Database;
 import model.Hotel;
+import model.Reservation;
 import model.Room;
 import view.frame.MainFrameUI;
 import view.page.ViewHotelUI;
@@ -102,7 +103,9 @@ public class ViewHotelCO
                         {
                             db.setReservation(hotel.getFirstReservedRoom().
                                 getReservations().getFirst());
-                        }                        
+                        }
+                        else
+                            db.setReservation(null);                        
 
                         // Updates the UI accordingly.
                         vhUI.configureComps();
@@ -128,7 +131,7 @@ public class ViewHotelCO
                     db.setDate(date);
 
                     // Updates the UI accordingly.
-                    vhUI.configureComps();
+                    vhUI.setUpdatedValues("cmbDates");
             });   
         }
 
@@ -153,7 +156,7 @@ public class ViewHotelCO
                         db.setRoom(room);
 
                         // Updates the UI accordingly.
-                        vhUI.configureComps();
+                        vhUI.setUpdatedValues("cmbRooms");
                 }
             });   
         }
@@ -183,13 +186,16 @@ public class ViewHotelCO
                         // Gets the room based on the room number.
                         Room room = h.getRooms().get(roomNum - 1);
 
+                        // Gets the reservation based on the check-in date.
+                        Reservation res = room.getReservation(checkIn);
+
                     /* Update */
 
-                        // Sets the reservation based on the check-in date.
-                        db.setReservation(room.getReservation(checkIn));
+                        // Sets the reservation currently being handled.
+                        db.setReservation(res);
 
                         // Updates the UI accordingly.
-                        vhUI.configureComps();
+                        vhUI.setUpdatedValues("cmbReservations");
                 }
             });   
         }
