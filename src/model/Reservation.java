@@ -7,6 +7,8 @@
 
 package model;
 
+import java.text.DecimalFormat;
+
 /**
  * The reservation model class.
 */
@@ -22,8 +24,6 @@ public class Reservation
         private final Room room;              // The reserved room.
         private final double nightlyPrices[]; // The price per night.
         private double totalPrice;            // The total price.
-
-        // TODO get reservation based on index
 
     /* -------------------------------------------------------------------------- */
     /*                                 CONSTRUCTOR                                */
@@ -171,7 +171,8 @@ public class Reservation
             for (int i = checkIn; i < checkOut; i++)
             {
                 pricePerNight[i - checkIn] = "Night " +
-                    (i) + (i + 1) + ": " + getNightlyPrice(i);
+                    (i) + (i + 1) + ": " + new DecimalFormat("#.##").
+                    format(getNightlyPrice(i));
             }
                 
             return pricePerNight;

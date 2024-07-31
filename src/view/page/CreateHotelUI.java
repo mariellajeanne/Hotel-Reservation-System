@@ -22,7 +22,6 @@ public final class CreateHotelUI extends JBlackPanel
         /* Class instances */
 
             private static CreateHotelUI chUI;
-            // !private static MainFrameUI mfUI;
 
         /* Components */
         
@@ -53,8 +52,6 @@ public final class CreateHotelUI extends JBlackPanel
          */
         private CreateHotelUI()
         {
-            // !mfUI = MainFrameUI.getInstance();
-            
             initializeComps();
             configureComps();
             addComps();

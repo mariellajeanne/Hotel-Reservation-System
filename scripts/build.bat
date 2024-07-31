@@ -12,13 +12,16 @@ if "%1" == "compile" (
     rem Iterate over each Java file in the src directory
     for /r src %%F in (*.java) do (
         rem Extract the relative path for the .java file
-        set "filePath=%%~dpF"
+        set "filePath=%%~fF"
         set "relativePath=!filePath:src\=!"
-        set "relativePath=!relativePath:~0,-1!"
-        
-        rem Create the corresponding directory in the build directory
-        if not exist build\!relativePath! (
-            md build\!relativePath! 2>nul
+        set "relativePath=!relativePath:.java=!"
+
+        rem Extract the directory path from the relative path
+        set "dirPath=!relativePath!"
+
+        rem Ensure the directory exists in the build directory
+        if not exist build\!dirPath! (
+            md build\!dirPath! 2>nul
         )
 
         rem Compile the Java file

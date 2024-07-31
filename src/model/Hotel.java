@@ -227,16 +227,6 @@ public class Hotel
         }
 
         /**
-         * Returns the total number of rooms booked.
-         * 
-         * @return {int}
-         */
-        public int getNumOfBookedRooms()
-        {
-            return rooms.size() - getNumOfAvailRooms();
-        }
-
-        /**
          * Returns the hotel's total estimated earnings.
          * 
          * @return {double}
