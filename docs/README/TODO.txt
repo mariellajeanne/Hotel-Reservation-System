@@ -1,18 +1,9 @@
 Show discount code upon viewing reservation information
 Check what references to add
 Check indentation of all function header comments
-Put full package in UML
-Each UI file should have a set error message function
-Each UI file must have a reload function
-Each UI file must have a set visible function
 Organize all imports
-Make sure controllers indirectly update the UI
-If database only has list of hotels, might as well add it as a static var in model.Hotel
 Remove "this" keyword when unnecessary
 Separate configuration, addition to panel, addition to hashmap
-Remove unnecessary elements of hashmap
-Add/delete values are different!
-Combo boxes listeners, update frame when combo item is selected
 Adds spaces between passed arguments
 
 

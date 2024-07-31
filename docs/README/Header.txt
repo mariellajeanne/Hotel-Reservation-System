@@ -1,6 +1,0 @@
-/**
- * @author Stephen M. Borja
- * @author Mariella Jeanne A. Dellosa
- * 
- * 
- */

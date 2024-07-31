@@ -27,8 +27,6 @@ public class Database
         private Reservation reservation;        // The reservation currently being handled.
         private int date;                       // The date currently being handled.
 
-        // TODO get hotel based on index
-
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
     /* -------------------------------------------------------------------------- */

@@ -8,8 +8,8 @@
 package view.page;
 
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import model.*;
 import view.util.*;
 
@@ -54,10 +54,7 @@ public final class ViewHotelUI extends JBlackPanel
             private JCommonComboBox<String> cmbRooms;
             private JCommonComboBox<String> cmbReservations;
             private JCommonComboBox<String> cmbAvailNights;
-
-            private DefaultTableModel dtmPricePerNight;
-            private JScrollPane scrPricePerNight;
-            private JTable tblPricePerNight;
+            private JCommonComboBox<String> cmbResPricePerNight;
 
     /* -------------------------------------------------------------------------- */
     /*                                INSTANTIATION                               */
@@ -115,17 +112,14 @@ public final class ViewHotelUI extends JBlackPanel
             lblRoomDetails = new JCommonLabel("Room: N/A", 0,false);
             lblCheckInAndOut = new JCommonLabel(0,false);
             lblResPrice = new JCommonLabel(0,false);
-            lblResPricePerNight = new JCommonLabel(0,false);
+            lblResPricePerNight = new JCommonLabel(1,false);
 
-            cmbHotels = new JCommonComboBox<>(372,249,396,29);
-            cmbDates = new JCommonComboBox<>(711,440,63,29);
-            cmbRooms = new JCommonComboBox<>(351,683,63,29);
-            cmbAvailNights = new JCommonComboBox<>(546,877,63,29);
-            cmbReservations = new JCommonComboBox<>(1273,251,272,29);
-
-            dtmPricePerNight = new DefaultTableModel(0, 1);
-            tblPricePerNight = new JTable(dtmPricePerNight);
-            scrPricePerNight = new JScrollPane(tblPricePerNight);
+            cmbHotels = new JCommonComboBox<>(459,246,396,32);
+            cmbDates = new JCommonComboBox<>(798,433,63,32);
+            cmbRooms = new JCommonComboBox<>(438,680,63,32);
+            cmbAvailNights = new JCommonComboBox<>(642,868,63,32);
+            cmbReservations = new JCommonComboBox<>(1357,251,272,32);
+            cmbResPricePerNight = new JCommonComboBox<>(1380, 558, 249, 32);
         }
 
         /**
@@ -147,36 +141,39 @@ public final class ViewHotelUI extends JBlackPanel
                 cmbRooms.setModel(new DefaultComboBoxModel<>(h.getRoomNumbers()));
                 cmbAvailNights.setModel(new DefaultComboBoxModel<>(room.getAvailableNights()));
 
-                // Sets the reservation combo box values if the hotel has reservations.
+                // EXecutes if the hotel has reservations.
                 if (db.getHotel().getNumOfReservations() != 0)
+                {
+                    // Sets the values of the chosen reservation's combo boxes.
                     cmbReservations.setModel(new DefaultComboBoxModel<>(db.getHotel().getReservationCodes()));
+                    cmbResPricePerNight.setModel(new DefaultComboBoxModel<>(db.getReservation().getNightlyPrices()));
+                }
+                // Executes if the hotel does not have reservations.
                 else
+                {
+                    // Removes all items of reservation-related combo boxes.
                     cmbReservations.removeAllItems();
+                    cmbResPricePerNight.removeAllItems();
+                }
 
                 // Sets the displayed hotel information.
                 cmbHotels.setSelectedItem(h.getName());
                 lblNumRooms.setText("Number of rooms: " + h.getRooms().size());
-                lblEstEarnings.setText("Estimated earnings: " + String.format("%.2f", h.getTotalEarnings()));
+                lblEstEarnings.setText("Estimated earnings: " + new DecimalFormat("#.##").format(h.getTotalEarnings()));
                 
                 // Sets the displayed date, room, and reservation information.
                 setUpdatedValues("cmbDates");
                 setUpdatedValues("cmbRooms");
                 setUpdatedValues("cmbReservations");
 
-                // Sets the price per night table panels.
-                scrPricePerNight.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-                scrPricePerNight.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-                scrPricePerNight.setBounds((int) (1010 * Scale.X), (int) (618 * Scale.Y),
-                                        (int) (536 * Scale.X),(int) (290 * Scale.Y));
-
                 // Sets the label sizes according to text content.
-                lblHotel.setSizePos(200,249,30);
-                lblNumRooms.setSizePos(250,308,39);
-                lblEstEarnings.setSizePos(250,371,38);
-                lblRoomAvailability.setSizePos(250,432,43);
-                lblRoom.setSizePos(200,681,31);
-                lblAvailNights.setSizePos(248,868,43);
-                lblReservation.setSizePos(960,249,31);
+                lblHotel.setSizePos(287,249,30);
+                lblNumRooms.setSizePos(337,308,39);
+                lblEstEarnings.setSizePos(337,371,38);
+                lblRoomAvailability.setSizePos(337,432,43);
+                lblRoom.setSizePos(287,681,31);
+                lblAvailNights.setSizePos(337,868,43);
+                lblReservation.setSizePos(1047,249,31);
             }
         }
 
@@ -211,8 +208,7 @@ public final class ViewHotelUI extends JBlackPanel
             add(cmbRooms);
             add(cmbAvailNights);
             add(cmbReservations);
-
-            add(scrPricePerNight);
+            add(cmbResPricePerNight);
         }
 
     /* -------------------------------------------------------------------------- */
@@ -289,8 +285,8 @@ public final class ViewHotelUI extends JBlackPanel
                     cmbDates.setSelectedItem(String.valueOf(db.getDate()));
                     lblAvailRoomCnt.setText("Number of rooms available: " + h.getNumOfAvailRooms(db.getDate(), true));
                     lblBookedRoomCnt.setText("Number of rooms booked: " + h.getNumOfAvailRooms(db.getDate(), false));
-                    lblAvailRoomCnt.setSizePos(304,493,43);
-                    lblBookedRoomCnt.setSizePos(304,556,43);
+                    lblAvailRoomCnt.setSizePos(391,493,43);
+                    lblBookedRoomCnt.setSizePos(391,556,43);
                 }
                 // Displays the chosen room information.
                 case "cmbRooms" ->
@@ -299,9 +295,9 @@ public final class ViewHotelUI extends JBlackPanel
 
                     cmbRooms.setSelectedItem(String.valueOf(r.getNum()));
                     lblRoomType.setText("Type: " + r.getType());
-                    lblPricePerNight.setText("Base price per night: " + String.format("%.2f", r.getNightlyPrice()));
-                    lblRoomType.setSizePos(248,743,43);
-                    lblPricePerNight.setSizePos(248,806,43);    
+                    lblPricePerNight.setText("Base price per night: " + new DecimalFormat("#.##").format(r.getNightlyPrice()));
+                    lblRoomType.setSizePos(335,743,43);
+                    lblPricePerNight.setSizePos(335,806,43);    
                 }
                 case "cmbReservations" ->
                 {
@@ -313,12 +309,10 @@ public final class ViewHotelUI extends JBlackPanel
                         cmbReservations.setSelectedItem(r.getCode());
 
                         lblGuestName.setText("Guest: " + r.getGuest());
-                        lblRoomDetails.setText("Room: Room " + r.getRoom().getNum() + ", " + r.getRoom().getType());
+                        lblRoomDetails.setText("Room: No. " + r.getRoom().getNum() + ", " + r.getRoom().getType());
                         lblCheckInAndOut.setText("Check-in and check-out: " + r.getCheckInAndOut());
-                        lblResPrice.setText("Price (w/discount if any): " + String.format("%.2f", r.getTotalPrice()));
-                        lblResPricePerNight.setText("Price per night: " + String.format("%.2f", r.getRoom().getNightlyPrice()));
-
-                        dtmPricePerNight.setDataVector(r.getNightlyPrices(), null);
+                        lblResPrice.setText("Price (w/discount if any): " + new DecimalFormat("#.##").format(r.getTotalPrice()));
+                        lblResPricePerNight.setText("Price per night:");
                     }
 
                     // Does not display the chosen reservation information if the chosen hotel has no reservations.
@@ -328,18 +322,14 @@ public final class ViewHotelUI extends JBlackPanel
                         lblRoomDetails.setText("Room: N/A");
                         lblCheckInAndOut.setText("Check-in and check-out: N/A");
                         lblResPrice.setText("Price (w/discount if any): N/A");
-                        lblResPricePerNight.setText("Price per night: N/A");
-
-                        dtmPricePerNight.setRowCount(0);
+                        lblResPricePerNight.setText("Price per night:");
                     }
 
-                    lblGuestName.setSizePos(1010,308,43);
-                    lblRoomDetails.setSizePos(1010,371,43);
-                    lblCheckInAndOut.setSizePos(1010,435,43);
-                    lblResPrice.setSizePos(1010,494,43);
-                    lblResPricePerNight.setSizePos(1010,556,43);
-
-                    // TODO Update table
+                    lblGuestName.setSizePos(1097,308,43);
+                    lblRoomDetails.setSizePos(1097,371,43);
+                    lblCheckInAndOut.setSizePos(1097,435,43);
+                    lblResPrice.setSizePos(1097,494,43);
+                    lblResPricePerNight.setSizePos(1097,556,43);
                 }
             }
         }
