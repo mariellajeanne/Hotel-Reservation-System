@@ -37,7 +37,6 @@ public class Reservation
          * @param checkIn    {int}       The check-in date.
          * @param checkOut   {int}       The check-out date.
          * @param room       {Room}      The reserved room.
-         * @param code       {String}    The discount code.
          */
         public Reservation(String guest, int checkIn, int checkOut, Room room)
         {
