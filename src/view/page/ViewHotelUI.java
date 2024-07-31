@@ -162,7 +162,7 @@ public final class ViewHotelUI extends JBlackPanel
                 // Executes the following if the chosen hotel has reservations.
                 if (db.getHotel().getNumOfReservations() != 0 && db.getReservation() != null)
                 {
-                    cmbReservations.setModel(new DefaultComboBoxModel<>(room.getReservationCodes()));
+                    cmbReservations.setModel(new DefaultComboBoxModel<>(db.getHotel().getReservationCodes()));
                     cmbReservations.setSelectedItem(res.getCode());
 
                     lblGuestName.setText("Guest: " + res.getGuest());
@@ -343,24 +343,30 @@ public final class ViewHotelUI extends JBlackPanel
             {
                 case "cmbDates" ->
                 {
+                    Hotel h = db.getHotel();
+
                     cmbDates.setSelectedItem(String.valueOf(db.getDate()));
-                    lblAvailRoomCnt.setText("Number of rooms available: " + db.getHotel().getNumOfAvailRooms(db.getDate(), true));
-                    lblBookedRoomCnt.setText("Number of rooms booked: " + db.getHotel().getNumOfAvailRooms(db.getDate(), false));
+                    lblAvailRoomCnt.setText("Number of rooms available: " + h.getNumOfAvailRooms(db.getDate(), true));
+                    lblBookedRoomCnt.setText("Number of rooms booked: " + h.getNumOfAvailRooms(db.getDate(), false));
                 }
                 case "cmbRooms" ->
                 {
-                    cmbRooms.setSelectedItem(String.valueOf(db.getRoom().getNum()));
-                    lblRoomType.setText("Type: " + db.getRoom().getType());
-                    lblPricePerNight.setText("Base price per night: " + String.format("%.2f", db.getRoom().getNightlyPrice()));
+                    Room r = db.getRoom();
+
+                    cmbRooms.setSelectedItem(String.valueOf(r.getNum()));
+                    lblRoomType.setText("Type: " + r.getType());
+                    lblPricePerNight.setText("Base price per night: " + String.format("%.2f", r.getNightlyPrice()));
                 }
                 case "cmbReservations" ->
                 {
-                    cmbReservations.setSelectedItem(db.getReservation().getCode());
-                    lblGuestName.setText("Guest: " + db.getReservation().getGuest());
-                    lblRoomDetails.setText("Room: Room " + db.getReservation().getRoom().getNum() + ", " + db.getReservation().getRoom().getType());
-                    lblCheckInAndOut.setText("Check-in and check-out: " + db.getReservation().getCheckInAndOut());
-                    lblResPrice.setText("Price (w/discount if any): " + String.format("%.2f", db.getReservation().getTotalPrice()));
-                    lblResPricePerNight.setText("Price per night: " + String.format("%.2f", db.getReservation().getRoom().getNightlyPrice()));
+                    Reservation r = db.getReservation();
+                    
+                    cmbReservations.setSelectedItem(r.getCode());
+                    lblGuestName.setText("Guest: " + r.getGuest());
+                    lblRoomDetails.setText("Room: Room " + r.getRoom().getNum() + ", " + r.getRoom().getType());
+                    lblCheckInAndOut.setText("Check-in and check-out: " + r.getCheckInAndOut());
+                    lblResPrice.setText("Price (w/discount if any): " + String.format("%.2f", r.getTotalPrice()));
+                    lblResPricePerNight.setText("Price per night: " + String.format("%.2f", r.getRoom().getNightlyPrice()));
 
                     // TODO Update table
                 }

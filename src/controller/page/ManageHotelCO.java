@@ -97,8 +97,23 @@ public class ManageHotelCO
             {
                 if (!db.getHotels().isEmpty())
                 {
-                    db.setHotel(db.getHotel(mhUI.getValue("cmbHotels")));
-                    mhUI.configureComps();
+                    /* Setup */
+                    
+                        // Gets the hotel.
+                        Hotel h = db.getHotel(mhUI.getValue("cmbHotels"));
+                        
+                    /* Update */
+
+                        // Sets the hotel.
+                        db.setHotel(h);
+
+                        // Sets the default chosen reservation if the hotel has any.
+                        if (h.getNumOfReservations() != 0)
+                            db.setReservation(h.getFirstReservedRoom().
+                            getReservations().getFirst());
+
+                        // Updates the UI accordingly.
+                        mhUI.configureComps();
                 }
             });
         }

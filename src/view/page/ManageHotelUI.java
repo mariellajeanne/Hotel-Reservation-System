@@ -159,7 +159,7 @@ public final class ManageHotelUI extends JBlackPanel
                 cmbHotels.setSelectedItem(db.getHotel().getName());
                 
                 // Sets the reservation combo box's items.
-                if (db.getHotel().getNumOfReservations() != 0)
+                if (db.getHotel().getNumOfReservations() != 0 && db.getReservation() != null)
                 {
                     cmbReservations.setModel(new DefaultComboBoxModel<>
                         (db.getHotel().getReservationCodes()));
