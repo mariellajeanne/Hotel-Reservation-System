@@ -95,7 +95,6 @@ public final class ManageHotelUI extends JBlackPanel
             return mhUI;
         }
 
-
     /* -------------------------------------------------------------------------- */
     /*                           COMPONENT CONFIGURATION                          */
     /* -------------------------------------------------------------------------- */
@@ -164,24 +163,15 @@ public final class ManageHotelUI extends JBlackPanel
                     cmbReservations.setModel(new DefaultComboBoxModel<>
                         (db.getHotel().getReservationCodes()));
                     cmbReservations.setSelectedItem(db.getReservation().getCode());
-                }
                     
+                    // Enables the delete reservation button.
+                    btnDeleteReservation.setEnabled(true);
+                }
+                
+                // Disables the delete reservation button.
                 else
-                    cmbReservations.removeAllItems();
+                    cmbReservations.setEnabled(false);
             }
-
-            // Makes the combo boxes empty if there exists no hotels.
-            else
-            {
-                cmbHotels.removeAllItems();
-                cmbReservations.removeAllItems();
-            }
-
-            // Enables the delete reservation button only if the hotel's reservations exist.
-            if (!db.getHotels().isEmpty())
-                btnDeleteReservation.setEnabled(db.getHotel().getNumOfReservations() != 0);
-            else
-                btnDeleteReservation.setEnabled(false);
 
             // Sets the label sizes according to text content.
             lblHotel.setSizePos(470,299,31);

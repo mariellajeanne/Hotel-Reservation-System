@@ -143,34 +143,29 @@ public final class ViewHotelUI extends JBlackPanel
                 Room room = db.getRoom();
                 Reservation res =  db.getReservation();
 
-                lblNumRooms.setText("Number of rooms: " + h.getRooms().size());
-                lblEstEarnings.setText("Estimated earnings: " + String.format("%.2f", h.getTotalEarnings()));
-                lblAvailRoomCnt.setText("Number of rooms available: " + h.getNumOfAvailRooms(db.getDate(), true));
-                lblBookedRoomCnt.setText("Number of rooms booked: " + h.getNumOfAvailRooms(db.getDate(), false));
-                lblRoomType.setText("Type: " + room.getType());
-                lblPricePerNight.setText("Base price per night: " + String.format("%.2f", db.getRoom().getNightlyPrice()));
-
+                // Sets the models of the combo boxes.
                 cmbHotels.setModel(new DefaultComboBoxModel<>(db.getHotelNames()));
                 cmbDates.setModel(new DefaultComboBoxModel<>(Reservation.getReservationDates(true)));
                 cmbRooms.setModel(new DefaultComboBoxModel<>(h.getRoomNumbers()));
                 cmbAvailNights.setModel(new DefaultComboBoxModel<>(room.getAvailableNights()));
 
+                // Sets the displayed hotel information.
                 cmbHotels.setSelectedItem(h.getName());
-                cmbDates.setSelectedItem(String.valueOf(db.getDate()));
-                cmbRooms.setSelectedItem(String.valueOf(room.getNum()));
+                lblNumRooms.setText("Number of rooms: " + h.getRooms().size());
+                lblEstEarnings.setText("Estimated earnings: " + String.format("%.2f", h.getTotalEarnings()));
+                
+                // Sets the displayed date and room information.
+                setUpdatedValues("cmbDates");
+                setUpdatedValues("cmbRooms");
 
-                // Executes the following if the chosen hotel has reservations.
+                // Displays reservation information if the chosen hotel has reservations.
                 if (db.getHotel().getNumOfReservations() != 0 && db.getReservation() != null)
                 {
+                    // Displays the reservation details.
                     cmbReservations.setModel(new DefaultComboBoxModel<>(db.getHotel().getReservationCodes()));
-                    cmbReservations.setSelectedItem(res.getCode());
+                    setUpdatedValues("cmbReservations");
 
-                    lblGuestName.setText("Guest: " + res.getGuest());
-                    lblRoomDetails.setText("Room: Room " + res.getRoom().getNum() + ", " + res.getRoom().getType());
-                    lblCheckInAndOut.setText("Check-in and check-out: " + res.getCheckInAndOut());
-                    lblResPrice.setText("Price (w/discount if any): " + String.format("%.2f", res.getTotalPrice()));
-                    lblResPricePerNight.setText("Price per night: " + String.format("%.2f", res.getRoom().getNightlyPrice()));
-
+                    // Displays the reservation price breakdown.
                     dtmPricePerNight.setDataVector(res.getNightlyPrices(), null);
                 }
 
@@ -187,32 +182,6 @@ public final class ViewHotelUI extends JBlackPanel
                     
                     dtmPricePerNight.setRowCount(0);
                 }
-            }
-
-            // Executes the following if there exists no hotels.
-            else
-            {
-                cmbHotels.removeAllItems();
-                cmbDates.removeAllItems();
-                cmbRooms.removeAllItems();
-                cmbAvailNights.removeAllItems();
-                cmbReservations.removeAllItems();
-
-                lblNumRooms.setText("Number of rooms: N/A");
-                lblEstEarnings.setText("Estimated earnings: N/A");
-                lblAvailRoomCnt.setText("Number of rooms available: N/A");
-                lblBookedRoomCnt.setText("Number of rooms booked: N/A");
-                lblRoomType.setText("Type: ");
-                lblPricePerNight.setText("Price per night: N/A");
-                
-                lblGuestName.setText("Guest: N/A");
-                lblRoomDetails.setText("Room: N/A");
-                lblCheckInAndOut.setText("Check-in and check-out: N/A");
-                lblResPrice.setText("Price (w/discount if any): N/A");
-                lblResPricePerNight.setText("Price per night: N/A");
-                
-                dtmPricePerNight.setRowCount(0);
-                tblPricePerNight.setModel(new DefaultTableModel());
             }
 
             // Sets the price per night table panels.
@@ -360,7 +329,7 @@ public final class ViewHotelUI extends JBlackPanel
                 case "cmbReservations" ->
                 {
                     Reservation r = db.getReservation();
-                    
+
                     cmbReservations.setSelectedItem(r.getCode());
                     lblGuestName.setText("Guest: " + r.getGuest());
                     lblRoomDetails.setText("Room: Room " + r.getRoom().getNum() + ", " + r.getRoom().getType());

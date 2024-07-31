@@ -114,15 +114,14 @@ public final class BookReservationUI extends JBlackPanel
         @Override
         public void configureComps()
         {
+            // Sets the combo box's values if there exists hotels.
             if (!db.getHotels().isEmpty())
             {
                 cmbHotels.setModel(new DefaultComboBoxModel<>(db.getHotelNames()));
                 cmbHotels.setSelectedItem(db.getHotel().getName());
             }
-                
-            else
-                cmbHotels.removeAllItems();
 
+            // Sets the label sizes according to text content.
             lblGuest.setSizePos(670,300,30);
             lblHotel.setSizePos(670,361,30);
             lblRoomType.setSizePos(670,422,38);
